@@ -1,0 +1,28 @@
+<h2>VIP Guest List of <%= @event.title%> on <%= @event.date %> </h2>
+
+<table class="table table-striped col-md-12" id="events">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @guests.each do |guest| %>
+      <tr>
+        <td>
+          <%= link_to "#{guest.name}", event_guest_path(@event, guest) %>
+        </td>
+        <td>
+          <%= guest.email_address %>
+        </td>          
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<ul>
+  <li><%= link_to "Add Guest", new_event_guest_path(@event) %></li>
+  <li><%= link_to "Back", root_path%></li>
+</ul>
+

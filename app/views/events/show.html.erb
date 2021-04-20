@@ -1,0 +1,29 @@
+<h2><%= @event.title %> on <%= @event.date %></h2>
+<h3>Box Office Ticket List</h3>
+
+<ul>
+  <li><%= link_to "Back", root_path%></li>
+</ul>
+
+<div class="table-responsive">
+<table class="table table-striped table-sm" id="events">
+<thead>
+  <tr>
+    <% @customers[0].each do |column_name| %>
+      <th><%= column_name %></th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <% @customers[1..-1].each do |row| %>
+    <tr>
+      <% row.each do |cell| %>
+        <td>
+          <%= cell %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+</div>

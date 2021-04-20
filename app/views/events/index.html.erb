@@ -1,0 +1,37 @@
+<p><%= link_to "Load Box Office Files", load_local_csv_file_path() %></p>
+
+<% @events.map do |event_title, events| %>
+  <h1 id='title_header'><%= event_title%></h1>
+  <table class="table table-striped col-md-12" id="events">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Total Seats</th>
+        <th>Total Box Office Seats</th>
+        <th>Total VIP Guests Seats</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.each do |event| %>
+        <tr>
+          <td>
+            <%= event.date %>
+          </td>
+          <td>
+            <%= event.total_seats %>
+          </td>          
+          <td>
+            <%= link_to "#{event.total_seats_box_office}", event_path(event) %>
+          </td>
+          <td>
+            <%= link_to "#{event.total_seats_guest}", event_guests_path(event) %>
+          </td>
+          <td>
+            <%= event.balance %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

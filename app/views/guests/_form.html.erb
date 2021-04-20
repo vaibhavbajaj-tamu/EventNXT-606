@@ -1,0 +1,20 @@
+<%= form_for [ event, guest ] do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email_address %><br>
+    <%= form.text_area :email_address %><br>
+  </div>
+
+  <div>
+    <%= link_to 'Cancel', event_guests_path(event) if guest.name==nil%>
+    <%= link_to 'Cancel', event_guest_path(event, guest) if guest.name%>
+  </div>
+  
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
