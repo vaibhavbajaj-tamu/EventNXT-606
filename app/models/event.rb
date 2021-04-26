@@ -11,6 +11,17 @@ class Event < ActiveRecord::Base
         first_cell = workbook.cell(1,1).split("-")
         title = first_cell[0][0..-2]
         date = first_cell[1][1..-1]
+        already_existed = false
+        for event in Event.all
+          if event.title == title and event.date == date
+            already_existed = true
+            next
+          end
+        end
+        # puts(already_existed)
+        if already_existed == true
+          next
+        end
         
         # read the xlsx file -> process the customer info into one string object box_office_customers
         box_office_customers = []

@@ -1,37 +1,64 @@
-<p><%= link_to "Load Box Office Files", load_local_csv_file_path() %></p>
+<p>Welcome to EVENTNXT, a tool to manage your Guest List RSVP and Box Office Ticket Sales data of your event in real-time. Have a comprehensive picture of your yet-to-be-booked seats at any time from one central Portal. Let’s get started.</p>
 
-<% @events.map do |event_title, events| %>
-  <h1 id='title_header'><%= event_title%></h1>
-  <table class="table table-striped col-md-12" id="events">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Total Seats</th>
-        <th>Total Box Office Seats</th>
-        <th>Total VIP Guests Seats</th>
-        <th>Balance</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% events.each do |event| %>
-        <tr>
-          <td>
-            <%= event.date %>
-          </td>
-          <td>
-            <%= event.total_seats %>
-          </td>          
-          <td>
-            <%= link_to "#{event.total_seats_box_office}", event_path(event) %>
-          </td>
-          <td>
-            <%= link_to "#{event.total_seats_guest}", event_guests_path(event) %>
-          </td>
-          <td>
-            <%= event.balance %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<h2>Access Box Office Seat-Table: >>>>></h2> 
+<%= form_tag load_event_information_path do %>
+  <div>
+    <%= label_tag(:username, "Username:") %><br>
+    <%= text_field_tag(:username) %>
+  </div>
+  
+  <div>
+    <%= label_tag(:password, "Password:") %><br>
+    <%= text_field_tag(:password) %>
+  </div>
+
+  <div>
+    <%= label_tag(:event_title, "Name of the Event (as seen in the Box Office Seat-Table file-name):") %><br>
+    <%= text_field_tag(:event_title) %>
+  </div>
+  
+  <div>
+    <%= label_tag(:file_type, "Box Office File-type:") %><br>
+    <%= text_field_tag(:file_type) %>
+  </div>
+  
+  <div>
+    <%= submit_tag("Create") %>
+  </div>
 <% end %>
+
+<!--<% @events.map do |event_title, events| %>-->
+<!--  <h1 id='title_header'><%= event_title%></h1>-->
+<!--  <table class="table table-striped col-md-12" id="events">-->
+<!--    <thead>-->
+<!--      <tr>-->
+<!--        <th>Date</th>-->
+<!--        <th>Total Seats</th>-->
+<!--        <th>Total Box Office Seats</th>-->
+<!--        <th>Total VIP Guests Seats</th>-->
+<!--        <th>Balance</th>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--      <% events.each do |event| %>-->
+<!--        <tr>-->
+<!--          <td>-->
+<!--            <%= event.date %>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <%= event.total_seats %>-->
+<!--          </td>          -->
+<!--          <td>-->
+<!--            <%= link_to "#{event.total_seats_box_office}", event_path(event) %>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <%= link_to "#{event.total_seats_guest}", event_guests_path(event) %>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <%= event.balance %>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      <% end %>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--<% end %>-->

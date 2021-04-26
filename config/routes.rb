@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     resources :guests
   end
 
-  get '/load_local_csv_file' => 'events#load_local_csv_file'
+  post '/load_event_information' => 'events#load_event_information'
+
+  get '/events/:event_id/guests/:id/send' => 'guests#send_email_invitation', as: :send_event_guest
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

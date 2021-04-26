@@ -11,15 +11,27 @@ class EventsController < ApplicationController
     end
   end
   
-  def load_local_csv_file
+  def load_event_information
+    event_title = "2017 FashioNXT Week Runway Shows"
     file = "#{Rails.root}/public/ticket_list_10-11-17.xlsx"
     Event.import(file)
-    
-    redirect_to root_path()
+    event = Event.find_by(title: event_title)
+    puts(event.title)
+    # file = "#{Rails.root}/public/Seat Data Report.xlsx"
+    # Event.import(file)
+    redirect_to event_path(event)
   end
   
   def show
     @event = Event.find(params[:id])
+    @guests = @event.guests
+    
+    @guest_params = Guest.column_names
+    fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
+    fixed_params.each do |fixed_param|
+      @guest_params.delete(fixed_param)
+    end
+    # puts(@guest_params)
     @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210417215655) do
+ActiveRecord::Schema.define(version: 20210425164236) do
 
   create_table "events", force: :cascade do |t|
     t.string  "title"
@@ -24,9 +24,17 @@ ActiveRecord::Schema.define(version: 20210417215655) do
   end
 
   create_table "guests", force: :cascade do |t|
-    t.string  "name"
-    t.string  "email_address"
     t.integer "event_id"
+    t.string  "first_name"
+    t.string  "last_name"
+    t.string  "email_address"
+    t.string  "affiliation"
+    t.string  "added_by"
+    t.string  "type"
+    t.string  "seat_category"
+    t.integer "max_seats_num"
+    t.string  "booking_status"
+    t.integer "total_booked_num"
   end
 
   add_index "guests", ["event_id"], name: "index_guests_on_event_id"
