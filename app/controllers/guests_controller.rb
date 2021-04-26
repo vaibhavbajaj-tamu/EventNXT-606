@@ -76,6 +76,6 @@ class GuestsController < ApplicationController
   private
     def guest_params
       params.require(:guest).permit(:first_name, :last_name, :event_id, :email_address, :affiliation, 
-        :added_by, :type, :seat_category, :max_seats_num, :booking_status, :total_booked_num)
+        :added_by, :guest_type, :seat_category, :max_seats_num, :booking_status, :total_booked_num)
     end
 end

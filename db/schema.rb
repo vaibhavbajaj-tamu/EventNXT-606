@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210425164236) do
+ActiveRecord::Schema.define(version: 20210426211246) do
 
   create_table "events", force: :cascade do |t|
     t.string  "title"
@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(version: 20210425164236) do
   end
 
   create_table "guests", force: :cascade do |t|
+    t.string  "email_address"
     t.integer "event_id"
     t.string  "first_name"
     t.string  "last_name"
-    t.string  "email_address"
     t.string  "affiliation"
     t.string  "added_by"
-    t.string  "type"
+    t.string  "guest_type"
     t.string  "seat_category"
     t.integer "max_seats_num"
     t.string  "booking_status"
