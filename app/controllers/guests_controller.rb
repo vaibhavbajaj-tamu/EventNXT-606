@@ -8,6 +8,7 @@ class GuestsController < ApplicationController
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
     # --- 
+    GuestMailer.confirmation_email(guest).deliver
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
     redirect_to event_path(event)
   end
