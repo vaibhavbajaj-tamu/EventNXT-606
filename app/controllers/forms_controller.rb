@@ -25,6 +25,10 @@ class FormsController < ApplicationController
 			end
 	
 			@guest = Guest.find_by_email(params[:form]["email"])
+			if params[:form]["number"] > 0
+				GuestMailer.rsvp_confirmation_email(@email, params[:form]["number"]).deliver
+			end
+
 			@guest.update_all({:booking_status => params[:coming], :total_booked_num => params[:form]["number"]})
 	  		#render plain: params[:form].inspect
 			render :template => "forms/success"
