@@ -10,6 +10,7 @@ class GuestsController < ApplicationController
     # --- 
     GuestMailer.confirmation_email(guest).deliver
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
+    flash[:notice] = "The email was successfully sent to #{guest.first_name} #{guest.last_name}."
     redirect_to event_path(event)
   end
   

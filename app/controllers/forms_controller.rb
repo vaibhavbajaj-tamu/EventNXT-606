@@ -1,10 +1,8 @@
 class FormsController < ApplicationController
-
 	def success
-
 	end
 
-  def submit
+	def submit
 		@email=params[:email]
 		if params[:maxtic]
 			@max=params[:maxtic].to_i
@@ -25,13 +23,14 @@ class FormsController < ApplicationController
 				end
 				params[:form]["resp"] = false
 			end
-
+	
 			@guest = Guest.find_by_email(params[:form]["email"])
 			@guest.update_all({:booking_status => params[:coming], :total_booked_num => params[:form]["number"]})
-  		#render plain: params[:form].inspect
+	  		#render plain: params[:form].inspect
 			render :template => "forms/success"
+			redirect_to event_path(@guest.event)
 		end
-  end
+	end
 
 	private
     def guest_params
