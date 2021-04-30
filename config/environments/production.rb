@@ -87,4 +87,6 @@ Rails.application.configure do
    :authentication       => "plain",
   :enable_starttls_auto => true
   }
+  
+  config.action_mailer.default_url_options = { :host => "https://morning-lake-37538.herokuapp.com/" }
 end

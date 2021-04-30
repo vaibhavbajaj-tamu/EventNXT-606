@@ -8,12 +8,10 @@ Rails.application.routes.draw do
   end
 
   post '/load_event_information' => 'events#load_event_information'
-
   get '/events/:event_id/guests/:id/send' => 'guests#send_email_invitation', as: :send_event_guest
-  get 'forms/submit'
-  get 'forms/success'
-  get 'admin/index'
-  post 'forms/submit'
+  put '/events/:event_id/guests/:id/update_in_place' => 'guests#update_in_place', as: :update_event_guest
+  
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

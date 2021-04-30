@@ -1,16 +1,15 @@
 class GuestMailer < ApplicationMailer
     
-    def confirmation_email(guest)
+    def rsvp_invitation_email(event, guest)
+        @event = event
         @guest = guest
-        email = @guest.email_address
-        maxtic = @guest.max_seats_num.to_s
-        @url = 'https://morning-lake-37538.herokuapp.com/forms/submit?email='+email+'&maxtic='+maxtic
-        mail(to: @guest.email_address, subject: 'Welcome to My Awesome Site')
+        mail(to: @guest.email_address, subject: "#{@event.title} - Invitation")
     end
     
-    def rsvp_confirmation_email(email, number)
-        @email = email
-        @number = number
-        mail(to: 'evelynnngao@gmail.com', subject: 'Congratulation on signing up the RSVP form')
+    def rsvp_confirmation_email(event, guest)
+        @event = event
+        @guest = guest
+        mail(to: @guest.email_address, subject: "#{@event.title} - Seating Confirmation")
     end
+
 end

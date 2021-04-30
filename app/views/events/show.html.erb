@@ -27,7 +27,8 @@
       <tr>
         <% @guest_params.each do |param| %>
           <td>
-            <%= best_in_place [@event, guest], param, :as => :input, :place_holder => "#{guest[param]}" %>
+            <%= best_in_place [@event, guest], param, :as => :input, :place_holder => "#{guest[param]}", 
+              :url => update_event_guest_path(@event, guest) %>
           </td>
         <% end %>
         <td>

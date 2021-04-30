@@ -7,23 +7,28 @@ class GuestsController < ApplicationController
   def send_email_invitation
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
-    # --- 
-    GuestMailer.confirmation_email(guest).deliver
+    # puts(request.host_with_port)
+    GuestMailer.rsvp_invitation_email(event, guest).deliver
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
     flash[:notice] = "The email was successfully sent to #{guest.first_name} #{guest.last_name}."
     redirect_to event_path(event)
   end
   
-  def receive
+  def update_in_place
+    event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
-    # --- 
-    # guest.update({:booking_status => 'Yes', :total_booked_num => 1})
+  
+    respond_to do |format|
+      if guest.update(guest_params)
+        format.html { redirect_to(event_guest_path(event, guest), :notice => 'Guest was successfully updated.') }
+        format.json { respond_with_bip(guest) }
+      else
+        format.html { redirect_to(event_guest_path(event, guest), :notice => 'Guest was not successfully updated.') }
+        format.json { respond_with_bip(guest) }
+      end
+    end
   end
-  
-  
-  
-  
-  
+
   # def new
   #   @event = Event.find(params[:event_id])
   # end
@@ -36,19 +41,36 @@ class GuestsController < ApplicationController
     redirect_to event_path(event)
   end
   
-  # def edit
-  #   @event = Event.find(params[:event_id])
-  #   @guest = Guest.find(params[:id])
-  # end
+  def edit
+    @event = Event.find(params[:event_id])
+    @guest = Guest.find(params[:id])
+    if @guest.booking_status == 'Yes' or @guest.booking_status == 'No'
+      render :template => "guests/success_confirmation"
+    end
+  end
+
 
   def update
+    # VIP guest updates RSVP information (Other infos updated by event owner is handled by update_in_place)
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
-
+    
+    if params[:guest][:booking_status] == 'Yes' and params[:guest][:total_booked_num] == '0'
+      flash[:notice] = "Please select the ticket number to be greater than 0 for the 'Yes' choice"
+      redirect_to edit_event_guest_path(event, guest) and return
+    end
+    if params[:guest][:booking_status] == 'No' and params[:guest][:total_booked_num] != '0'
+      flash[:notice] = "Please select the ticket number to be 0 for the 'No' choice"
+      redirect_to edit_event_guest_path(event, guest) and return
+    end
+    
     if guest.update(guest_params)
-      redirect_to event_path(event)
+      if guest.total_booked_num > 0
+				GuestMailer.rsvp_confirmation_email(event, guest).deliver
+			end
+      render :template => "guests/success_confirmation"
     else
-      render :edit
+      render file: "#{Rails.root}/public/500.html", layout: false
     end
   end
   
@@ -79,4 +101,5 @@ class GuestsController < ApplicationController
       params.require(:guest).permit(:first_name, :last_name, :event_id, :email_address, :affiliation, 
         :added_by, :guest_type, :seat_category, :max_seats_num, :booking_status, :total_booked_num)
     end
+    
 end
