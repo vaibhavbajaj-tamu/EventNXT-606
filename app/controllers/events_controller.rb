@@ -1,14 +1,14 @@
 class EventsController < ApplicationController
   def index
-    @events = Hash.new()
-    for event in Event.all
-      if @events.keys.include?(event.title) == false
-        @events[event.title] = []
-      end
-      @events[event.title].append(event)
+    # @events = Hash.new()
+    # for event in Event.all
+    #   if @events.keys.include?(event.title) == false
+    #     @events[event.title] = []
+    #   end
+    #   @events[event.title].append(event)
       # puts(event.inspect)
       # puts(Event.column_names.inspect)
-    end
+    # end
   end
   
   def load_event_information

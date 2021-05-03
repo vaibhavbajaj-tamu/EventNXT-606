@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+ruby '>= 2.6.6', '< 2.7.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.11.3'
 # Use sqlite3 as the database for Active Record
@@ -27,6 +27,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "roo", "~> 2.8.0"
 gem 'best_in_place', '~> 3.0.1'
 
+group :test do
+  gem 'cucumber-rails', require: false
+  # database_cleaner is not required, but highly recommended
+  gem 'cucumber-rails-training-wheels'
+  gem 'simplecov', :require => false
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -39,6 +45,8 @@ gem 'best_in_place', '~> 3.0.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rspec-rails', '3.7.2'
+  gem 'database_cleaner', '1.4.1'
 end
 
 group :development do
