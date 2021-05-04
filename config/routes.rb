@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     resources :guests
   end
 
-  post '/load_event_information' => 'events#load_event_information'
+  post '/import_new_spreadsheet' => 'events#import_new_spreadsheet'
+  post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet'
+  
   get '/events/:event_id/guests/:id/send' => 'guests#send_email_invitation', as: :send_event_guest
   put '/events/:event_id/guests/:id/update_in_place' => 'guests#update_in_place', as: :update_event_guest
   

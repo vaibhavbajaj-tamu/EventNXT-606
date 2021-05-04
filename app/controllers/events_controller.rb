@@ -11,14 +11,22 @@ class EventsController < ApplicationController
     # end
   end
   
-  def load_event_information
-    event_title = "2017 FashioNXT Week Runway Shows"
-    file = "#{Rails.root}/public/ticket_list_10-11-17.xlsx"
-    Event.import(file)
-    event = Event.find_by(title: event_title)
+  def import_new_spreadsheet
+    if !params[:file]
+      redirect_to root_path and return
+    end
+    event = Event.import(params[:file])
     puts(event.title)
-    # file = "#{Rails.root}/public/Seat Data Report.xlsx"
-    # Event.import(file)
+    redirect_to event_path(event)
+  end
+  
+  def open_existed_spreadsheet
+    event = Event.find_by(title: params[:event_title])
+    if !event
+      flash[:notice] = "Cannot find the event #{params[:event_title]}."
+      redirect_to root_path and return
+    end
+    # puts(event.title)
     redirect_to event_path(event)
   end
   
@@ -34,8 +42,6 @@ class EventsController < ApplicationController
     # puts(@guest_params)
     @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
     
-    
-    @event.total_seats_box_office = @customers.length()-1
     @event.total_seats_guest = 0
     for guest in @guests
       @event.total_seats_guest += guest.total_booked_num

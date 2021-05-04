@@ -1,6 +1,6 @@
 
-<h2>Import Box Office Table: </h2> 
-<%= form_tag load_event_information_path do %>
+<h2>1. Import New/Updated Box Office Spreadsheet: </h2> 
+<%= form_tag import_new_spreadsheet_path, multipart: true do %>
   <!--<div>-->
   <!--  <%= label_tag(:username, "Gmail Username:") %><br>-->
   <!--  <%= text_field_tag(:username) %>-->
@@ -10,14 +10,23 @@
   <!--  <%= label_tag(:password, "Gmail Password:") %><br>-->
   <!--  <%= text_field_tag(:password) %>-->
   <!--</div>-->
-
-  <!--<div>-->
-  <!--  <%= label_tag(:event_title, "Name of the Box Office Seat-Table:") %><br>-->
-  <!--  <%= text_field_tag(:event_title) %>-->
-  <!--</div>-->
   
-  <div class="mt-3">
-    <%= file_field_tag :file %>
-    <%= submit_tag("Submit") %>
+  <div>
+    <%= file_field_tag(:file)%>
+  </div>
+  
+  <div>
+    <%= submit_tag("Import") %>
+  </div>
+<% end %>
+
+<h2>2. Open imported Box Office Spreadsheet: </h2> 
+<%= form_tag open_existed_spreadsheet_path do %>
+  <div>
+    <%= label_tag(:event_title, "Name of the Event:") %><br>
+    <%= text_field_tag(:event_title) %>
+  </div>
+  <div>
+    <%= submit_tag("Open") %>
   </div>
 <% end %>
