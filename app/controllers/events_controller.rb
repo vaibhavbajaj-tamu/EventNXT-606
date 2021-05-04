@@ -33,6 +33,14 @@ class EventsController < ApplicationController
     end
     # puts(@guest_params)
     @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
+    
+    
+    @event.total_seats_box_office = @customers.length()-1
+    @event.total_seats_guest = 0
+    for guest in @guests
+      @event.total_seats_guest += guest.total_booked_num
+    end
+    @event.balance = @event.total_seats - @event.total_seats_box_office - @event.total_seats_guest
   end
   
   # def new
@@ -54,15 +62,16 @@ class EventsController < ApplicationController
   #   @event = Event.find(params[:id])
   # end
 
-  # def update
-  #   @event = Event.find(params[:id])
+  def update
+    @event = Event.find(params[:id])
 
-  #   if @event.update(event_params)
-  #     redirect_to @event
-  #   else
-  #     render :edit
-  #   end
-  # end
+    if @event.update(event_params)
+      redirect_to @event
+    else
+      flash[:notice] = "Failed to update the event information."
+      redirect_to @event
+    end
+  end
   
   # def destroy
   #   @event = Event.find(params[:id])

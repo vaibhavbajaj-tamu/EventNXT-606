@@ -7,6 +7,10 @@ class GuestsController < ApplicationController
   def send_email_invitation
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
+    if guest.booking_status == 'Yes' or guest.booking_status == 'No'
+      flash[:notice] = "The guest #{guest.first_name} #{guest.last_name} has already confirmed this invitation."
+      redirect_to event_path(event) and return
+    end
     # puts(request.host_with_port)
     GuestMailer.rsvp_invitation_email(event, guest).deliver
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
