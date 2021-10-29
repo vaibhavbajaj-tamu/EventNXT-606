@@ -47,6 +47,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '3.7.2'
   gem 'database_cleaner', '1.4.1'
+  gem 'pg', '~> 0.21'
 end
 
 group :development do
