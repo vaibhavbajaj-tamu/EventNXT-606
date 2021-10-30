@@ -44,7 +44,6 @@ group :development, :test do
   gem 'rspec-rails', '3.7.2'
   gem 'database_cleaner', '1.4.1'
   gem 'pg', '~> 0.21'
-end
 
   gem 'rspec-rails'
   gem 'guard-rspec'
