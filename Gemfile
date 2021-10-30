@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.11.3'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.13'
+gem 'pg', '~> 0.21'
 # gem 'pg', '~> 0.21'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -28,7 +28,7 @@ gem "roo", "~> 2.8.0"
 gem 'best_in_place', '~> 3.0.1'
 
 group :test do
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require => false
   # database_cleaner is not required, but highly recommended
   gem 'cucumber-rails-training-wheels'
   gem 'simplecov', :require => false
@@ -47,6 +47,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '3.7.2'
   gem 'database_cleaner', '1.4.1'
+  gem 'pg', '~> 0.21'
 end
 
 group :development do
