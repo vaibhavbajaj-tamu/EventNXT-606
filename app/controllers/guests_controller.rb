@@ -5,6 +5,7 @@ class GuestsController < ApplicationController
   # end
   
   def send_email_invitation
+    puts "email send try"
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
     if guest.booking_status == 'Yes' or guest.booking_status == 'No'
