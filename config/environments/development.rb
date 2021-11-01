@@ -41,8 +41,9 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-   :address              => "smtp.gmail.com",
+   :address              => "smtp.mailgun.com",
    :port                 => 587,
+   :domain               => 'sandbox4460b599dfa2462aad5cfc469caa845c.mailgun.org',
    :user_name            => 'tmpemailfortesting@gmail.com',
    :password             => 'simplepassword',
    :authentication       => "plain",

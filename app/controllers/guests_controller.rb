@@ -12,13 +12,7 @@ class GuestsController < ApplicationController
       redirect_to event_path(event) and return
     end
     # puts(request.host_with_port)
-    #GuestMailer.rsvp_invitation_email(event, guest)
-    RestClient.post "https://api:4199d9416da271a9dfb63f66d0a349ed-10eedde5-b0feb88b"\
-		"@api.mailgun.net/v3/sandbox4460b599dfa2462aad5cfc469caa845c.mailgun.org/messages",
-		:from => "Mailgun Sandbox <postmaster@sandbox4460b599dfa2462aad5cfc469caa845c.mailgun.org>",
-		:to => "Leon Lin <leon990x@gmail.com>",
-		:subject => "Hello Leon Lin",
-		:text => "Congratulations Leon Lin, you just sent an email with Mailgun!  You are truly awesome!"
+    GuestMailer.rsvp_invitation_email(event, guest).deliver_now
 		#end of mail module
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
     flash[:notice] = "The email was successfully sent to #{guest.first_name} #{guest.last_name}."
