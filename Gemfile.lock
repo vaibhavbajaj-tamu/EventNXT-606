@@ -41,6 +41,7 @@ GEM
     best_in_place (3.0.3)
       actionpack (>= 3.2)
       railties (>= 3.2)
+    bigdecimal (1.4.2)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     builder (3.2.4)
@@ -227,6 +228,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.3.13)
     sys-uname (1.2.2)
       ffi (~> 1.1)
     thor (1.1.0)
@@ -252,6 +254,7 @@ PLATFORMS
 
 DEPENDENCIES
   best_in_place (~> 3.0.1)
+  bigdecimal (= 1.4.2)
   byebug
   coffee-rails (~> 4.1.0)
   cucumber-rails
@@ -267,6 +270,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simplecov
   spring
+  sqlite3 (~> 1.3.13)
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
