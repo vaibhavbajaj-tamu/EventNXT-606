@@ -9,7 +9,7 @@ ActionMailer::Base.smtp_settings = {
   :address        => "smtp.gmail.com"
   :user_name      => 'tmpemailfortesting@gmail.com',
   :password       => 'simplepassword',
-  :domain         => 'yourapp.heroku.com',
+  :domain         => 'sheltered-forest-93990.herokuapp.com',
   :authentication => :plain,
 }
 ActionMailer::Base.delivery_method = :smtp
