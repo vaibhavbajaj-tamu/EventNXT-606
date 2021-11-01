@@ -48,7 +48,7 @@ group :development, :test do
   gem 'rspec-rails', '3.7.2'
   gem 'database_cleaner', '1.4.1'
   gem 'pg', '~> 0.21'
-  gem 'sqlite3', '~> 1.3.6'
+  gem 'sqlite3', '~> 1.3.13'
 end
 
 group :development do
