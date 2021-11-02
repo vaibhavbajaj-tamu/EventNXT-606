@@ -1,8 +1,8 @@
 class GuestMailer < ApplicationMailer
     
     def rsvp_invitation_email(event, guest)
-        @event = params[:event]
-        @guest = params[:guest]
+        @event = event
+        @guest = guest
         mail(to: @guest.email_address, subject: "#{@event.title} - Invitation")
     end
     
