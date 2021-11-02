@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def index
+    @event_pic = params[:event_picture]
     # @events = Hash.new()
     # for event in Event.all
     #   if @events.keys.include?(event.title) == false
@@ -33,7 +34,6 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @guests = @event.guests
-    
     @guest_params = Guest.column_names
     fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
     fixed_params.each do |fixed_param|
