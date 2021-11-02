@@ -71,7 +71,7 @@ class GuestsController < ApplicationController
     
     if guest.update(guest_params)
       if guest.total_booked_num > 0
-				GuestMailer.rsvp_confirmation_email(event, guest).deliver
+				GuestMailer.rsvp_confirmation_email(event, guest).deliver_now
 			end
       render :template => "guests/success_confirmation"
     else
