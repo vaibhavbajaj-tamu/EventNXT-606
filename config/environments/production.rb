@@ -88,5 +88,8 @@ Rails.application.configure do
   :enable_starttls_auto => true
   }
   
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {domain: 'sandbox4460b599dfa2462aad5cfc469caa845c.mailgun.org'}
+  
   config.action_mailer.default_url_options = { :host => "https://sheltered-forest-93990.herokuapp.com/" }
 end
