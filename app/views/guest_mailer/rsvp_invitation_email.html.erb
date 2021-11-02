@@ -12,7 +12,7 @@
     <p><b>Event date: <%= @event.date %></b></p>
     <p><b>Ticket Number: <%= @guest.total_booked_num %></b></p>
     <p><b>Seat Category: <%= @guest.seat_category %></b></p>
-    <img src="https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg">
+    <img src="<%= :event_picture %>">
     <p>
       Please RSVP to confirm attendence with this link: <%= link_to 'RSVP', edit_event_guest_url(@event, @guest, :protocol => 'https') %>.
     </p>
