@@ -27,8 +27,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "roo", "~> 2.8.0"
 gem 'best_in_place', '~> 3.0.1'
 
-gem 'mailgunner', '~> 2.4'
-
 group :test do
   gem 'cucumber-rails', require: false
   # database_cleaner is not required, but highly recommended
