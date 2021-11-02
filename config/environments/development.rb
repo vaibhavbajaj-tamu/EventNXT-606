@@ -41,6 +41,14 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
+  #config.action_mailer.smtp_settings = {
+  # :address              => "smtp.gmail.com",
+  # :port                 => 587,
+  # :user_name            => 'tmpemailfortesting@gmail.com',
+  # :password             => 'simplepassword',
+  # :authentication       => "plain",
+  #:enable_starttls_auto => true
+  #}
   config.action_mailer.smtp_settings = {
   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
   :password => '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', # This is the secret sendgrid API key which was issued during API key creation
