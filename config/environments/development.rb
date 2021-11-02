@@ -41,12 +41,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-   :address              => "smtp.mailgun.com",
-   :port                 => 587,
-   :domain               => 'sandbox4460b599dfa2462aad5cfc469caa845c.mailgun.org',
-   :user_name            => 'tmpemailfortesting@gmail.com',
-   :password             => 'simplepassword',
-   :authentication       => "plain",
+  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  :password => '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', # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'sheltered-forest-93990.herokuapp.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
   :enable_starttls_auto => true
   }
   
