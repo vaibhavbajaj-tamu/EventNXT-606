@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def index
+    @event = Event.find(params[:id]) #new
     # @events = Hash.new()
     # for event in Event.all
     #   if @events.keys.include?(event.title) == false
@@ -12,7 +13,7 @@ class EventsController < ApplicationController
   end
   
   def import_new_spreadsheet
-    @event_pic = params[:event_picture] #new
+    @event = Event.find(params[:id]) #new
     if !params[:file]
       redirect_to root_path and return
     end
@@ -22,7 +23,7 @@ class EventsController < ApplicationController
   end
   
   def open_existed_spreadsheet
-    @event_pic = params[:event_picture] #new
+    @event = Event.find(params[:id])#new
     event = Event.find_by(title: params[:event_title])
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
