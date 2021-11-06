@@ -89,7 +89,7 @@ class EventsController < ApplicationController
   
   private
     def event_params
-      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest)
+      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest, :picture) #added :picture
     end
       
 
