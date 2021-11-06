@@ -3,6 +3,7 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.string :title
       t.string :date
+      t.string :seat_category
       t.integer :total_seats
       t.string :box_office_customers
       t.integer :total_seats_box_office
