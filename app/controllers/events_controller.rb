@@ -31,8 +31,8 @@ class EventsController < ApplicationController
   end
   
   def show
-    @event_pic = params[:event_picture] #new
     @event = Event.find(params[:id])
+    @event_picture = params[:event_picture] #new
     @guests = @event.guests
     @guest_params = Guest.column_names
     fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
