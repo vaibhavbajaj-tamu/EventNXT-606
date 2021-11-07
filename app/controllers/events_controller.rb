@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   def index
-    @event = Event.find(params[:id]) #new
     # @events = Hash.new()
     # for event in Event.all
     #   if @events.keys.include?(event.title) == false
@@ -90,7 +89,7 @@ class EventsController < ApplicationController
   
   private
     def event_params
-      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest, :picture) #added :picture
+      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest)
     end
       
 
