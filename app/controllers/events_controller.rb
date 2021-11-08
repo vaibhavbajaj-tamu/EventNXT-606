@@ -40,9 +40,9 @@ class EventsController < ApplicationController
     attr_accessor :seat_category
     attr_accessor :total_seats
     attr_accessor :balance
-    attr_accessor :model_name
+    #attr_accessor :model_name
     def initialize(a, b, c, d, e)
-      @model_name = 'SeatWiseRows'
+      #@model_name = 'SeatWiseRows'
       @total_seats = a
       @vip_seats = b
       @non_vip_seats = c
@@ -66,20 +66,22 @@ class EventsController < ApplicationController
     end
     
     @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
+    #puts(@customers[1])
     @customers[1..-1].each do |row|
       @seat_category_set.add?(row[9])
       if @bo_seat_wise_split.keys.include?(row[9]) == true
-        @bo_seat_wise_split[row[9]] += 1
+        @bo_seat_wise_split[row[9]] += row[24].to_i
       else
-        @bo_seat_wise_split[row[9]] = 1
+        @bo_seat_wise_split[row[9]] = row[24].to_i
       end
     end
     @guests.each do |guest|
+      puts(guest)
       @seat_category_set.add?(guest[:seat_category])
       if @vip_seat_wise_split.keys.include?(guest[:seat_category]) == true
-        @vip_seat_wise_split[guest[:seat_category]] += 1
+        @vip_seat_wise_split[guest[:seat_category]] += guest[:max_seats_num]    #change to guest[:total_booked_num]
       else
-        @vip_seat_wise_split[guest[:seat_category]] = 1
+        @vip_seat_wise_split[guest[:seat_category]] = guest[:max_seats_num]      #change to guest[:total_booked_num]
       end
     end
     @seat_category_set.each do |category_name|
@@ -91,6 +93,7 @@ class EventsController < ApplicationController
       if @bo_seat_wise_split.keys.include?(category_name)
         non_vip_seats = @bo_seat_wise_split[category_name]
       end
+     
       total_seats = 500
       balance = total_seats - vip_seats - non_vip_seats
       newEntry = SeatWiseRows.new(total_seats, vip_seats, non_vip_seats, category_name, balance)
