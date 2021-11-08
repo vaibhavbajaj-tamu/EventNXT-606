@@ -69,21 +69,25 @@ class EventsController < ApplicationController
     #puts(@customers[1])
     @customers[1..-1].each do |row|
       @seat_category_set.add?(row[9])
+      
       if @bo_seat_wise_split.keys.include?(row[9]) == true
         @bo_seat_wise_split[row[9]] += row[24].to_i
       else
         @bo_seat_wise_split[row[9]] = row[24].to_i
       end
     end
+    
     @guests.each do |guest|
       puts(guest)
       @seat_category_set.add?(guest[:seat_category])
+      
       if @vip_seat_wise_split.keys.include?(guest[:seat_category]) == true
         @vip_seat_wise_split[guest[:seat_category]] += guest[:max_seats_num]    #change to guest[:total_booked_num]
       else
-        @vip_seat_wise_split[guest[:seat_category]] = guest[:max_seats_num]      #change to guest[:total_booked_num]
+        @vip_seat_wise_split[guest[:seat_category]] = guest[:max_seats_num]     #change to guest[:total_booked_num]
       end
     end
+    
     @seat_category_set.each do |category_name|
       vip_seats = 0
       non_vip_seats = 0
