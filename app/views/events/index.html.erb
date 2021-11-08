@@ -20,6 +20,7 @@
   </div>
 <% end %>
 
+
 <h2>2. Open imported Box Office Spreadsheet: </h2> 
 <%= form_tag open_existed_spreadsheet_path do %>
   <div>
@@ -28,5 +29,17 @@
   </div>
   <div>
     <%= submit_tag("Open") %>
+  </div>
+<% end %>
+
+
+<h2>3. Add seat category: </h2> 
+<%= form_tag seat_categories_path do %>
+  <div>
+    <%= label_tag(:number_category, "Number of seat categories:") %>
+    <%= number_field_tag(:number_category) %>
+  </div>
+  <div>
+    <%= submit_tag("Add") %>
   </div>
 <% end %>

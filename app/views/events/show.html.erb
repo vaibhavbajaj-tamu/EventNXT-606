@@ -11,6 +11,7 @@
 <table class="table table-sm col-md-12">
   <thead class="thead-light">
     <tr> 
+      <th>Seat Category</th>
       <th>Total Seats</th>
       <th>Total Box Office Commitments</th>
       <th>Total VIP Guest Commitments</th>
@@ -18,13 +19,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><%= best_in_place [@event], :total_seats, :as => :input, :place_holder => "#{@event.total_seats}", 
-              :url => event_path(@event) %></td>
-      <td><%= @event.total_seats_box_office %></td>
-      <td><%= @event.total_seats_guest %></td>
-      <td><%= @event.balance %></td>
-    </tr>
+    <% @total_seat_wise_split.each do |row| %>
+      <tr>
+        <td><%= row.seat_category %></td>
+        <td><%= row.total_seats %></td>
+        <td><%= row.non_vip_seats %></td>
+        <td><%= row.vip_seats %></td>
+        <td><%= row.balance %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 </div>
