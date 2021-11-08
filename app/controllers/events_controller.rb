@@ -131,7 +131,7 @@ class EventsController < ApplicationController
       redirect_to @event
     else
       flash[:notice] = "Failed to update the event information."
-      redirect_to @event
+      redirect_to @event 
     end
   end
   
