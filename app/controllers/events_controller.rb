@@ -41,6 +41,7 @@ class EventsController < ApplicationController
     attr_accessor :total_seats
     attr_accessor :balance
     #attr_accessor :model_name
+    
     def initialize(a, b, c, d, e)
       #@model_name = 'SeatWiseRows'
       @total_seats = a
