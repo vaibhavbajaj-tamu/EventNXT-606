@@ -1,4 +1,17 @@
-<h2>1. Import New/Updated Box Office Spreadsheet: </h2> 
+<h2>1. Import New/Updated Box Office Spreadsheet: </h2>
+
+<script>
+  //JS toggles RSVP Form visibility
+  function toggle() {
+  var x = document.getElementById("rsvp-contents-toggle");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
 <%= form_tag import_new_spreadsheet_path, multipart: true do %>
   <!--<div>-->
   <!--  <%= label_tag(:username, "Gmail Username:") %><br>-->
@@ -28,11 +41,16 @@
     <%= label_tag(:event_title, "Name of the Event:") %><br>
     <%= text_field_tag(:event_title) %><br><br>
     
-    <h2>Prepare RSVP Form: </h2>
+    <h2>3. Prepare RSVP Form: </h2>
+    <button onclick="toggle()">Start</button>
+    
+    <div id="rsvp-contents-toggle" style="display: none;">
     <%= label_tag(:event_picture, "Insert event picture link:") %><br>
     <%= text_field_tag(:event_picture) %><br><br>
     <%= label_tag(:event_text, "Insert event description:") %><br>
     <%= text_field_tag(:event_text) %>
+    </div>
+    
   </div>
   <div>
     <br>
