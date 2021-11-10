@@ -21,8 +21,8 @@ class EventsController < ApplicationController
   end
   
   def open_existed_spreadsheet
-    $event_pic = $event_pic.to_s
     event = Event.find_by(title: params[:event_title])
+    $event_pic = params[:event_picture] #new
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
       redirect_to root_path and return
