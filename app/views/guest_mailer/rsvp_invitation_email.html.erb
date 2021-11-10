@@ -38,8 +38,8 @@
     </p>
     <div class="ticket">
         <h2>Event Title: <%= @event.title %></h2>
-        <div id="img"><img src="https://12thman.com/images/2019/8/30/stadium_pano.jpg" height="300px"></div>
-        <p><b>Guest Name:</b></p>
+        <div id="img"><img src="" height="300px"></div>
+        <p><b>Guest Name: <%= @guest.first_name %></b></p>
         <p><b>Event date: <%= @event.date %></b></p>
         <p><b>Ticket Number: <%= @guest.total_booked_num %></b></p>
         <p><b>Seat Category: <%= @guest.seat_category %></b></p>
