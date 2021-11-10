@@ -3,10 +3,13 @@
 <script>
   //JS toggles RSVP Form visibility
   function toggle() {
+  var button_name = document.getElementById("rsvp-prepper");
   var x = document.getElementById("rsvp-contents-toggle");
   if (x.style.display === "none") {
+    button_name.innerHTML = "Close RSVP Form";
     x.style.display = "block";
   } else {
+    button_name.innerHTML = "Open RSVP Form";
     x.style.display = "none";
   }
 }
@@ -26,7 +29,7 @@
   <div>
     <%= label_tag(:file, "Accepted types: .xlsx") %><br>
     <%= file_field_tag(:file)%>
-  </div>
+  </div><br>
   
   <div>
     <%= submit_tag("Import") %>
@@ -57,4 +60,4 @@
 <% end %>
 
 <br>
-<button onclick="toggle()">Create RSVP Form</button>
+<button id="rsvp-prepper" onclick="toggle()">Create RSVP Form</button>
