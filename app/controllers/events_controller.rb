@@ -21,7 +21,6 @@ class EventsController < ApplicationController
   end
   
   def open_existed_spreadsheet
-    event_pic = Event.find_by(picture: params[:event_picture]) #new
     event = Event.find_by(title: params[:event_title])
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
