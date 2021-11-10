@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
-    @event_pic = Event.find(params[:event_picture])
+    @event_pic = Event.find(params[:id])
     @guests = @event.guests
     @guest_params = Guest.column_names
     fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
@@ -89,7 +89,7 @@ class EventsController < ApplicationController
   
   private
     def event_params
-      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest, :picture)
+      params.require(:event).permit(:title, :date, :total_seats, :total_seats_box_office, :total_seats_guest)
     end
       
 
