@@ -17,15 +17,16 @@
             text-align: center;
         }
 
-        #rsvp{
+        
+        #rsvp-button {
             -webkit-appearance: button;
             -moz-appearance: button;
             appearance: button;
             padding: 10px;
             text-decoration: none;
-            color: initial;
+            color: white;
             background-color: black;
-
+          
         }
         
     </style>
@@ -44,7 +45,7 @@
         <p><b>Ticket Number: <%= @guest.total_booked_num %></b></p>
         <p><b>Seat Category: <%= @guest.seat_category %></b></p>
         <p><strong>About Event: </strong><%= $event_txt.to_s %></p>
-        <p id="rsvp"><%= link_to 'RSVP', edit_event_guest_url(@event, @guest, :protocol => 'https') %></p>
+        <p id="rsvp"><%= link_to 'RSVP', edit_event_guest_url(@event, @guest, :protocol => 'https'), :id => 'rsvp-button' %></p>
     </div>  
     <p>Thank you and have a great day!</p><br>
     <h2 style="color: white; background-color: lightblue; padding: 15px">EVENTNXT Team</h2>
