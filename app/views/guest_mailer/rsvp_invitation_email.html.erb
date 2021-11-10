@@ -38,7 +38,7 @@
     </p>
     <div class="ticket">
         <h2>Event Title: <%= @event.title %></h2>
-        <div id="img"><img src="" height="300px"></div>
+        <div id="img"><img src='<%= $event_pic.to_s %>' height="300px"></div>
         <p><b>Guest Name: <%= @guest.first_name %></b></p>
         <p><b>Event date: <%= @event.date %></b></p>
         <p><b>Ticket Number: <%= @guest.total_booked_num %></b></p>
