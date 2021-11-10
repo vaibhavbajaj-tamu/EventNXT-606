@@ -32,6 +32,7 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
+    $event_pic #new
     #@event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
     @guests = @event.guests
     @guest_params = Guest.column_names
