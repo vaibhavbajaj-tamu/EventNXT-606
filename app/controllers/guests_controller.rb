@@ -6,6 +6,7 @@ class GuestsController < ApplicationController
   
   def send_email_invitation
     $event_pic = $event_pic.to_s #new
+    $event_text = $event_text.to_s #new text
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
     if guest.booking_status == 'Yes' or guest.booking_status == 'No'

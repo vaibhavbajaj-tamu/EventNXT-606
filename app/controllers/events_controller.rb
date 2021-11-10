@@ -22,7 +22,9 @@ class EventsController < ApplicationController
   
   def open_existed_spreadsheet
     event = Event.find_by(title: params[:event_title])
+    
     $event_pic = params[:event_picture] #new
+    $event_txt = params[:event_text] #new text
     
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
@@ -36,6 +38,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     #@event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
     $event_pic = $event_pic.to_s #new
+    
     @guests = @event.guests
     @guest_params = Guest.column_names
     fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
