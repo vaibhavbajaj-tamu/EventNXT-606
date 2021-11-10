@@ -37,6 +37,7 @@
 <% end %>
 
 <br>
+<button id="rsvp-prepper" onclick="toggle()">Create RSVP Form</button>
 
 <h2>2. Open imported Box Office Spreadsheet: </h2> 
 <%= form_tag open_existed_spreadsheet_path do %>
@@ -45,7 +46,7 @@
     <%= text_field_tag(:event_title) %><br><br>
     
     <div id="rsvp-contents-toggle" style="display: none;">
-    <h2>3. Prepare RSVP Form: </h2>
+    <h2>Prepare RSVP Form: </h2>
     <%= label_tag(:event_picture, "Insert event picture link:") %><br>
     <%= text_field_tag(:event_picture) %><br><br>
     <%= label_tag(:event_text, "Insert event description:") %><br>
@@ -60,4 +61,3 @@
 <% end %>
 
 <br>
-<button id="rsvp-prepper" onclick="toggle()">Create RSVP Form</button>
