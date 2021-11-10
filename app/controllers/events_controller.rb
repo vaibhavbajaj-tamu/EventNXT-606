@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
-    @event_pic = Event.find(params[:total_seats_guest])
+    @event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
     @guests = @event.guests
     @guest_params = Guest.column_names
     fixed_params = ['id', 'event_id', 'booking_status', 'total_booked_num']
