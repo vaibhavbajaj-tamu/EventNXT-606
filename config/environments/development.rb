@@ -40,14 +40,24 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
+  #config.action_mailer.smtp_settings = {
+   #:address              => "smtp.gmail.com",
+   #:port                 => 587,
+   #:user_name            => 'tmpemailfortesting@gmail.com',
+   #:password             => 'simplepassword',
+   #:authentication       => "plain",
+  #:enable_starttls_auto => true
+  #}
+  
   config.action_mailer.smtp_settings = {
-   :address              => "smtp.gmail.com",
-   :port                 => 587,
-   :user_name            => 'tmpemailfortesting@gmail.com',
-   :password             => 'simplepassword',
-   :authentication       => "plain",
-  :enable_starttls_auto => true
-  }
+  user_name: 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  password: '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', # This is the secret sendgrid API key which was issued during API key creation
+  domain: 'form4s.herokuapp.com',
+  address: 'smtp.sendgrid.net',
+  port: 587,
+  authentication: :plain,
+  enable_starttls_auto: true
+}
   
   config.action_mailer.default_url_options = { :host => "c724f07a446c452e9a830e7c64dff91e.vfs.cloud9.us-east-2.amazonaws.com" }
 end
