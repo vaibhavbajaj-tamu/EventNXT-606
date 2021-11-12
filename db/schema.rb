@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20210426211246) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
     t.string  "title"
     t.string  "date"
@@ -37,6 +40,7 @@ ActiveRecord::Schema.define(version: 20210426211246) do
     t.integer "total_booked_num"
   end
 
-  add_index "guests", ["event_id"], name: "index_guests_on_event_id"
+  add_index "guests", ["event_id"], name: "index_guests_on_event_id", using: :btree
 
+  add_foreign_key "guests", "events"
 end
