@@ -6,6 +6,7 @@ class GuestMailer < ApplicationMailer
         mail(to: @guest.email_address, subject: "#{@event.title} - Invitation")
     end
     
+    
     def rsvp_confirmation_email(event, guest)
         @event = event
         @guest = guest

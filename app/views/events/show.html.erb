@@ -1,9 +1,39 @@
 <h2><%= @event.title %></h2>
 <!--<h2>The Control Room</h2>-->
 
+<img src='<%= $event_pic.to_s %>' height="300px">
+<p>Source: <%= $event_pic.to_s %></p>
+
 <ul>
   <li><%= link_to "Back", root_path%></li>
 </ul>
+
+<h3>Seat Categories</h3>
+
+<div class="table-responsive">
+<table class="table table-sm col-md-12">
+  <thead class="thead-light">
+    <tr> 
+      <th>Seat Category</th>
+      <th>Total Seats</th>
+      <th>Total Box Office Commitments</th>
+      <th>Total VIP Guest Commitments</th>
+      <th>Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @total_seat_wise_split.each do |row| %>
+      <tr>
+        <td><%= row.seat_category %></td>
+        <td><%= row.total_seats %></td>
+        <td><%= row.non_vip_seats %></td>
+        <td><%= row.vip_seats %></td>
+        <td><%= row.balance %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
 
 <h3>Summarized Ticket Commitments Information</h3>
 

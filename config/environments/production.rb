@@ -76,6 +76,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.action_mailer.perform_deliveries = true
   
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
@@ -89,15 +90,15 @@ Rails.application.configure do
   #}
   
   config.action_mailer.smtp_settings = {
-  user_name: 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-  password: '<api-key>', # This is the secret sendgrid API key which was issued during API key creation
-  domain: 'form4s.herokuapp.com',
-  address: 'smtp.sendgrid.net',
-  port: 587,
-  authentication: :plain,
-  enable_starttls_auto: true
-}
+  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  :password => '_input_key', # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'form4s.herokuapp.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+  }
   
   
-  config.action_mailer.default_url_options = { :host => "https://event-guest-list-automation.herokuapp.com/" }
+  config.action_mailer.default_url_options = { :host => "https://sheltered-forest-93990.herokuapp.com/" }
 end
