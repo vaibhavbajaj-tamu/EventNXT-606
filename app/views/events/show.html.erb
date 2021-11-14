@@ -19,14 +19,13 @@
     </tr>
   </thead>
   <tbody>
-    # <tr>
-    #   <td><%= @event.seat_category %></td>
-    #   <td><%= best_in_place [@event], :total_seats, :as => :input, :place_holder => "#{@event.total_seats}", 
-    #           :url => event_path(@event) %></td>
-    #   <td><%= @event.total_seats_box_office %></td>
-    #   <td><%= @event.total_seats_guest %></td>
-    #   <td><%= @event.balance %></td>
-    # </tr>
+    <!--<tr>-->
+    <!-- <td><%= @event.seat_category %></td>-->
+    <!-- <td><%= best_in_place [@event], :total_seats, :as => :input, :place_holder => "#{@event.total_seats}", :url => event_path(@event) %></td>-->
+    <!--   <td><%= @event.total_seats_box_office %></td>-->
+    <!--   <td><%= @event.total_seats_guest %></td>-->
+    <!--   <td><%= @event.balance %></td>-->
+    <!-- </tr>-->
     <% @total_seat_wise_split.each do |row| %>
       <tr>
         <td><%= row.seat_category %></td>
