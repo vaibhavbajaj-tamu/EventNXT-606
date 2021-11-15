@@ -100,5 +100,5 @@ Rails.application.configure do
   }
   
   
-  config.action_mailer.default_url_options = { :host => "https://quiet-lake-32102.herokuapp.com/" }
+  config.action_mailer.default_url_options = { :host => "https://event-guest-list-automation.herokuapp.com/" }
 end
