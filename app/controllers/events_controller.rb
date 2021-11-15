@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!
   def index
     # @events = Hash.new()
     # for event in Event.all
@@ -9,6 +10,9 @@ class EventsController < ApplicationController
       # puts(event.inspect)
       # puts(Event.column_names.inspect)
     # end
+  end
+  
+  def create_event
   end
   
   def import_new_spreadsheet

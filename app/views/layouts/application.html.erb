@@ -9,9 +9,52 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg text-white mb-3" style="background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Portland_from_Pittock_Mansion_October_2019_panorama_2.jpg/1600px-Portland_from_Pittock_Mansion_October_2019_panorama_2.jpg); background-size: cover;">
+  <nav <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Portland_from_Pittock_Mansion_October_2019_panorama_2.jpg/1600px-Portland_from_Pittock_Mansion_October_2019_panorama_2.jpg); background-size: cover;">
     <h1 class="title">EVENTNXT</h1>
-  </nav>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+      
+      <%if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "My Events" , root_path, class: "nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Dashboard" , root_path, class: "nav-link"%>
+          
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign Out" , destroy_user_session_path, method: :delete, class: "nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to " Edit Profile" , edit_user_registration_path, class: "nav-link"%>
+        </li>
+
+      <%else %>  
+        
+        
+        <li class="nav-item">
+          <%= link_to "Sign Up" , new_user_registration_path, class: "nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign In" , new_user_session_path, class: "nav-link"%>
+        </li>
+      <%end %>
+
+
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+  
   <div class="container" >
     <%# Render "flash" messages in our application. This loads _flash.erb %>
     <%= render 'layouts/flash' %>
