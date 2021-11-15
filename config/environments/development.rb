@@ -15,6 +15,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -40,12 +41,21 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
+  #config.action_mailer.smtp_settings = {
+  # :address              => "smtp.gmail.com",
+  # :port                 => 587,
+  # :user_name            => 'tmpemailfortesting@gmail.com',
+  # :password             => 'simplepassword',
+  # :authentication       => "plain",
+  #:enable_starttls_auto => true
+  #}
   config.action_mailer.smtp_settings = {
-   :address              => "smtp.gmail.com",
-   :port                 => 587,
-   :user_name            => 'tmpemailfortesting@gmail.com',
-   :password             => 'simplepassword',
-   :authentication       => "plain",
+  :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  :password => '_input_key', # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'form4s.herokuapp.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
   :enable_starttls_auto => true
   }
   

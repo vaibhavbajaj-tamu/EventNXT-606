@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'tmpemailfortesting@gmail.com'
+  default from: 'eventsnxthelper@gmail.com'
   layout 'mailer'
 end

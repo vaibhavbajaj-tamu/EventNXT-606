@@ -1,5 +1,97 @@
+<h2>Import New/Updated Box Office Spreadsheet: </h2>
 
-<h2>1. Import New/Updated Box Office Spreadsheet: </h2> 
+<style>
+    #rsvp-button {
+        -webkit-appearance: button;
+        -moz-appearance: button;
+        appearance: button;
+        padding: 20px;
+        font-size: 20px;
+        text-decoration: none;
+        color: white;
+        background-color: black;
+    }
+
+    .level-contents-toggle{
+      text-align: center;
+    }
+
+    .level-box{
+      margin-right: 5px;
+    }
+
+    .capacity-box{
+      margin-right: 5px;
+    }
+
+</style>
+
+<script>
+  //JS toggles RSVP Form visibility
+  function toggle_RSVP() {
+  var button_name = document.getElementById("rsvp-prepper");
+  var x = document.getElementById("rsvp-contents-toggle");
+  if (x.style.display === "none") {
+    button_name.innerHTML = "Close Invitation Card";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Invitation Card";
+    x.style.display = "none";
+  }
+}
+
+  function toggle_levels() {
+  var button_name = document.getElementById("seat-level-prepper");
+  var x = document.getElementById("level-contents-toggle");
+  if (x.style.display === "none") {
+    button_name.innerHTML = "Close Seat Preparer";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Seat Preparer";
+    x.style.display = "none";
+  }
+}
+
+  function new_level(){
+    var add_new = document.getElementById("level-contents-toggle");
+    var del_button = document.createElement("button");
+    
+    del_button.type = "button";
+    del_button.innerHTML = "Delete";
+    del_button.onclick = () => {
+      level.remove();
+      capacity.remove();
+      del_button.remove();
+      br.remove();
+      br1.remove();
+      };
+    
+    var level = document.createElement("input");
+    level.type = "text";
+    level.className = "level-box";
+    level.placeholder = "Enter Level"
+    
+
+    var capacity = document.createElement("input");
+    capacity.type = "text";
+    capacity.className = "capacity-box"
+    capacity.placeholder = "Enter Capacity"
+    
+
+    
+
+    var br = document.createElement("br");
+    var br1 = document.createElement("br");
+    add_new.appendChild(level);
+    add_new.appendChild(capacity);
+    add_new.appendChild(del_button);
+    add_new.appendChild(br);
+    add_new.appendChild(br1);
+      
+  }
+
+</script>
+
 <%= form_tag import_new_spreadsheet_path, multipart: true do %>
   <!--<div>-->
   <!--  <%= label_tag(:username, "Gmail Username:") %><br>-->
@@ -12,21 +104,55 @@
   <!--</div>-->
   
   <div>
-    <%= file_field_tag(:file)%>
-  </div>
+    <br>
+    <%= file_field_tag(:file)%><br>
+    <%= label_tag(:file, "Accepted types: .xlsx") %>
+  </div><br>
   
   <div>
     <%= submit_tag("Import") %>
   </div>
 <% end %>
 
-<h2>2. Open imported Box Office Spreadsheet: </h2> 
+<br>
+
+<h2>Open imported Box Office Spreadsheet: </h2> 
 <%= form_tag open_existed_spreadsheet_path do %>
   <div>
     <%= label_tag(:event_title, "Name of the Event:") %><br>
-    <%= text_field_tag(:event_title) %>
+    <%= text_field_tag(:event_title) %><br><br>
+
+    <h2>Event Setup Panel</h2>
+    <br>
+    <button type="button" id="seat-level-prepper" onclick="toggle_levels()">Add Seating Levels</button>
+    
+    
+    <br><br>
+    <div id="level-contents-toggle" class="bg-secondary" style="display: none; text-align: center;">
+    <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4>
+    <h6 style="color: red;"><br>WARNING: Not yet functional!<br></h6>
+
+    <div style="text-align: center;">
+    <%= text_field_tag(:event_picture, nil, placeholder: "Enter Level") %>
+    <%= text_field_tag(:event_text, nil, placeholder: "Enter Capacity") %>
+    <button type="button" id="new-level" onclick="new_level()">Add New Level</button><br><br>
+    </div>
+    </div>
+   
+    <br><br>
+    <button type="button" id="rsvp-prepper" onclick="toggle_RSVP()">Create Invitation Card</button>
+    <br><br>
+    <div id="rsvp-contents-toggle" class= "bg-secondary" style="display: none; text-align: center; padding-top: 10px; padding-bottom: 20px;">
+    <h4>Invitation Card Contents</h4>
+    <%= text_field_tag(:event_picture, nil, placeholder: "Image address or path") %><br><br>
+    <%= text_field_tag(:event_text, nil, placeholder: "Event description") %>
+    </div>
+    
   </div>
-  <div>
-    <%= submit_tag("Open") %>
+  <div style="text-align: center;">
+    <br><br><br>
+    <%= submit_tag("Open Spreadsheet") %>
   </div>
 <% end %>
+
+<br>
