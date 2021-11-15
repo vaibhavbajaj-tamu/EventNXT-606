@@ -100,5 +100,5 @@ Rails.application.configure do
   }
   
   
-  config.action_mailer.default_url_options = { :host => "https://sheltered-forest-93990.herokuapp.com/" }
+  config.action_mailer.default_url_options = { :host => "https://quiet-lake-32102.herokuapp.com/" }
 end
