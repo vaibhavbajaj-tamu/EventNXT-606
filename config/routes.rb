@@ -1,14 +1,19 @@
 Rails.application.routes.draw do
+  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # You can have the root of your site routed with "root"
+  get 'events/create_event'
+  get 'events/show'
   root 'events#index'
+  
   resources :events do
     resources :guests
   end
 
   post '/import_new_spreadsheet' => 'events#import_new_spreadsheet'
   post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet'
+  post '/seat_categories'  => 'events#seat_categories'
   
   get '/events/:event_id/guests/:id/send' => 'guests#send_email_invitation', as: :send_event_guest
   put '/events/:event_id/guests/:id/update_in_place' => 'guests#update_in_place', as: :update_event_guest
