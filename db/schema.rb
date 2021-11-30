@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_052248) do
+ActiveRecord::Schema.define(version: 2021_11_30_043202) do
 
   create_table "events", force: :cascade do |t|
     t.string "title"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(version: 2021_11_15_052248) do
     t.integer "vip_seats"
     t.integer "non_vip_seats"
     t.integer "balance"
+  end
+
+  create_table "seating_types", force: :cascade do |t|
+    t.string "seat_category"
+    t.integer "total_seat_count"
+    t.integer "vip_seat_count"
+    t.integer "box_office_seat_count"
+    t.integer "balance_seats"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_seating_types_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|

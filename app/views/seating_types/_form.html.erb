@@ -1,0 +1,47 @@
+<%= form_with(model: seating_type, local: true) do |form| %>
+  <% if seating_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(seating_type.errors.count, "error") %> prohibited this seating_type from being saved:</h2>
+
+      <ul>
+      <% seating_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :seat_category %>
+    <%= form.text_field :seat_category %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_seat_count %>
+    <%= form.number_field :total_seat_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vip_seat_count %>
+    <%= form.number_field :vip_seat_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :box_office_seat_count %>
+    <%= form.number_field :box_office_seat_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :balance_seats %>
+    <%= form.number_field :balance_seats %>
+  </div>
+
+  <div class="field">
+    <%= form.label :event_id %>
+    <%= form.text_field :event_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Seat category:</strong>
+  <%= @seating_type.seat_category %>
+</p>
+
+<p>
+  <strong>Total seat count:</strong>
+  <%= @seating_type.total_seat_count %>
+</p>
+
+<p>
+  <strong>Vip seat count:</strong>
+  <%= @seating_type.vip_seat_count %>
+</p>
+
+<p>
+  <strong>Box office seat count:</strong>
+  <%= @seating_type.box_office_seat_count %>
+</p>
+
+<p>
+  <strong>Balance seats:</strong>
+  <%= @seating_type.balance_seats %>
+</p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @seating_type.event %>
+</p>
+
+<%= link_to 'Edit', edit_seating_type_path(@seating_type) %> |
+<%= link_to 'Back', seating_types_path %>
