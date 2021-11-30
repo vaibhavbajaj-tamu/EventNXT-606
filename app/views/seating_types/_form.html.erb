@@ -11,37 +11,37 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :seat_category %>
-    <%= form.text_field :seat_category %>
+    <%= form.text_field :seat_category, class:"form-control" , placeholder:"PATRON"%>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :total_seat_count %>
-    <%= form.number_field :total_seat_count %>
+    <%= form.number_field :total_seat_count, class:"form-control", placeholder:1 %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :vip_seat_count %>
-    <%= form.number_field :vip_seat_count %>
+    <%= form.number_field :vip_seat_count, class:"form-control", placeholder:1 %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :box_office_seat_count %>
-    <%= form.number_field :box_office_seat_count %>
+    <%= form.number_field :box_office_seat_count, class:"form-control", placeholder:1 %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :balance_seats %>
-    <%= form.number_field :balance_seats %>
+    <%= form.number_field :balance_seats, class:"form-control", placeholder:1 %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :event_id %>
-    <%= form.text_field :event_id %>
+    <%= form.text_field :event_id, class:"form-control", placeholder:1 %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-group">
+    <%= form.submit class:"btn btn-secondary"%>
   </div>
 <% end %>
