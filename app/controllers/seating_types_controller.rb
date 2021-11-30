@@ -22,10 +22,12 @@ class SeatingTypesController < ApplicationController
   # POST /seating_types or /seating_types.json
   def create
     @seating_type = SeatingType.new(seating_type_params)
+    @seating_type.event_id = 1
+    @seating_type.balance_seats=@seating_type.total_seat_count - @seating_type.vip_seat_count - @seating_type.box_office_seat_count
 
     respond_to do |format|
       if @seating_type.save
-        format.html { redirect_to @seating_type, notice: "Seating type was successfully created." }
+        format.html { redirect_to @seating_type, notice: "You got it" }
         format.json { render :show, status: :created, location: @seating_type }
       else
         format.html { render :new, status: :unprocessable_entity }
