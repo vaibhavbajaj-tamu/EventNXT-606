@@ -13,27 +13,27 @@
 
   <div class="field form-group">
     <%= form.label :seat_category %>
-    <%= form.text_field :seat_category, class:"form-control" , value:"PATRON"%>
+    <%= form.text_field :seat_category, class:"form-control"%>
   </div>
 
   <div class="field form-group">
     <%= form.label :total_seat_count %>
-    <%= form.number_field :total_seat_count, class:"form-control", value:1 %>
+    <%= form.number_field :total_seat_count, class:"form-control" %>
   </div>
 
   <div class="field form-group">
     <%= form.label :vip_seat_count %>
-    <%= form.number_field :vip_seat_count, class:"form-control", value:1 %>
+    <%= form.number_field :vip_seat_count, class:"form-control"%>
   </div>
 
   <div class="field form-group">
     <%= form.label :box_office_seat_count %>
-    <%= form.number_field :box_office_seat_count, class:"form-control", value:1 %>
+    <%= form.number_field :box_office_seat_count, class:"form-control" %>
   </div>
 
   <div class="field form-group">
     <!--<%= form.label :event_id  %>-->
-    <%= form.hidden_field :event_id, class:"form-control", value: Event.all %>
+    <%= form.hidden_field :event_id, class:"form-control"%>
   </div>
 
   <div class="actions form-group">
