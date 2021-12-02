@@ -1,18 +1,33 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
+
   def index
-    # @events = Hash.new()
-    # for event in Event.all
-    #   if @events.keys.include?(event.title) == false
-    #     @events[event.title] = []
-    #   end
-    #   @events[event.title].append(event)
-      # puts(event.inspect)
-      # puts(Event.column_names.inspect)
-    # end
+
   end
   
   def create_event
+
+    $title_saved = params[:title]
+    session[:title] ||= params[:title] 
+  
+    #$event_t = $title ? $title : session[:title]
+
+    $event_date = params[:event_date]
+    session[:event_date] ||= params[:event_date] 
+
+    $event_tickets = params[:event_tickets]
+    session[:event_tickets] ||= params[:event_tickets] 
+
+    $event_pic = params[:event_picture] #Grabs picture from form in index
+    session[:event_picture] ||= params[:event_picture] #Save picture into session hash
+
+    $event_pic_size_left = params[:event_picture_size_left]
+    session[:event_picture_size_left] ||= params[:event_picture_size_left]
+    $event_pic_size_right = params[:event_picture_size_right]
+    session[:event_picture_size_right] ||= params[:event_picture_size_right]
+
+    $event_txt = params[:event_text] #Grabs text from form in index
+    session[:event_text] ||= params[:event_text] #Save text into session hash
   end
   
   def import_new_spreadsheet
@@ -27,15 +42,20 @@ class EventsController < ApplicationController
   def open_existed_spreadsheet
     event = Event.find_by(title: params[:event_title])
     
-    $event_pic = params[:event_picture] #new
-    $event_txt = params[:event_text] #new text
+    $event_pic = session[:event_picture] #Grab picture from session
+    $event_txt = session[:event_text] #Grab text from session
+
+    $event_pic_size_left = session[:event_picture_size_left]
+    $event_pic_size_right = session[:event_picture_size_right] 
     
+
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
       redirect_to root_path and return
     end
     # puts(event.title)
     redirect_to event_path(event)
+    
   end
 
   #Seat Categories Code //////////////////
@@ -64,9 +84,9 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
-    #@event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
     $event_pic = $event_pic.to_s #new
     
+    $levels = params[:event_level]
     @guests = @event.guests
     @guest_params = Guest.column_names
 
@@ -94,7 +114,7 @@ class EventsController < ApplicationController
         @bo_seat_wise_split[row[9]] = row[24].to_i
       end
     end
-    
+
     @guests.each do |guest|
       puts(guest)
       @seat_category_set.add?(guest[:seat_category])
