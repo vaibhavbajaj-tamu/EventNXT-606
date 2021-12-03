@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post 'events/create_event'
   get 'events/show'
   post 'events/show'
-  get '/users/sign_in'
+
   
   resources :events do
     resources :guests
