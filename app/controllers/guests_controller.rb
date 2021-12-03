@@ -14,7 +14,7 @@ class GuestsController < ApplicationController
       redirect_to event_path(event) and return
     end
     # puts(request.host_with_port)
-    GuestMailer.rsvp_invitation_email(event, guest).deliver_now
+    GuestMailer.rsvp_invitation_email(event, guest).deliver
 		#end of mail module
     guest.update({:booking_status => 'Invited', :total_booked_num => 0})
     flash[:notice] = "The email was successfully sent to #{guest.first_name} #{guest.last_name}."
@@ -59,6 +59,7 @@ class GuestsController < ApplicationController
 
   def update
     # VIP guest updates RSVP information (Other infos updated by event owner is handled by update_in_place)
+    console.log("in update")
     event = Event.find(params[:event_id])
     guest = Guest.find(params[:id])
     
@@ -73,7 +74,7 @@ class GuestsController < ApplicationController
     
     if guest.update(guest_params)
       if guest.total_booked_num > 0
-				GuestMailer.rsvp_confirmation_email(event, guest).deliver_now
+				GuestMailer.rsvp_confirmation_email(event, guest).deliver
 			end
       render :template => "guests/success_confirmation"
     else
