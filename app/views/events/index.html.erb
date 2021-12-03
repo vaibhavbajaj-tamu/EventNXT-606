@@ -235,7 +235,7 @@ function refresh()
     <%= text_field_tag(:event_picture_size_left, nil, :required => 'true', placeholder: "Height: e.g. 300px") %>
     <%= text_field_tag(:event_picture_size_right, nil, :required => 'true', placeholder: "Width: e.g. 300px") %><br><br>
     
-    <%= label_tag(:event_text, "Add Image Description:") %><br>
+    <%= label_tag(:event_text, "Add Event Description:") %><br>
     <%= text_area_tag(:event_text, nil, :required => 'true', placeholder: "Event description") %><br><br>
     <div style="text-align: center;">
     <br>
@@ -252,6 +252,6 @@ function refresh()
 
 <br><br>
 <div style="text-align: center;">
-<%= button_to "Event Creation Page", 'events/create_event', :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
+<%= button_to "Guest List Page", 'events/create_event', :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
 </div>
 <br>

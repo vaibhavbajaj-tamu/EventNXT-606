@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   end
   
   def create_event
-
+    @guest_params = Guest.column_names #new
     $title_saved = params[:title]
     session[:title] ||= params[:title] 
   
@@ -30,6 +30,18 @@ class EventsController < ApplicationController
     session[:event_text] ||= params[:event_text] #Save text into session hash
   end
   
+  # def import_new_spreadsheet
+  #   if !params[:file]
+  #     redirect_to root_path and return
+  #   end
+  #   event = Event.import(params[:file])
+  #   puts(event.title)
+  #   #redirect_to event_path(event)
+  #   #event = Event.find_by(title: params[:event_title])
+  #   @guests = $event.guests
+  #   @guest_params = Guest.column_names
+  # end
+
   def import_new_spreadsheet
     if !params[:file]
       redirect_to root_path and return
@@ -85,7 +97,7 @@ class EventsController < ApplicationController
  def show
   @event = Event.find(params[:id])
   $event_pic = $event_pic.to_s #new
-  
+
   @guests = @event.guests
   @guest_params = Guest.column_names
 
