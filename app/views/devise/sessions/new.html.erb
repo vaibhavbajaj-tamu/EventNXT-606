@@ -12,8 +12,15 @@
     background-size: cover;
     height:100%;
     width:100%; 
+    color: white;
     
   }
+
+input, select, textarea{
+    color: white;
+}
+
+
 </style>
 <body>
 <div style="text-align: center">
@@ -29,7 +36,7 @@
  <%= f.label :email %> 
 <%
 =end%>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "👤 Email Address", style: "background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;"%>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "👤 Email Address", style: "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;"%>
   </div>
 
   <br>
