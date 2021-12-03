@@ -50,7 +50,6 @@
         <% column_title.capitalize! %>
         <th><%= column_title %></th>
       <% end %>
-      
       <th>Action</th>
       <th>Ticket Booking Status</th>
       <th>Total Booked</th>
@@ -79,10 +78,16 @@
     <% end %>
     <tr>
       <%= form_for [@event, @event.guests.build] do |form| %>
-        <% @guest_params.each do |param| %>     
+        <% @guest_params.each do |param| %>  
+        <% if param=="event_id" %>  
+          <td> 
+            <%= form.hidden_field :"#{param}" , value: @event.id %>
+          </td>
+        <% else %>
           <td> 
             <%= form.text_field :"#{param}" %>
           </td>
+        <% end %>
         <% end %>
         <td><%= submit_tag("Add") %></td>
       <% end %>
