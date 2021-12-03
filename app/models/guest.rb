@@ -1,4 +1,4 @@
-class Guest < ActiveRecord::Base
+class Guest < ApplicationRecord
     belongs_to :event
     
     validates :first_name, presence: true
