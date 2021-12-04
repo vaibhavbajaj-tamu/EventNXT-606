@@ -1,5 +1,26 @@
 <%#= button_to "Create Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
 <style>
+    body {
+    
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+      background-repeat: no-repeat; 
+      background-position: center;
+      background-attachment: fixed; 
+      webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      height:100%;
+      width:100%; 
+      
+    }
+
+    #panel{
+      padding: 40px;
+      padding-bottom: 100vh;
+      background-color: white;
+    }
+
     #rsvp-button {
         -webkit-appearance: button;
         -moz-appearance: button;
@@ -20,7 +41,7 @@
       text-align: center; 
       padding-top: 10px; 
       padding-bottom: 20px; 
-      background-color: #e6ccff; 
+      background-color: lightgray;
       border-radius: 10px;
       padding: 10px;
     }
@@ -157,23 +178,14 @@ function refresh()
 
 </script>
 
-    <br><br>
-    <h1 style="text-align: center; color: gray;">Setup Panel</h1>
-    <br>
-    <h2 style="text-align: center;"><%= $title_saved.to_s %></h2>
+<body>
+  <section id="panel">
+  <br><br>
+  <h1 style="text-align: center; color: gray;">Setup Panel</h1>
+  <br><br>
 
-  <%
-=begin%>
- <div style="text-align: center;">
-    <%= form_tag 'events/create_event', :id => "title-form", :remote => true do %>
-    <%= label_tag(:event_t, "Event Title:") %>
-    <%= text_field_tag(:event_t, nil, :required => 'true', placeholder: "Event Title")  %>
-    <%= submit_tag "Save", :id => "thisone", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
-    <% end %><br><br>
-  </div> 
-<%
-=end%>
-
+  
+  <h2 style="text-align: center;"><%= $title_saved.to_s %></h2>
   <div id="Open" style="text-align: center;">
   <br>
   <%= form_tag '/events/create_event', :remote => true do %>
@@ -191,7 +203,7 @@ function refresh()
     
     
     <br><br>
-    <div id="level-contents-toggle" style="display: none; text-align: center; background-color: #e6ccff; border-radius: 10px; padding: 10px;">
+    <div id="level-contents-toggle" style="display: none; text-align: center; background-color: lightgray; border-radius: 10px; padding: 10px;">
     <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4>
 
     <div style="text-align: center;">
@@ -254,3 +266,5 @@ function refresh()
 <%= button_to "Guest List Page", 'events/create_event', :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
 </div>
 <br>
+</section>
+</body>

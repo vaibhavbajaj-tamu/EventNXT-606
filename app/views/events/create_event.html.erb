@@ -12,13 +12,42 @@
     margin-left: 20%;
   }
 
+  body {
+
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+  background-repeat: no-repeat; 
+  background-position: center;
+  background-attachment: fixed; 
+  webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100%;
+  width:100%; 
+  
+}
+
+section{
+  padding: 40px;
+  padding-bottom: 100vh;
+  background-color: white;
+}
+
+.display-6, h2, p, input, label{
+  color: black;
+}
+
 </style>
 
+<body>
+<section>
 <br>
 
-<h1 class="display-6" style="text-align: center; color: gray;"> Guest List </h1>
+<h1 class="display-6" style="text-align: center;"> Guest List </h1>
 <br>
-<table class="table table-sm col-md-12">
+<%
+=begin%>
+ <table class="table table-sm col-md-12">
   
   <thead class="thead-light">
     <tr>
@@ -41,10 +70,12 @@
         <% end %>
         </tr>
   </tbody>
-</table>
+</table> 
+<%
+=end%>
 <br><br>
 <div id="form-div">
-<h2 style="color: gray;">Import Latest Box Office Data</h2>
+<h2>Import Latest Box Office Data</h2>
 <%= form_tag import_new_spreadsheet_path, multipart: true  do %> 
   <div style="text-align: center;">
     <br>
@@ -55,18 +86,19 @@
 <% end %>
 </div>
 <br><br><br><br>
-<h1 class="display-6" style="text-align: center; color: gray;"> Referral Rewards </h1>
+<h1 class="display-6" style="text-align: center"> Referral Rewards </h1>
 
 <div id="referrals">
     <br><br>
     <%= button_tag("Create Referral Reward Template", :class => "btn btn-success btn-rounded") %>
+    <br><br>
+
+    <%= button_to "Back to Setup", root_path, :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
+
 </div>
-
 <br><br>
-
-<%= button_to "Back to Setup", root_path, :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
-
-<br><br>
+</section>
+</body>
 
     
     

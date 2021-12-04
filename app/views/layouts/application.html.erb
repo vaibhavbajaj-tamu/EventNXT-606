@@ -7,12 +7,16 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   
   <%= csrf_meta_tags %>
+
+
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e6ccff;">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-image: linear-gradient(white, gray);">
     <h1 class="title">EVENTNXT</h1>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,9 +26,6 @@
 
       
       <%if user_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "My Events" , root_path, class: "nav-link"%>
-        </li>
         <li class="nav-item">
           <%= link_to "Dashboard" , root_path, class: "nav-link"%>
           
@@ -50,10 +51,6 @@
 
 
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>
 
