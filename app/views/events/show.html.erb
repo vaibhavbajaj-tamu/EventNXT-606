@@ -18,8 +18,8 @@
     <tr> 
       <th>Seat Category</th>
       <th>Total Seats</th>
+      <th>Total Guest Commitments</th>
       <th>Total Box Office Commitments</th>
-      <th>Total VIP Guest Commitments</th>
       <th>Balance</th>
     </tr>
   </thead>
@@ -35,8 +35,8 @@
       <tr>
         <td><%= row.seat_category %></td>
         <td><%= row.total_seats %></td>
-        <td><%= row.non_vip_seats %></td>
         <td><%= row.vip_seats %></td>
+        <td><%= row.non_vip_seats %></td>
         <td><%= row.balance %></td>
       </tr>
     <% end %>
