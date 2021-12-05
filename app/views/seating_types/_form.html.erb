@@ -21,14 +21,14 @@
     <%= form.number_field :total_seat_count, class:"form-control" %>
   </div>
 
-  <div class="field form-group">
+  <div class="field form-group" hidden>
     <%= form.label :vip_seat_count %>
-    <%= form.number_field :vip_seat_count, class:"form-control"%>
+    <%= form.number_field :vip_seat_count, class:"form-control", value: 0%>
   </div>
 
-  <div class="field form-group">
+  <div class="field form-group" hidden>
     <%= form.label :box_office_seat_count %>
-    <%= form.number_field :box_office_seat_count, class:"form-control" %>
+    <%= form.number_field :box_office_seat_count, class:"form-control", value: 0%>
   </div>
 
   <div class="field form-group">

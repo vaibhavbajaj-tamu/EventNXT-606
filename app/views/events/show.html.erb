@@ -26,7 +26,7 @@
     <!--   <td><%= @event.total_seats_guest %></td>-->
     <!--   <td><%= @event.balance %></td>-->
     <!-- </tr>-->
-    <% @total_seat_wise_split.each do |row| %>
+  <!--  <% @total_seat_wise_split.each do |row| %>
       <tr>
         <td><%= row.seat_category %></td>
         <td><%= row.total_seats %></td>
@@ -34,7 +34,34 @@
         <td><%= row.vip_seats %></td>
         <td><%= row.balance %></td>
       </tr>
+      
     <% end %>
+    -->
+    
+    <% @seat_type_split.each do |row| %>
+      <tr>
+        <td><%= row.seat_category %></td>
+        <td><%= row.total_seat_count %></td>
+        <td><%= row.box_office_seat_count %></td>
+        <td><%= row.vip_seat_count %></td>
+        <td><%= row.balance_seats %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+
+    <!-- <%= form_tag("/seating_types/") %>
+      <td><%= text_field_tag :"seating_type" %></td>
+      <td><%= text_field_tag :"total_seat_count" %></td>
+      <td><%= submit_tag("Add") %></td>
+    </form>
+    -->
+    <td>  
+          <%= link_to 'New Seating Type', new_seating_type_path %>
+          <%= form_tag reconcile_path %>
+          td><%= link_to "Reconcile", event_path(:reconcile => 'true') %></td>
+    </td>
+    </tr>
   </tbody>
 </table>
 </div>
