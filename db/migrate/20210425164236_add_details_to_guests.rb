@@ -1,4 +1,4 @@
-class AddDetailsToGuests < ActiveRecord::Migration[5.1]
+class AddDetailsToGuests < ActiveRecord::Migration[5.2]
   def change
     remove_column :guests, :name, :string
     add_column :guests, :first_name, :string
