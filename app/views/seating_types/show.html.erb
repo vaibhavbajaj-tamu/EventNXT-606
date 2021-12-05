@@ -27,9 +27,9 @@
 
 <p>
   <strong>Event:</strong>
-  <%= @seating_type.event %>
+  <%= @seating_type.event.title %>
 </p>
 
 <%= link_to 'Edit', edit_seating_type_path(@seating_type), class:"btn btn-secondary" %> |
-<%= link_to 'Back', seating_types_path, class:"btn btn-secondary" %>
+<%= link_to 'Back', event_path, class:"btn btn-secondary" %>
 </div>
