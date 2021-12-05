@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post '/import_new_spreadsheet' => 'events#import_new_spreadsheet'
   post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet', as: :open_existed_spreadsheet
   post '/seat_categories'  => 'events#seat_categories'
+  post '/reconcile'  => 'events#reconcile'
   
   get '/events/:event_id/guests/:id/send' => 'guests#send_email_invitation', as: :send_event_guest
   put '/events/:event_id/guests/:id/update_in_place' => 'guests#update_in_place', as: :update_event_guest
