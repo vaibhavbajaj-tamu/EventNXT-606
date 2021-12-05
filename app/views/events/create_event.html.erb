@@ -152,14 +152,16 @@ function refresh()
     <%= form_tag '/events/create_event', :id => "referral-form", :remote => true do %>
     <%= label_tag(:reward, "Insert Reward:", :style => "color: black;") %>
     <%= text_field_tag(:reward, nil, :required => 'true', placeholder: "XYZ Reward", :style => "color: black;")%><br><br>
-    <%= button_tag "Save Changes", :id => "thisone", :type => "button", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
-    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded" %>
     <% end %>
-  
+       
+       <br>
+        <%= button_tag "Preview Changes", :id => "thisone", :type => "button", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+      <br>
 
-<br><br>
 
-    <%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>
+
+    <br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>
 
 </div>
 <br><br>

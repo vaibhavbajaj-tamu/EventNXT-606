@@ -40,11 +40,17 @@
       text-align: center; 
       padding-top: 10px; 
       padding-bottom: 20px; 
-      background-color: #e6ccff;
+      background-color: transparent;
       background-size: cover;
       background-repeat: no-repeat;
       border-radius: 10px;
       padding: 10px;
+      border: 3px solid white;
+      color: white;
+    }
+
+    #rsvp-form{
+      color: black;
     }
 
     .level-box{
@@ -70,13 +76,22 @@
     text-align: right;
   }
 
-  .button{
+  .button {
   color: white; 
   background-color: transparent; 
   border: 2px solid white; 
   border-radius: 2px; 
   padding: 5px;
   font-size: 20px;
+  }
+
+  input {
+  color: white; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  border-radius: 2px; 
+  padding: 5px;
+  font-size: 16px;
   }
 
   .button:hover {
@@ -188,9 +203,6 @@ function refresh()
   $("#params-hash").load(location.href + " #params-hash");
   $("#img").load(location.href + " #img");
   $("#about-event").load(location.href + " #about-event");
-
-  var s = document.getElementById("error-msg");
-  s.innerHTML = "Please fill all blank fields with \"none\" before saving.";
   
 }
 
@@ -252,7 +264,7 @@ function refresh()
     <br>
     <h4>Invitation Card Contents</h4>
 
-    <div class="ticket" style="background: white;">
+    <div class="ticket" style="background: white; color: black; border: 2px solid white; border-radius: 3px;">
         <h2 id="event-t"><%= $title_saved.to_s %></h2>
         <div id="img">
         <img id="eventpic" src='<%= $event_pic.to_s %>' height='<%= $event_pic_size_left.to_s %>' width='<%= $event_pic_size_right.to_s %>'>
@@ -262,31 +274,25 @@ function refresh()
         <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p>
         <p id="about-event"><strong>About Event: </strong><%= $event_txt.to_s %></p>
     </div>
-    <%= form_tag '/events/create_event', :id => "rsvp-form", :remote => true do %>
-    <%= label_tag(:title, "Event Title:") %>
-    
-    <%= text_field_tag(:title, $title_saved.to_s, :required => 'false', :id => "title-tag", placeholder: "Event Title", :disabled => true )  %><br><br>
-    <%= label_tag(:event_date, "Event Date:") %>
-    <%= text_field_tag(:event_date, nil, :required => 'false', placeholder: "MM/DD/YYYY")%><br><br>
-    <%= label_tag(:event_tickets, "Tickets Purchased:") %>
-    <%= text_field_tag(:event_tickets, nil, :required => 'false', placeholder: "Number of Tickets")%><br><br>
 
-    <%= label_tag(:event_picture, "Insert Image Path:") %>
-    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", :required => 'false', placeholder: "Image address or path") %>
-    <%= label_tag(:event_picture, "ⓘ", :title => "Right click on image and copy image address to paste here.") %><br><br>
-    <%= label_tag(:event_picture_size_left, "Adjust Dimensions:") %><br>
-    <%= text_field_tag(:event_picture_size_left, nil, :required => 'false', placeholder: "Height: e.g. 300px") %>
-    <%= text_field_tag(:event_picture_size_right, nil, :required => 'false', placeholder: "Width: e.g. 300px") %><br><br>
+    <%= form_tag '/events/create_event', :id => "rsvp-form", :remote => true do %>
     
-    <%= label_tag(:event_text, "Add Event Description:") %><br>
-    <%= text_area_tag(:event_text, nil, :required => 'false', placeholder: "Event description") %><br><br>
+    <%= text_field_tag(:event_date, nil, placeholder: "MM/DD/YYYY")%><br><br>
+    <%= text_field_tag(:event_tickets, nil, placeholder: "Number of Tickets")%><br><br>
+
+    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", placeholder: "Image address or path") %><br><br>
+    <%= text_field_tag(:event_picture_size_left, nil, placeholder: "Height: e.g. 300px") %>
+    <%= text_field_tag(:event_picture_size_right, nil, placeholder: "Width: e.g. 300px") %><br><br>
+    
+    <%= text_area_tag(:event_text, nil, placeholder: "Event description", style:"background-color: transparent; color: white;") %><br><br>
+
 
     <div style="text-align: center;">
     <br>
     <p id="error-msg", style="color: red;"></p>
    
 
-    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "button", :onclick => "refresh()" %>
     <br><br><br>
     </div>
     </div>
