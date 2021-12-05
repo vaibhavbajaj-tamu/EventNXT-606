@@ -246,7 +246,7 @@ end
       #newEntry = SeatWiseNonExcelRows.new(total_seats, vip_seats, non_vip_seats, category_name, balance)
       @seat_type_split.append(seat_type)
     end
-    #render event_path(1)
+    redirect_to event_path(params[:id])
   end
   
   def update
