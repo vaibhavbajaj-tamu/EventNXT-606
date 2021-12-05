@@ -14,7 +14,7 @@
 
   body {
 
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
   background-repeat: no-repeat; 
   background-position: center;
   background-attachment: fixed; 
@@ -30,11 +30,23 @@
 section{
   padding: 40px;
   padding-bottom: 100vh;
-  background-color: white;
 }
 
-.display-6, h2, p, input, label{
-  color: black;
+.display-6, h2, h3, p, input, label{
+  color: white;
+
+}
+
+.button{
+  color: white; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  border-radius: 2px; 
+  padding: 5px;
+}
+
+.button:hover {
+  opacity: 0.5;
 }
 
 </style>
@@ -43,57 +55,31 @@ section{
 <section>
 <br>
 
-<h1 class="display-6" style="text-align: center;"> Guest List </h1>
+<h1 class="display-6" style="text-align: center;"> Guest Setup Portal</h1>
 <br>
-<%
-=begin%>
- <table class="table table-sm col-md-12">
-  
-  <thead class="thead-light">
-    <tr>
-      <% @guest_params.each do |param| %>
-        <% column_title = param.dup.gsub('_', ' ')%>
-        <% column_title.capitalize! %>
-        <th><%= column_title %></th>
-      <% end %>
-      
-      <th>Action</th>
-      <th>Ticket Booking Status</th>
-      <th>Total Booked</th>
-    </tr>
-  </thead>
-  <tbody>
-        <tr>
-        <% @guest_params.each do |param| %>
-          <td>
-          </td>
-        <% end %>
-        </tr>
-  </tbody>
-</table> 
-<%
-=end%>
+
+
 <br><br>
 <div id="form-div">
-<h2>Import Latest Box Office Data</h2>
+<h3>Import Box Office Data</h3>
 <%= form_tag import_new_spreadsheet_path, multipart: true  do %> 
   <div style="text-align: center;">
     <br>
     <%= label_tag(:file, "Accepted types: .xlsx") %><br>
     <%= file_field_tag(:file, :id => "file-button") %><br><br>
-    <%= submit_tag("Import Latest Box Office Data", :class => "btn btn-secondary btn-rounded") %>
+    <%= submit_tag("Import Latest Box Office Data", :class => "button") %>
   </div>
 <% end %>
 </div>
 <br><br><br><br>
-<h1 class="display-6" style="text-align: center"> Referral Rewards </h1>
+<h3 style="text-align: center"> Referral Rewards </h3>
 
 <div id="referrals">
     <br><br>
-    <%= button_tag("Create Referral Reward Template", :class => "btn btn-success btn-rounded") %>
+    <%= button_tag("Create Referral Reward Template", :class => "button") %>
     <br><br>
 
-    <%= button_to "Back to Setup", root_path, :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
+    <%= button_to "Back to Dashboard", root_path, :class => "button", :type => "button", :method => "get"%>
 
 </div>
 <br><br>

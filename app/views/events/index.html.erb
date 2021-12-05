@@ -2,7 +2,7 @@
 <style>
     body {
     
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
       background-repeat: no-repeat; 
       background-position: center;
       background-attachment: fixed; 
@@ -18,7 +18,6 @@
     #panel{
       padding: 40px;
       padding-bottom: 100vh;
-      background-color: white;
     }
 
     #rsvp-button {
@@ -41,7 +40,9 @@
       text-align: center; 
       padding-top: 10px; 
       padding-bottom: 20px; 
-      background-color: lightgray;
+      background-color: #e6ccff;
+      background-size: cover;
+      background-repeat: no-repeat;
       border-radius: 10px;
       padding: 10px;
     }
@@ -65,6 +66,23 @@
             text-align: center;
     }
 
+  label{
+    text-align: right;
+  }
+
+  .button{
+  color: white; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  border-radius: 2px; 
+  padding: 5px;
+  font-size: 20px;
+  }
+
+  .button:hover {
+  opacity: 0.5;
+  }
+
         
 </style>
 
@@ -79,7 +97,7 @@
     x.style.display = "block";
   } else {
     button_name.innerHTML = "Open Invitation Card";
-    button_name.style.background = "lightgreen";
+    button_name.style.background = "transparent";
     x.style.display = "none";
   }
 }
@@ -181,17 +199,17 @@ function refresh()
 <body>
   <section id="panel">
   <br><br>
-  <h1 style="text-align: center; color: gray;">Setup Panel</h1>
+  <h1 style="text-align: center; color: white;">Dashboard</h1>
   <br><br>
 
   
-  <h2 style="text-align: center;"><%= $title_saved.to_s %></h2>
+  <h2 style="text-align: center; color: white;"><%= $title_saved.to_s %></h2>
   <div id="Open" style="text-align: center;">
   <br>
   <%= form_tag '/events/create_event', :remote => true do %>
     <div>
-      <%= text_field_tag(:title, nil, placeholder: "Event Name") %>
-      <%= submit_tag "Save", :class => "btn btn-secondary btn-rounded", :onclick => "refreshTitle()" %>
+      <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px; font-size: 20px; ") %>
+      <%= submit_tag "Save", :class => "button", :onclick => "refreshTitle()" %>
       <% end %>
     </div>
   <br>
@@ -199,26 +217,39 @@ function refresh()
   </div>
 
   <div style="text-align: center;">
-    <button type="button" id="seat-level-prepper" class="btn btn-success btn-rounded" onclick="toggle_levels()">Add Seating Levels</button>
+    <%
+=begin%>
+ <button type="button" id="seat-level-prepper" class="btn btn-success btn-rounded" onclick="toggle_levels()">Add Seating Levels</button> 
+<%
+=end%>
     
     
     <br><br>
-    <div id="level-contents-toggle" style="display: none; text-align: center; background-color: lightgray; border-radius: 10px; padding: 10px;">
-    <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4>
+    <div id="level-contents-toggle">
+    <%
+=begin%>
+ <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4> 
+<%
+=end%>
 
     <div style="text-align: center;">
    
-    <button type="button" id="new-level" onclick="new_level()">Add New Level</button>
+    <%
+=begin%>
+ <button type="button" id="new-level" onclick="new_level()">Add New Level</button> 
+<%
+=end%>
     </div>
    
     <br>
     </div>
  
    
-    <br><br>
-    <button type="button" id="rsvp-prepper" class="btn btn-success btn-rounded" onclick="toggle_RSVP()">Create Invitation Card</button>
+    
+    <button type="button" id="rsvp-prepper" class="button" onclick="toggle_RSVP()">Create Invitation Card</button>
     <br><br>
     <div id="rsvp-contents-toggle">
+    <br>
     <h4>Invitation Card Contents</h4>
 
     <div class="ticket" style="background: white;">
@@ -233,21 +264,23 @@ function refresh()
     </div>
     <%= form_tag '/events/create_event', :id => "rsvp-form", :remote => true do %>
     <%= label_tag(:title, "Event Title:") %>
-    <%= text_field_tag(:title, $title_saved.to_s, :required => 'true', :id => "title-tag", placeholder: "Event Title", :disabled => true )  %><br><br>
-    <%= label_tag(:event_date, "Insert Event Date:") %>
-    <%= text_field_tag(:event_date, nil, :required => 'true', placeholder: "MM/DD/YYYY")%><br><br>
-    <%= label_tag(:event_tickets, "Insert Number of Tickets:") %>
-    <%= text_field_tag(:event_tickets, nil, :required => 'true', placeholder: "Number of Tickets")%><br><br>
+    
+    <%= text_field_tag(:title, $title_saved.to_s, :required => 'false', :id => "title-tag", placeholder: "Event Title", :disabled => true )  %><br><br>
+    <%= label_tag(:event_date, "Event Date:") %>
+    <%= text_field_tag(:event_date, nil, :required => 'false', placeholder: "MM/DD/YYYY")%><br><br>
+    <%= label_tag(:event_tickets, "Tickets Purchased:") %>
+    <%= text_field_tag(:event_tickets, nil, :required => 'false', placeholder: "Number of Tickets")%><br><br>
 
     <%= label_tag(:event_picture, "Insert Image Path:") %>
-    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", :required => 'true', placeholder: "Image address or path") %>
+    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", :required => 'false', placeholder: "Image address or path") %>
     <%= label_tag(:event_picture, "ⓘ", :title => "Right click on image and copy image address to paste here.") %><br><br>
     <%= label_tag(:event_picture_size_left, "Adjust Dimensions:") %><br>
-    <%= text_field_tag(:event_picture_size_left, nil, :required => 'true', placeholder: "Height: e.g. 300px") %>
-    <%= text_field_tag(:event_picture_size_right, nil, :required => 'true', placeholder: "Width: e.g. 300px") %><br><br>
+    <%= text_field_tag(:event_picture_size_left, nil, :required => 'false', placeholder: "Height: e.g. 300px") %>
+    <%= text_field_tag(:event_picture_size_right, nil, :required => 'false', placeholder: "Width: e.g. 300px") %><br><br>
     
     <%= label_tag(:event_text, "Add Event Description:") %><br>
-    <%= text_area_tag(:event_text, nil, :required => 'true', placeholder: "Event description") %><br><br>
+    <%= text_area_tag(:event_text, nil, :required => 'false', placeholder: "Event description") %><br><br>
+
     <div style="text-align: center;">
     <br>
     <p id="error-msg", style="color: red;"></p>
@@ -263,7 +296,7 @@ function refresh()
 
 <br><br>
 <div style="text-align: center;">
-<%= button_to "Guest List Page", 'events/create_event', :type => "button", class: "btn btn-secondary btn-rounded", :method => "get"%>
+<%= button_to "Continue to Guest Setup", 'events/create_event', :type => "button", :class => "button", :method => "get"%>
 </div>
 <br>
 </section>
