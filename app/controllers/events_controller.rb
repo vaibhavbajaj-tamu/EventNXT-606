@@ -63,7 +63,8 @@ class EventsController < ApplicationController
  #^Seat Categories Code //////////////////
   
   def show
-    @event = Event.find(1)
+    #@event = Event.find(1)
+    @event = Event.find_by(id: params[:id])
     #@event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
     $event_pic = $event_pic.to_s #new
     @seat_types = SeatingType.all

@@ -16,6 +16,8 @@
       <th>Total Box Office Commitments</th>
       <th>Total VIP Guest Commitments</th>
       <th>Balance</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -45,6 +47,8 @@
         <td><%= row.box_office_seat_count %></td>
         <td><%= row.vip_seat_count %></td>
         <td><%= row.balance_seats %></td>
+        <td><%= link_to 'Edit', edit_seating_type_path(row) %></td>
+        <td><%= link_to 'Delete', row, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
 
@@ -57,14 +61,21 @@
     </form>
     -->
     <td>  
-          <%= link_to 'New Seating Type', new_seating_type_path %>
-          <%= form_tag reconcile_path %>
-          td><%= link_to "Reconcile", event_path(:reconcile => 'true') %></td>
-    </td>
+          
     </tr>
   </tbody>
 </table>
+
+
+
 </div>
+
+<%= link_to 'New Seating Type', new_seating_type_path, class:"btn btn-primary" %> <br> <br>
+
+<%= form_tag reconcile_path %>
+<%= link_to "Reconcile", event_path(:reconcile => 'true'), class:"btn btn-primary" %>
+
+
 
 <h3>VIP Guest List</h3>
 

@@ -53,7 +53,7 @@ class SeatingTypesController < ApplicationController
   def destroy
     @seating_type.destroy
     respond_to do |format|
-      format.html { redirect_to seating_types_url, notice: "Seating type was successfully destroyed." }
+      format.html { redirect_to @seating_type, notice: "Seating type was successfully destroyed." }
       format.json { head :no_content }
     end
   end
