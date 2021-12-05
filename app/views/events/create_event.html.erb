@@ -3,7 +3,7 @@
 </head>
 
 <style>
-  #form-div, #referrals{
+  #form-div, #referral{
     
     text-align: center;
   }
@@ -49,10 +49,56 @@ section{
   opacity: 0.5;
 }
 
+
+#referral-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+}
+
+.level-contents-toggle{
+  text-align: center;
+}
+
+#referral-contents-toggle{
+  display: none; 
+  text-align: center; 
+  padding-top: 10px; 
+  padding-bottom: 20px; 
+  background-color: #e6ccff; 
+  border-radius: 10px;
+  padding: 10px;
+}
+
 </style>
 
 <body>
 <section>
+
+
+<script>
+  
+  //JS toggles RSVP Form visibility
+  function toggle_referral() {
+  var button_name = document.getElementById("referral-prepper");
+  var x = document.getElementById("referral-contents-toggle");
+  if (x.style.display == "none") {
+    button_name.innerHTML = "Close Referral Reward Template";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Referral Reward Template";
+    button_name.style.background = "lightgreen";
+    x.style.display = "none";
+  }
+}
+
+</script>
+
 <br>
 
 <h1 class="display-6" style="text-align: center;"> Guest Setup Portal</h1>
@@ -72,12 +118,31 @@ section{
 <% end %>
 </div>
 <br><br><br><br>
-<h3 style="text-align: center"> Referral Rewards </h3>
 
-<div id="referrals">
-    <br><br>
-    <%= button_tag("Create Referral Reward Template", :class => "button") %>
-    <br><br>
+<h1 class="display-6" style="text-align: center; color: gray;"> Referral Rewards </h1>
+
+<br><br>
+  <div id="referral">
+  <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Create Referral Reward Template</button>
+  <br><br>
+  <div id="referral-contents-toggle">
+  <h4>Referral Reward Email Template</h4>
+  <div class="ticket" style="background: white;"> 
+        <p>Hi Guest,</p>
+        <p>Please send your friends an invitation to FashionNXT by inserting their emails in the box below. You will receive XYZ Reward if any of your friends purchase tickets to FashionNXT.</p>
+        <p id="email"><b>Email:  <%= label_tag(:email, "")%>
+        <%= text_field_tag(:email, nil, :required => 'true', placeholder: "email")%><br><br></p>
+        <p>Choose the date you are going and want your friends to join:</p>
+        <p id="event-date"><b>Event date:  <%= label_tag(:event_date, "") %>
+        <%= text_field_tag(:event_date, nil, :required => 'true', placeholder: "MM/DD/YYYY")%><br><br></p>
+  </div>
+    <%= form_tag '/events/create_event', :id => "referral-form", :remote => true do %>
+    <%= label_tag(:reward, "Insert Reward:") %>
+    <%= text_field_tag(:reward, nil, :required => 'true', placeholder: "XYZ Reward")%><br><br>
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+    <% end %>
+
+<br><br>
 
     <%= button_to "Back to Dashboard", root_path, :class => "button", :type => "button", :method => "get"%>
 

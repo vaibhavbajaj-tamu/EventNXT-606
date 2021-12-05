@@ -1,4 +1,4 @@
-class RemoveTypeFromGuests < ActiveRecord::Migration[5.1]
+class RemoveTypeFromGuests < ActiveRecord::Migration[5.2]
   def change
     #remove_column :guests, :type, :string
   end
