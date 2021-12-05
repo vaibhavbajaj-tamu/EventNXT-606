@@ -98,20 +98,26 @@ class EventsController < ApplicationController
   @event = Event.find(params[:id])
   $event_pic = $event_pic.to_s #new
 
+
+  @seat_types = SeatingType.all
   @guests = @event.guests
-  @guest_params = Guest.column_names
+    @guest_params = Guest.column_names
+    @cat = []
+    #seat category additions
+    @bo_seat_wise_split = {}
+    @vip_seat_wise_split = {}
+    @seat_category_set = Set.new
+    @total_seat_wise_split = []
+    @seat_type_split = []
+    #end seat category additions
 
-  #seat category additions
-  @bo_seat_wise_split = {}
-  @vip_seat_wise_split = {}
-  @seat_category_set = Set.new
-  @total_seat_wise_split = []
-  #end seat category additions
+    
+    fixed_params = ['id', 'booking_status', 'total_booked_num']
+    fixed_params.each do |fixed_param|
+      @guest_params.delete(fixed_param)
+    end
+    @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
 
-  fixed_params = ['id', 'booking_status', 'total_booked_num']
-  fixed_params.each do |fixed_param|
-    @guest_params.delete(fixed_param)
-  end
   @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
   
   #new
@@ -152,6 +158,9 @@ class EventsController < ApplicationController
       if @bo_seat_wise_split.keys.include?(category_name)
         non_vip_seats = @bo_seat_wise_split[category_name]
       end
+      
+      total_seats = 500
+      balance = total_seats - vip_seats.to_i - non_vip_seats.to_i
       hash = { total_seats: total_seats, vips_seats: vip_seats, non_vip_seats: non_vip_seats, category_name: category_name,balance: balance }
       
 # {:bacon=>:protein, :apple=>:fruit}
