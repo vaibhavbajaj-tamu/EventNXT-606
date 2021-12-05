@@ -4,16 +4,21 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   # You can have the root of your site routed with "root"
-  get 'events/create_event'
-  get 'events/show'
   root 'events#index'
+  get 'events/index'
+  post 'events/index'
+  get 'events/create_event'
+  post 'events/create_event'
+  get 'events/show'
+  post 'events/show'
+
   
   resources :events do
     resources :guests
   end
 
   post '/import_new_spreadsheet' => 'events#import_new_spreadsheet'
-  post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet'
+  post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet', as: :open_existed_spreadsheet
   post '/seat_categories'  => 'events#seat_categories'
   post '/reconcile'  => 'events#reconcile'
   

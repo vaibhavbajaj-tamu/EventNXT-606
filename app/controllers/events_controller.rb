@@ -1,20 +1,47 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
+
   def index
-    # @events = Hash.new()
-    # for event in Event.all
-    #   if @events.keys.include?(event.title) == false
-    #     @events[event.title] = []
-    #   end
-    #   @events[event.title].append(event)
-      # puts(event.inspect)
-      # puts(Event.column_names.inspect)
-    # end
+
   end
   
   def create_event
+    @guest_params = Guest.column_names #new
+    $title_saved = params[:title]
+    session[:title] ||= params[:title] 
+  
+    #$event_t = $title ? $title : session[:title]
+
+    $event_date = params[:event_date]
+    session[:event_date] ||= params[:event_date] 
+
+    $event_tickets = params[:event_tickets]
+    session[:event_tickets] ||= params[:event_tickets] 
+
+    $event_pic = params[:event_picture] #Grabs picture from form in index
+    session[:event_picture] ||= params[:event_picture] #Save picture into session hash
+
+    $event_pic_size_left = params[:event_picture_size_left]
+    session[:event_picture_size_left] ||= params[:event_picture_size_left]
+    $event_pic_size_right = params[:event_picture_size_right]
+    session[:event_picture_size_right] ||= params[:event_picture_size_right]
+
+    $event_txt = params[:event_text] #Grabs text from form in index
+    session[:event_text] ||= params[:event_text] #Save text into session hash
   end
   
+  # def import_new_spreadsheet
+  #   if !params[:file]
+  #     redirect_to root_path and return
+  #   end
+  #   event = Event.import(params[:file])
+  #   puts(event.title)
+  #   #redirect_to event_path(event)
+  #   #event = Event.find_by(title: params[:event_title])
+  #   @guests = $event.guests
+  #   @guest_params = Guest.column_names
+  # end
+
   def import_new_spreadsheet
     if !params[:file]
       redirect_to root_path and return
@@ -27,15 +54,20 @@ class EventsController < ApplicationController
   def open_existed_spreadsheet
     event = Event.find_by(title: params[:event_title])
     
-    $event_pic = params[:event_picture] #new
-    $event_txt = params[:event_text] #new text
+    $event_pic = session[:event_picture] #Grab picture from session
+    $event_txt = session[:event_text] #Grab text from session
+
+    $event_pic_size_left = session[:event_picture_size_left]
+    $event_pic_size_right = session[:event_picture_size_right] 
     
+
     if !event
       flash[:notice] = "Cannot find the event #{params[:event_title]}."
       redirect_to root_path and return
     end
     # puts(event.title)
     redirect_to event_path(event)
+    
   end
 
   #Seat Categories Code //////////////////
@@ -62,51 +94,54 @@ class EventsController < ApplicationController
   end
  #^Seat Categories Code //////////////////
   
-  def show
-    @event = Event.find(1)
-    #@event = Event.find_by(1)
-    #@event_pic = "https://www.lavendascloset.com/wp-content/uploads/2016/10/FashionNXT-103.jpg"
-    $event_pic = $event_pic.to_s #new
-    @seat_types = SeatingType.all
-    @guests = @event.guests
-    @guest_params = Guest.column_names
-    @cat = []
-    #seat category additions
-    @bo_seat_wise_split = {}
-    @vip_seat_wise_split = {}
-    @seat_category_set = Set.new
-    @total_seat_wise_split = []
-    @seat_type_split = []
-    #end seat category additions
+ def show
+  @event = Event.find(params[:id])
+  $event_pic = $event_pic.to_s #new
+
+  @guests = @event.guests
+  @guest_params = Guest.column_names
+
+  #seat category additions
+  @bo_seat_wise_split = {}
+  @vip_seat_wise_split = {}
+  @seat_category_set = Set.new
+  @total_seat_wise_split = []
+  #end seat category additions
+
+  fixed_params = ['id', 'booking_status', 'total_booked_num']
+  fixed_params.each do |fixed_param|
+    @guest_params.delete(fixed_param)
+  end
+  @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
+  
+  #new
+  @customers[1..-1].each do |row|
+    @seat_category_set.add?(row[9])
     
-    
-    fixed_params = ['id', 'booking_status', 'total_booked_num']
-    fixed_params.each do |fixed_param|
-      @guest_params.delete(fixed_param)
+    if @bo_seat_wise_split.keys.include?(row[9]) == true
+      @bo_seat_wise_split[row[9]] += row[24].to_i
+    else
+      @bo_seat_wise_split[row[9]] = row[24].to_i
     end
-    @customers = @event.box_office_customers.split('#row#').map{|row| row.split('#cell#')}
+  end
+  
+  @guests.each do |guest|
+    puts(guest)
+    @seat_category_set.add?(guest[:seat_category])
     
-    #new
-    @customers[1..-1].each do |row|
-      @seat_category_set.add?(row[9])
-      
-      if @bo_seat_wise_split.keys.include?(row[9]) == true
-        @bo_seat_wise_split[row[9]] += row[24].to_i
-      else
-        @bo_seat_wise_split[row[9]] = row[24].to_i
-      end
+    if @vip_seat_wise_split.keys.include?(guest[:seat_category]) == true
+      @vip_seat_wise_split[guest[:seat_category]] += guest[:max_seats_num]    #change to guest[:total_booked_num]
+    else
+      @vip_seat_wise_split[guest[:seat_category]] = guest[:max_seats_num]     #change to guest[:total_booked_num]
     end
-    
-    @guests.each do |guest|
-      puts(guest)
-      @seat_category_set.add?(guest[:seat_category])
-      
-      if @vip_seat_wise_split.keys.include?(guest[:seat_category]) == true
-        @vip_seat_wise_split[guest[:seat_category]] += guest[:max_seats_num]    #change to guest[:total_booked_num]
-      else
-        @vip_seat_wise_split[guest[:seat_category]] = guest[:max_seats_num]     #change to guest[:total_booked_num]
-      end
-    end
+  end
+  
+  # @seat_category_set.each do |category_name|
+  #   vip_seats = 0
+  #   non_vip_seats = 0
+  #   if @vip_seat_wise_split.keys.include?(category_name)
+  #     vip_seats = @vip_seat_wise_split[category_name]
+  #   end
     
     @seat_category_set.each do |category_name|
       vip_seats = 0
@@ -117,17 +152,22 @@ class EventsController < ApplicationController
       if @bo_seat_wise_split.keys.include?(category_name)
         non_vip_seats = @bo_seat_wise_split[category_name]
       end
-     
-      total_seats = 500
-      balance = total_seats - vip_seats - non_vip_seats
       hash = { total_seats: total_seats, vips_seats: vip_seats, non_vip_seats: non_vip_seats, category_name: category_name,balance: balance }
       
 # {:bacon=>:protein, :apple=>:fruit}
       @cat.append(hash)
       newEntry = SeatWiseRows.new(total_seats, vip_seats, non_vip_seats, category_name, balance)
       @total_seat_wise_split.append(newEntry)
+    if @bo_seat_wise_split.keys.include?(category_name)
+      non_vip_seats = @bo_seat_wise_split[category_name]
     end
-    #new end
+   
+    total_seats = 500
+    balance = total_seats - vip_seats.to_i - non_vip_seats.to_i
+    newEntry = SeatWiseRows.new(total_seats, vip_seats, non_vip_seats, category_name, balance)
+    @total_seat_wise_split.append(newEntry)
+  end
+  #new end
 
     @event.total_seats_guest = 0
     for guest in @guests
@@ -137,6 +177,7 @@ class EventsController < ApplicationController
       end
     end
     @event.balance = @event.total_seats - @event.total_seats_box_office - @event.total_seats_guest
+    
     string_error = ""
     if params[:reconcile].nil?
       @seat_types.each do |seat_type|
@@ -160,7 +201,7 @@ class EventsController < ApplicationController
           end
         end
         if found == 0
-          string_error  += @category[:category_name] + " ,"
+          string_error  += @category[:category_name] + ", "
         end
       end
     end
@@ -169,7 +210,7 @@ class EventsController < ApplicationController
       puts(string_error)
       flash[:notice] = string_error
     end
-  end
+end
   
   # def new
   #   @event = Event.new

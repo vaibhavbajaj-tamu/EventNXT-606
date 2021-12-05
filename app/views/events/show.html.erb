@@ -1,5 +1,36 @@
+<style>
+    body {
+    
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+      background-repeat: no-repeat; 
+      background-position: center;
+      background-attachment: fixed; 
+      webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      height:100%;
+      width:100%; 
+      
+    }
+
+    section{
+      padding: 40px;
+      padding-bottom: 100vh;
+      background-color: white;
+    }
+    
+</style>
+
+<body>
+<section>
 <h2><%= @event.title %></h2>
 <!--<h2>The Control Room</h2>-->
+
+<img src='<%= $event_pic.to_s %>' height='<%= $event_pic_size_left.to_s %>' width='<%= $event_pic_size_right.to_s %>'>
+<p>source</p>
+<p><%= $event_pic_size_left.to_s %></p>
+
 
 <ul>
   <li><%= link_to "Back", root_path%></li>
@@ -13,8 +44,8 @@
     <tr> 
       <th>Seat Category</th>
       <th>Total Seats</th>
+      <th>Total Guest Commitments</th>
       <th>Total Box Office Commitments</th>
-      <th>Total VIP Guest Commitments</th>
       <th>Balance</th>
       <th>Edit</th>
       <th>Delete</th>
@@ -32,8 +63,8 @@
       <tr>
         <td><%= row.seat_category %></td>
         <td><%= row.total_seats %></td>
-        <td><%= row.non_vip_seats %></td>
         <td><%= row.vip_seats %></td>
+        <td><%= row.non_vip_seats %></td>
         <td><%= row.balance %></td>
       </tr>
       
@@ -76,8 +107,7 @@
 <%= link_to "Reconcile", event_path(:reconcile => 'true'), class:"btn btn-primary" %>
 
 
-
-<h3>VIP Guest List</h3>
+<h3> Guest List </h3>
 
 <div class="table-responsive">
 <table class="table table-sm col-md-12">
@@ -161,3 +191,5 @@
 </tbody>
 </table>
 </div>
+</section>
+</body>

@@ -1,43 +1,303 @@
-<h1 class="display-6">Create a new Event </h1>
-<br>
-<%= button_to "Create Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
+<%#= button_to "Create Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
+<style>
+    body {
+    
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://www.teahub.io/photos/full/197-1977791_portland-wallpapers-hd-portland-oregon-city-view.jpg);
+      background-repeat: no-repeat; 
+      background-position: center;
+      background-attachment: fixed; 
+      webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      height:100%;
+      width:100%; 
+      
+    }
 
-<br>
-<h1 class="display-6"> Import New Excel </h1>
+    #panel{
+      padding: 40px;
+      padding-bottom: 100vh;
+    }
 
+    #rsvp-button {
+        -webkit-appearance: button;
+        -moz-appearance: button;
+        appearance: button;
+        padding: 20px;
+        font-size: 20px;
+        text-decoration: none;
+        color: white;
+        background-color: black;
+    }
 
-<%= form_tag import_new_spreadsheet_path, multipart: true do %>
-  <!--<div>-->
-  <!--  <%= label_tag(:username, "Gmail Username:") %><br>-->
-  <!--  <%= text_field_tag(:username) %>-->
-  <!--</div>-->
+    .level-contents-toggle{
+      text-align: center;
+    }
+
+    #rsvp-contents-toggle{
+      display: none; 
+      text-align: center; 
+      padding-top: 10px; 
+      padding-bottom: 20px; 
+      background-color: #e6ccff;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .level-box{
+      margin-right: 5px;
+    }
+
+    .capacity-box{
+      margin-right: 5px;
+    }
+
+    .ticket {
+            text-align: center;
+            border: 3px solid black;
+            margin: 50px;
+    }
   
-  <!--<div>-->
-  <!--  <%= label_tag(:password, "Gmail Password:") %><br>-->
-  <!--  <%= text_field_tag(:password) %>-->
-  <!--</div>-->
+    #img {
+            position: relative;
+            text-align: center;
+    }
+
+  label{
+    text-align: right;
+  }
+
+  .button{
+  color: white; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  border-radius: 2px; 
+  padding: 5px;
+  font-size: 20px;
+  }
+
+  .button:hover {
+  opacity: 0.5;
+  }
+
+        
+</style>
+
+<script>
   
-  <div>
+  //JS toggles RSVP Form visibility
+  function toggle_RSVP() {
+  var button_name = document.getElementById("rsvp-prepper");
+  var x = document.getElementById("rsvp-contents-toggle");
+  if (x.style.display == "none") {
+    button_name.innerHTML = "Close Invitation Card";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Invitation Card";
+    button_name.style.background = "transparent";
+    x.style.display = "none";
+  }
+}
+
+  function toggle_levels() {
+  var button_name = document.getElementById("seat-level-prepper");
+  var x = document.getElementById("level-contents-toggle");
+  if (x.style.display === "none") {
+    button_name.innerHTML = "Close Seat Preparer";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Seat Preparer";
+    x.style.display = "none";
+  }
+}
+  //stores levels and capacities for each level
+  var level_capacity = {};
+  document.getElementById("seat-categories").innerHTML = "<h1>Today's date is " + level_capacity + "</h1>"
+
+
+  //store to json file
+  const data = JSON.stringify(level_capacity);
+  
+  
+  
+
+  function new_level(){
+    var add_new = document.getElementById("level-contents-toggle");
+    var del_button = document.createElement("button");
+    var save_button = document.createElement("button");
+    var sub = document.getElementById("levelform");
+    
+    save_button.type = "button";
+    del_button.type = "button";
+    save_button.innerHTML = "Save";
+    del_button.innerHTML = "Delete";
+    
+
+    save_button.onclick = () => {
+      level_capacity[level.value] = capacity.value;
+      console.log(level_capacity)
+    }
+
+    del_button.onclick = () => {
+      level.remove();
+      save_button.remove();
+      capacity.remove();
+      del_button.remove();
+      br.remove();
+      br1.remove();
+      };
+
+
+    var level = document.createElement("input");
+    level.type = "text";
+    level.id = "level-box";
+    level.placeholder = "Enter Level";
+
+    var capacity = document.createElement("input");
+    capacity.type = "text";
+    capacity.id = "capacity-box";
+    capacity.placeholder = "Enter Capacity";
+
+    var br = document.createElement("br");
+    var br1 = document.createElement("br");
+    add_new.appendChild(level);
+    add_new.appendChild(capacity);
+    add_new.appendChild(del_button);
+    add_new.appendChild(save_button);
+    add_new.appendChild(br);
+    add_new.appendChild(br1);
+  
+  }
+
+function refreshTitle()
+{
+  $("#title-tag").load(location.href + " #title-tag");
+  location.reload();
+  
+}
+
+function refresh()
+{
+  // or $('#myform')[0] with jQuery
+  $("#event-t").load(location.href + " #event-t");
+  $("#event-date").load(location.href + " #event-date");
+  $("#num-tickets").load(location.href + " #num-tickets");
+  $("#params-hash").load(location.href + " #params-hash");
+  $("#img").load(location.href + " #img");
+  $("#about-event").load(location.href + " #about-event");
+
+  var s = document.getElementById("error-msg");
+  s.innerHTML = "Please fill all blank fields with \"none\" before saving.";
+  
+}
+
+</script>
+
+<body>
+  <section id="panel">
+  <br><br>
+  <h1 style="text-align: center; color: white;">Dashboard</h1>
+  <br><br>
+
+  
+  <h2 style="text-align: center; color: white;"><%= $title_saved.to_s %></h2>
+  <div id="Open" style="text-align: center;">
+  <br>
+  <%= form_tag '/events/create_event', :remote => true do %>
+    <div>
+      <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px; font-size: 20px; ") %>
+      <%= submit_tag "Save", :class => "button", :onclick => "refreshTitle()" %>
+      <% end %>
+    </div>
+  <br>
+  <br>
+  </div>
+
+  <div style="text-align: center;">
+    <%
+=begin%>
+ <button type="button" id="seat-level-prepper" class="btn btn-success btn-rounded" onclick="toggle_levels()">Add Seating Levels</button> 
+<%
+=end%>
+    
+    
+    <br><br>
+    <div id="level-contents-toggle">
+    <%
+=begin%>
+ <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4> 
+<%
+=end%>
+
+    <div style="text-align: center;">
+   
+    <%
+=begin%>
+ <button type="button" id="new-level" onclick="new_level()">Add New Level</button> 
+<%
+=end%>
+    </div>
+   
     <br>
-    <%= file_field_tag(:file)%><br>
-    <%= label_tag(:file, "Accepted types: .xlsx") %>
-  </div>
-  
-  <div>
-    <%= submit_tag("Import") %>
+    </div>
+ 
+   
+    
+    <button type="button" id="rsvp-prepper" class="button" onclick="toggle_RSVP()">Create Invitation Card</button>
+    <br><br>
+    <div id="rsvp-contents-toggle">
+    <br>
+    <h4>Invitation Card Contents</h4>
+
+    <div class="ticket" style="background: white;">
+        <h2 id="event-t"><%= $title_saved.to_s %></h2>
+        <div id="img">
+        <img id="eventpic" src='<%= $event_pic.to_s %>' height='<%= $event_pic_size_left.to_s %>' width='<%= $event_pic_size_right.to_s %>'>
+        </div>
+        <p id="event-date"><b>Event date: <%= $event_date.to_s %></b></p>
+        <p id="num-tickets"><b>Number of Tickets: <%= $event_tickets.to_s %></b></p>
+        <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p>
+        <p id="about-event"><strong>About Event: </strong><%= $event_txt.to_s %></p>
+    </div>
+    <%= form_tag '/events/create_event', :id => "rsvp-form", :remote => true do %>
+    <%= label_tag(:title, "Event Title:") %>
+    
+    <%= text_field_tag(:title, $title_saved.to_s, :required => 'false', :id => "title-tag", placeholder: "Event Title", :disabled => true )  %><br><br>
+    <%= label_tag(:event_date, "Event Date:") %>
+    <%= text_field_tag(:event_date, nil, :required => 'false', placeholder: "MM/DD/YYYY")%><br><br>
+    <%= label_tag(:event_tickets, "Tickets Purchased:") %>
+    <%= text_field_tag(:event_tickets, nil, :required => 'false', placeholder: "Number of Tickets")%><br><br>
+
+    <%= label_tag(:event_picture, "Insert Image Path:") %>
+    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", :required => 'false', placeholder: "Image address or path") %>
+    <%= label_tag(:event_picture, "ⓘ", :title => "Right click on image and copy image address to paste here.") %><br><br>
+    <%= label_tag(:event_picture_size_left, "Adjust Dimensions:") %><br>
+    <%= text_field_tag(:event_picture_size_left, nil, :required => 'false', placeholder: "Height: e.g. 300px") %>
+    <%= text_field_tag(:event_picture_size_right, nil, :required => 'false', placeholder: "Width: e.g. 300px") %><br><br>
+    
+    <%= label_tag(:event_text, "Add Event Description:") %><br>
+    <%= text_area_tag(:event_text, nil, :required => 'false', placeholder: "Event description") %><br><br>
+
+    <div style="text-align: center;">
+    <br>
+    <p id="error-msg", style="color: red;"></p>
+   
+
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+    <br><br><br>
+    </div>
+    </div>
+    
   </div>
 <% end %>
-<br>
-<h1 class="display-6">Open Existing Excel </h1> 
-<br>
-<%= form_tag open_existed_spreadsheet_path do %>
-  <div>
-    <%= label_tag(:event_title, "Name of the Event:") %><br>
-    <%= text_field_tag(:event_title) %>
-  </div>
 
-    <%= submit_tag("Open Spreadsheet") %>
-  </div>
-<% end %>
+<br><br>
+<div style="text-align: center;">
+<%= button_to "Continue to Guest Setup", 'events/create_event', :type => "button", :class => "button", :method => "get"%>
+</div>
 <br>
-
+</section>
+</body>
