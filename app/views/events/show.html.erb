@@ -47,6 +47,8 @@
       <th>Total Guest Commitments</th>
       <th>Total Box Office Commitments</th>
       <th>Balance</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -57,7 +59,7 @@
     <!--   <td><%= @event.total_seats_guest %></td>-->
     <!--   <td><%= @event.balance %></td>-->
     <!-- </tr>-->
-    <% @total_seat_wise_split.each do |row| %>
+  <!--  <% @total_seat_wise_split.each do |row| %>
       <tr>
         <td><%= row.seat_category %></td>
         <td><%= row.total_seats %></td>
@@ -65,12 +67,47 @@
         <td><%= row.non_vip_seats %></td>
         <td><%= row.balance %></td>
       </tr>
+      
     <% end %>
+    -->
+    
+    <% @seat_type_split.each do |row| %>
+      <tr>
+        <td><%= row.seat_category %></td>
+        <td><%= row.total_seat_count %></td>
+        <td><%= row.box_office_seat_count %></td>
+        <td><%= row.vip_seat_count %></td>
+        <td><%= row.balance_seats %></td>
+        <td><%= link_to 'Edit', edit_seating_type_path(row) %></td>
+        <td><%= link_to 'Delete', row, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+
+    <!-- <%= form_tag("/seating_types/") %>
+      <td><%= text_field_tag :"seating_type" %></td>
+      <td><%= text_field_tag :"total_seat_count" %></td>
+      <td><%= submit_tag("Add") %></td>
+    </form>
+    -->
+    <td>  
+          
+    </tr>
   </tbody>
 </table>
+
+
+
 </div>
 
-<h3>Guest List</h3>
+<%= link_to 'New Seating Type', new_seating_type_path, class:"btn btn-primary" %> <br> <br>
+
+<%= form_tag reconcile_path %>
+<%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %>
+
+
+<h3> Guest List </h3>
 
 <div class="table-responsive">
 <table class="table table-sm col-md-12">
@@ -81,7 +118,6 @@
         <% column_title.capitalize! %>
         <th><%= column_title %></th>
       <% end %>
-      
       <th>Action</th>
       <th>Ticket Booking Status</th>
       <th>Total Booked</th>
@@ -110,10 +146,17 @@
     <% end %>
     <tr>
       <%= form_for [@event, @event.guests.build] do |form| %>
-        <% @guest_params.each do |param| %>     
+      <!--<%= form_for [@event, @event.guests.build],  :url => update_event_guest_path(@event) do |form| %>-->
+        <% @guest_params.each do |param| %>  
+        <% if param=="event_id" %>  
+          <td> 
+            <%= form.hidden_field :"#{param}" , value: @event.id %>
+          </td>
+        <% else %>
           <td> 
             <%= form.text_field :"#{param}" %>
           </td>
+        <% end %>
         <% end %>
         <td><%= submit_tag("Add") %></td>
       <% end %>
