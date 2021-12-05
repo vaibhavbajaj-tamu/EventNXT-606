@@ -6,9 +6,13 @@ class EventsController < ApplicationController
   end
   
   def create_event
+    
     @guest_params = Guest.column_names #new
     $title_saved = params[:title]
     session[:title] ||= params[:title] 
+
+    $reward = params[:reward]
+    session[:reward] ||= params[:reward] 
   
     #$event_t = $title ? $title : session[:title]
 
