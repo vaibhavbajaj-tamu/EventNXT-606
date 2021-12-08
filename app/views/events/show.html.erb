@@ -103,9 +103,6 @@
 
 <%= link_to 'New Seating Type', new_seating_type_path, class:"btn btn-primary" %> <br> <br>
 
-<%= form_tag reconcile_path %>
-<%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %>
-
 
 <h3> Guest List </h3>
 
@@ -168,6 +165,9 @@
   </tbody>
 </table>
 </div>
+
+<%= form_tag reconcile_path %>
+<%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %>
 
 <h3>Box Office List</h3>
 <div class="table-responsive">
