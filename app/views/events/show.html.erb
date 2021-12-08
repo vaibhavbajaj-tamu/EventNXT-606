@@ -102,15 +102,10 @@
 <div style="text-align: center;">
 <%= link_to 'New Seating Type', new_seating_type_path, class:"btn btn-primary" %> <br> <br>
 
-<%
-=begin%>
- <%= form_tag reconcile_path %>
-<%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %> 
-<%
-=end%>
 
 <br><br>
 </div>
+
 
 <h3> Guest List </h3>
 
