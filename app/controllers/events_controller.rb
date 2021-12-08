@@ -99,7 +99,7 @@ class EventsController < ApplicationController
  #^Seat Categories Code //////////////////
   
  def show
-  @event = Event.find(params[:id])
+  @event = Event.find(1)
   $event_pic = $event_pic.to_s #new
 
 
