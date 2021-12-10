@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_185124) do
+ActiveRecord::Schema.define(version: 2021_11_30_062704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "events", force: :cascade do |t|
+  create_table "events", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "date"
     t.integer "total_seats"
@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 2021_12_10_185124) do
     t.string "seat_category"
   end
 
-  create_table "guests", force: :cascade do |t|
+  create_table "guests", id: :serial, force: :cascade do |t|
     t.string "email_address"
-    t.string "first_name"
     t.integer "event_id"
+    t.string "first_name"
     t.string "last_name"
     t.string "affiliation"
     t.string "added_by"
@@ -38,11 +38,9 @@ ActiveRecord::Schema.define(version: 2021_12_10_185124) do
     t.integer "max_seats_num"
     t.string "booking_status"
     t.integer "total_booked_num"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_guests_on_event_id"
   end
-  
+
   create_table "seat_category_details", force: :cascade do |t|
     t.string "event_title"
     t.string "seat_category"
@@ -77,5 +75,6 @@ ActiveRecord::Schema.define(version: 2021_12_10_185124) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "guests", "events"
   add_foreign_key "seating_types", "events"
 end
