@@ -33,6 +33,7 @@ group :test do
   # database_cleaner is not required, but highly recommended
   gem 'cucumber-rails-training-wheels'
   gem 'simplecov', :require => false
+  gem 'capybara'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -50,6 +51,8 @@ group :development, :test do
   gem 'database_cleaner', '1.4.1'
   # gem 'pg', '~> 0.21'
   gem 'sqlite3', '~> 1.3.13'
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
 end
 
 group :development do
