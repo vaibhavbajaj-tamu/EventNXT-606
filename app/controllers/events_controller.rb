@@ -165,8 +165,8 @@ class EventsController < ApplicationController
       
       total_seats = 500
       balance = total_seats - vip_seats.to_i - non_vip_seats.to_i
-      hash = { total_seats: total_seats, vips_seats: vip_seats, non_vip_seats: non_vip_seats, category_name: category_name,balance: balance }
-      
+      hash = { total_seats: total_seats, vips_seats: vip_seats.to_i, non_vip_seats: non_vip_seats, category_name: category_name,balance: balance }
+
 # {:bacon=>:protein, :apple=>:fruit}
       @cat.append(hash)
       newEntry = SeatWiseRows.new(total_seats, vip_seats, non_vip_seats, category_name, balance)
@@ -195,6 +195,17 @@ class EventsController < ApplicationController
     if params[:reconcile].nil?
       @seat_types.each do |seat_type|
         @seat_type_split.append(seat_type)
+    end
+      for @category in @cat
+        for seat_type in @seat_type_split
+          if seat_type[:seat_category] == @category[:category_name]
+            if @category[:vip_seats].nil?
+              @category[:vip_seats] = 0
+            end
+            seat_type[:vip_seat_count] = @category[:vips_seats]
+            #print(@category[:vip_seats])
+          end
+        end
       end
     else
       @seat_types.each do |seat_type|
@@ -211,6 +222,7 @@ class EventsController < ApplicationController
             balance_seat = seat_type[:total_seat_count] - @category[:vip_seats] - @category[:non_vip_seats]
             seat_type[:balance_seats] = balance_seat
             seat_type[:box_office_seat_count] = @category[:non_vip_seats]
+            seat_type[:vip_seat_count] = @category[:vips_seats]
           end
         end
         if found == 0
@@ -221,7 +233,7 @@ class EventsController < ApplicationController
     if string_error!= ""
       string_error += "is not in the database."
       puts(string_error)
-      flash[:notice] = string_error
+      flash[:warning] = string_error
     end
 end
   
