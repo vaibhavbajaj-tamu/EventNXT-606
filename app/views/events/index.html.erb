@@ -1,4 +1,3 @@
-<%#= button_to "Create Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
 <style>
     body {
     
@@ -83,6 +82,7 @@
   border-radius: 2px; 
   padding: 5px;
   font-size: 20px;
+  text-align: center;
   }
 
   input {
@@ -111,7 +111,7 @@
     button_name.innerHTML = "Close Invitation Card";
     x.style.display = "block";
   } else {
-    button_name.innerHTML = "Open Invitation Card";
+    button_name.innerHTML = "Create Invitation Card";
     button_name.style.background = "transparent";
     x.style.display = "none";
   }
@@ -203,7 +203,7 @@ function refresh()
   $("#params-hash").load(location.href + " #params-hash");
   $("#img").load(location.href + " #img");
   $("#about-event").load(location.href + " #about-event");
-  
+  console.log("tried to update")
 }
 
 </script>
@@ -211,72 +211,23 @@ function refresh()
 <body>
   <section id="panel">
   <br><br>
-  <h1 style="text-align: center; color: white;">Dashboard</h1>
-  <br><br>
-
-  
-  <h2 style="text-align: center; color: white;"><%= $title_saved.to_s %></h2>
-  <div id="Open" style="text-align: center;">
-  <br>
-  <%= form_tag '/events/create_event', :remote => true do %>
-    <div>
-      <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px; font-size: 20px; ") %>
-      <%= submit_tag "Save", :class => "button", :onclick => "refreshTitle()" %>
-      <% end %>
-    </div>
-  <br>
-  <br>
-  </div>
-
   <div style="text-align: center;">
-    <%
-=begin%>
- <button type="button" id="seat-level-prepper" class="btn btn-success btn-rounded" onclick="toggle_levels()">Add Seating Levels</button> 
-<%
-=end%>
+  <h1 style="text-align: center; color: white;">Dashboard</h1>
+  <br><br><br>
     
-    
-    <br><br>
-    <div id="level-contents-toggle">
-    <%
-=begin%>
- <h4 style="text-align: center; padding-top: 10px;">Edit Seat Levels</h4> 
-<%
-=end%>
+    <%= button_to "Manage Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
 
-    <div style="text-align: center;">
-   
-    <%
-=begin%>
- <button type="button" id="new-level" onclick="new_level()">Add New Level</button> 
-<%
-=end%>
-    </div>
-   
-    <br>
-    </div>
- 
-   
+    <br><br><br>
+  <button type="button" id="rsvp-prepper" class="button" style="font-size: 20px; padding: 10px;" onclick="toggle_RSVP()">Create New Event</button>
+  </div>
+  <br>
+
     
-    <button type="button" id="rsvp-prepper" class="button" onclick="toggle_RSVP()">Create Invitation Card</button>
-    <br><br>
+   <br><br>
     <div id="rsvp-contents-toggle">
-    <br>
-    <h4>Invitation Card Contents</h4>
+    <%= form_tag '/events/create_event', :id => "rsvp-form" do %>
 
-    <div class="ticket" style="background: white; color: black; border: 2px solid white; border-radius: 3px;">
-        <h2 id="event-t"><%= $title_saved.to_s %></h2>
-        <div id="img">
-        <img id="eventpic" src='<%= $event_pic.to_s %>' height='<%= $event_pic_size_left.to_s %>' width='<%= $event_pic_size_right.to_s %>'>
-        </div>
-        <p id="event-date"><b>Event date: <%= $event_date.to_s %></b></p>
-        <p id="num-tickets"><b>Number of Tickets: <%= $event_tickets.to_s %></b></p>
-        <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p>
-        <p id="about-event"><strong>About Event: </strong><%= $event_txt.to_s %></p>
-    </div>
-
-    <%= form_tag '/events/create_event', :id => "rsvp-form", :remote => true do %>
-    
+    <%= text_field_tag(:e_title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;") %><br><br>
     <%= text_field_tag(:event_date, nil, placeholder: "MM/DD/YYYY")%><br><br>
     <%= text_field_tag(:event_tickets, nil, placeholder: "Number of Tickets")%><br><br>
 
@@ -290,9 +241,10 @@ function refresh()
     <div style="text-align: center;">
     <br>
     <p id="error-msg", style="color: red;"></p>
-   
-
-    <%= submit_tag "Save Changes", :id => "thisone", :class => "button", :onclick => "refresh()" %>
+    
+    <%= submit_tag "Save and Continue", :id => "thisone", :class => "button" %>
+    
+    <%= submit_tag "Skip to Manage Page", :id => "thisone", :class => "button" %>
     <br><br><br>
     </div>
     </div>
@@ -301,9 +253,6 @@ function refresh()
 <% end %>
 
 <br><br>
-<div style="text-align: center;">
-<%= button_to "Continue to Guest Setup", 'events/create_event', :type => "button", :class => "button", :method => "get"%>
-</div>
 <br>
 </section>
 </body>

@@ -5,19 +5,23 @@ class GuestsController < ApplicationController
   # end
   
   def send_email_invitation
-    $event_pic = $event_pic.to_s #new
-    $event_text = $event_text.to_s #new text
+    #new
+    #new text
     event = Event.find(params[:event_id])
-    guest = Guest.find(params[:id])
-    if guest.booking_status == 'Yes' or guest.booking_status == 'No'
-      flash[:notice] = "The guest #{guest.first_name} #{guest.last_name} has already confirmed this invitation."
+    @guest = Guest.find(params[:id])
+    if @guest.booking_status == 'Yes' or @guest.booking_status == 'No'
+      flash[:notice] = "The guest #{@guest.first_name} #{@guest.last_name} has already confirmed this invitation."
       redirect_to event_path(event) and return
     end
-    # puts(request.host_with_port)
-    GuestMailer.rsvp_invitation_email(event, guest).deliver
+    puts("Hash Params listed here! ###################")
+    puts($event_date)
+    puts("Hash Params above! ###################")
+    
+    GuestMailer.rsvp_invitation_email(event, @guest).deliver_now
 		#end of mail module
-    guest.update({:booking_status => 'Invited', :total_booked_num => 0})
-    flash[:notice] = "The email was successfully sent to #{guest.first_name} #{guest.last_name}."
+    @guest.update_attribute({:booking_status => 'Invited', :total_booked_num => 0})\
+    # Guest.update!(params[:id], booking_status: 'Invited')
+    flash[:notice] = "The email was successfully sent to #{@guest.first_name} #{@guest.last_name}."
     redirect_to event_path(event)
   end
   

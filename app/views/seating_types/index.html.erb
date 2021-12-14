@@ -11,7 +11,7 @@
       <!--<th>Event</th>-->
       <th>Show</th>
       <th>Edit</th>
-      <th>Destroy</th>
+      <th>Delete</th>
     </tr>
   </thead>
 
@@ -26,7 +26,7 @@
         <!--<td><%= seating_type.event %></td>-->
         <td><%= link_to 'Show', seating_type %></td>
         <td><%= link_to 'Edit', edit_seating_type_path(seating_type) %></td>
-        <td><%= link_to 'Destroy', seating_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', seating_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -35,4 +35,8 @@
 <br>
 
 <%= link_to 'New Seating Type', new_seating_type_path %> |
-<%= link_to 'Back', event_path(@seating_types[0].event.id) %>
+<% if @seating_types.length() != 0 %>
+ <%= link_to 'Back', event_path(@seating_types[0].event.id) %>
+<% else %>
+  <%= link_to 'Back', event_path(flash[:event_ref]) %>
+<% end %>

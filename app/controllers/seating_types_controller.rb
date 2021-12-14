@@ -27,7 +27,7 @@ class SeatingTypesController < ApplicationController
 
     respond_to do |format|
       if @seating_type.save
-        format.html { redirect_to @seating_type, notice: "You got it" }
+        format.html { redirect_to @seating_type, notice: "Seating type created !" }
         format.json { render :show, status: :created, location: @seating_type }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,8 +38,10 @@ class SeatingTypesController < ApplicationController
 
   # PATCH/PUT /seating_types/1 or /seating_types/1.json
   def update
+    rem_seats = seating_type_params[:total_seat_count].to_i - seating_type_params[:vip_seat_count].to_i - seating_type_params[:box_office_seat_count].to_i
     respond_to do |format|
       if @seating_type.update(seating_type_params)
+        @seating_type.update({:balance_seats => rem_seats})
         format.html { redirect_to @seating_type, notice: "Seating type was successfully updated." }
         format.json { render :show, status: :ok, location: @seating_type }
       else
@@ -51,9 +53,10 @@ class SeatingTypesController < ApplicationController
 
   # DELETE /seating_types/1 or /seating_types/1.json
   def destroy
+    @event_ref = @seating_type.event.id
     @seating_type.destroy
     respond_to do |format|
-      format.html { redirect_to @seating_type, notice: "Seating type was successfully destroyed." }
+      format.html { redirect_to @seating_type, notice: "Seating type was successfully destroyed.", flash: {event_ref: @event_ref} }
       format.json { head :no_content }
     end
   end

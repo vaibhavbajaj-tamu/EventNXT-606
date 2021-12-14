@@ -27,10 +27,6 @@
 <h2><%= @event.title %></h2>
 <!--<h2>The Control Room</h2>-->
 
-<img src='<%= $event_pic.to_s %>' height='<%= $event_pic_size_left.to_s %>' width='<%= $event_pic_size_right.to_s %>'>
-<p><%= $event_pic_size_left.to_s %></p>
-
-
 <%= link_to "Back", root_path, class:"btn btn-primary" %><br><br>
 
 
@@ -42,8 +38,8 @@
     <tr> 
       <th>Seat Category</th>
       <th>Total Seats</th>
-      <th>Total Guest Commitments</th>
       <th>Total Box Office Commitments</th>
+      <th>Total Guest Commitments</th>
       <th>Balance</th>
       <th>Edit</th>
       <th>Delete</th>
@@ -119,8 +115,8 @@
         <th><%= column_title %></th>
       <% end %>
       <th>Action</th>
-      <th>Ticket Booking Status</th>
-      <th>Total Booked</th>
+      <!--<th>Ticket Booking Status</th>-->
+      <!--<th>Total Booked</th>-->
     </tr>
   </thead>
   <tbody>
@@ -136,12 +132,12 @@
           <%= link_to "Send",  send_event_guest_path(@event, guest)%>
           <%= link_to "Delete", [@event, guest], method: :delete, data: { confirm: "Are you sure?" } %>
         </td>
-        <td>
-          <%= guest.booking_status %>
-        </td>
-        <td>
-          <%= guest.total_booked_num %>
-        </td>
+        <!--<td>-->
+        <!--  <%= guest.booking_status %>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--  <%= guest.total_booked_num %>-->
+        <!--</td>-->
       </tr>
     <% end %>
     <tr>
@@ -170,6 +166,7 @@
 </div>
 
 <%= form_tag reconcile_path %>
+<br>
 <%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %>
 
 <h3><br>Box Office List</h3>
