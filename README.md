@@ -1,14 +1,27 @@
 # Event-Guest-List-Automation
+
+## Setup
+
+Install [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) for your distribution.
+
+In a terminal, run
+
+`docker-compose up -d --build`
+
+_(Subsequent use may omit the_ `-d` _and_ `--build` _flag.)_
+
+Verify the containers are `up` by running `docker-compose up`. Then, set up the database by running
+
+`docker-compose run rails bash -c 'rake db:create && rake db:migrate'`
+
+_(Must be done if the_ `--build` _flag is used.)_
+
+Stop the containers using
+
+`docker-compose down`
+
+_(Use_ `Ctrl-C` _to stop the containers if the_ `-d` _flag was omitted.)_
+
 ## Current Work
 
-## Previous Work
-In iteration1, the project was developed concurrently in three parts. These three parts are integrated in the 2rd iteration.
-### Part1 
-Web portal to show the event related information (box office ticket list and VIP guests info)  
-Link (this repo): https://github.com/yinyao23/Event-Guest-List-Automation 
-### Part2: 
-Event owner send RSVP invitation through emails to VIP guests  
-Link: https://github.com/Coder00Fighter/AutoEmailSender
-### Part3: 
-VIP guests confirm RSVP invitation through the email link 
-Link: https://github.com/bhcsayx/forms/tree/psql
+🚧🚧🚧
