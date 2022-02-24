@@ -112,7 +112,7 @@ class EventsController < ApplicationController
 
   @seat_types = SeatingType.all
   @guests = @event.guests
-    @guest_params = Guest.column_names
+    @guest_params = Guest.column_names.map(&:clone)
     @cat = []
     #seat category additions
     @bo_seat_wise_split = {}
