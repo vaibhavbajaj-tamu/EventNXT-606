@@ -8,22 +8,12 @@ require 'set'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Blog
+module EventNXT
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.logger = Logger.new("log/#{Time.new.strftime('%Y%m%dT%H%M%S')}.log")
-
-    # SMTP settings for gmail
-    #config.action_mailer.smtp_settings = {
-     #:address              => "smtp.gmail.com",
-     #:port                 => 587,
-     #:user_name            => 'tmpemailfortesting@gmail.com',
-     #:password             => 'simplepassword',
-     #:authentication       => "plain",
-    #:enable_starttls_auto => true
-    #}
     
     if ENV['USE_SENDGRID'].to_i == 1
       config.action_mailer.smtp_settings = {
