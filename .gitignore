@@ -18,6 +18,8 @@
 !/log/.keep
 /tmp
 
+/coverage
+
 /config/master.key
 /config/credentials/development.key
 /config/credentials/production.key
