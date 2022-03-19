@@ -16,6 +16,11 @@ RSpec.describe Event, type: :model do
     expect(event).to_not be_valid
   end
 
+  it "fails if date is in the past" do
+    event = build(:event, datetime: Faker::Date.backward)
+    expect(event).to_not be_valid
+  end
+
   it "has a valid model with title, address, and datetime fields" do
     event = build(:event)
     expect(event).to be_valid

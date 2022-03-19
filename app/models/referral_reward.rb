@@ -1,6 +1,9 @@
 class ReferralReward < ApplicationRecord
-    belongs_to :events
+    belongs_to :event
+
+    has_many :guest_referral_rewards
     has_many :guests, through: :guest_referral_rewards
 
-    validate :reward, presence: true
+    validates :reward, presence: true
+    validates :min_count, presence: true, numericality: {greater_than_or_equal_to: 0}
 end
