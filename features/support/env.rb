@@ -1,3 +1,4 @@
+require 'factory_bot_rails'
 require 'simplecov'
 SimpleCov.start 'rails'
 
@@ -8,6 +9,7 @@ SimpleCov.start 'rails'
 # files.
 
 require 'cucumber/rails'
+World(FactoryBot::Syntax::Methods)
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any

@@ -18,7 +18,7 @@ gem "best_in_place", git: "https://github.com/bernat/best_in_place"
 gem "devise", "~> 4.8"
 
 group :test do
-  gem "cucumber-rails"
+  gem "cucumber-rails", require: false
   gem "capybara"
   gem "simplecov"
 end
