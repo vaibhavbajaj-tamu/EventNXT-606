@@ -9,8 +9,11 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     last_modified { Faker::Date.backward }
 
-    file = Dir.glob('spec/fixtures/files/img/**/*').reject {|f| File.directory?(f)}.sample
-    image { Rack::Test::UploadedFile.new(file, Rack::Mime.mime_type(File.extname(file))) }
+    file_img = Dir.glob('spec/fixtures/files/img/**/*').reject {|f| File.directory?(f)}.sample
+    image { Rack::Test::UploadedFile.new(file_img, Rack::Mime.mime_type(File.extname(file_img))) }
+
+    file_ss = Dir.glob('spec/fixtures/files/spreadsheet/*').reject {|f| File.directory?(f)}.sample
+    box_office { Rack::Test::UploadedFile.new(file_ss, Rack::Mime.mime_type(File.extname(file_ss))) }
 
     factory :event_all do
       transient do

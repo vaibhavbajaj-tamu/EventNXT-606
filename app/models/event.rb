@@ -4,13 +4,15 @@ class Event < ApplicationRecord
     has_many :seats, dependent: :destroy
     has_many :referral_rewards, dependent: :destroy
     has_one_attached :image, dependent: :purge_later
+    has_one_attached :box_office, dependent: :purge_later
 
     validates :title, presence: true
     validates :address, presence: true
     # todo: validator for datetime > current_date
     validates :datetime, presence: true, expiration: true
     validates :last_modified, presence: true
-    validate :image_format
+    validate :validate_image
+    validate :validate_box_office
     
     require 'roo'
     def self.import(file)
@@ -56,9 +58,16 @@ class Event < ApplicationRecord
     end
 
     private
-    def image_format
+    def validate_image
       return unless image.attached?
       return if image.blob.content_type.start_with? 'image/'
       errors.add(:image, 'needs to be an image')
+    end
+
+    def validate_box_office
+      return unless box_office.attached?
+      content_types = ['csv', 'tsv', 'xlsx', 'xlsm', 'ods'].map { |ext| Rack::Mime.mime_type ".#{ext}" }
+      return if box_office.blob.content_type.start_with? *content_types
+      errors.add(:box_office, 'needs to be ods, xlsx, xlsm, csv, or tsv')
     end
 end
