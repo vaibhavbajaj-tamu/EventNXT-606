@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :event do
-    sequence(:id)
     association :user
 
     title { Faker::Lorem.word }

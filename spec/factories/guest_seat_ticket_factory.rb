@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :guest_seat_ticket do
-    sequence(:id)
     association :guest
     association :seat
 

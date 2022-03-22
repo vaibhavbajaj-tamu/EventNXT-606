@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :guest do
-    sequence(:id)
     association :event
     association :user
 

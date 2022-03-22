@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :referral_reward do
-    sequence(:id)
     association :event
 
     reward { Faker::Lorem.word }

@@ -17,7 +17,12 @@ RSpec.describe GuestReferralReward, type: :model do
   end
 
   it "has a valid model with guest and referral reward associations" do
-    guest_referral_reward = build(:guest_referral_reward)
+    user = build :user, id: 1
+    event = build :event, id: 1, user: user
+    guest = build :guest, id: 1, event: event, user: user
+    reward = build :referral_reward, id: 1, event: event
+
+    guest_referral_reward = build :guest_referral_reward, guest: guest, referral_reward: reward
     expect(guest_referral_reward).to be_valid
   end
 end
