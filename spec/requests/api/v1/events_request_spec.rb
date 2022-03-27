@@ -2,7 +2,18 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::EventsController", type: :request do
   describe "GET /api/v1/events" do
-    pending "should return a json list of all events"
+    let!(:user) { create :user }
+    let!(:event_list) { create_list :event, 3, user: user}
+
+    it "should return a json list of all events" do
+      get '/api/v1/events', params: { user_id: user.id }
+      expect(response).to be_successful
+      expect(response.content_type).to eq("application/json; charset=utf-8")
+      
+      events = JSON.parse response.body
+      expect(events.length).to be == 3
+      expect(events[0]).to include("title", "datetime", "address", "description")
+    end
   end
 
   describe 'POST /api/v1/events' do

@@ -1,8 +1,12 @@
 class Api::V1::EventsController < Api::V1::ApiController
   def index
+    events = Event.where(user_id: params[:user_id]).limit(params[:limit]).offset(params[:offset])
+    render json: events.map{|event| event.as_json.merge({image_url: rails_storage_proxy_url(event.image)})}
   end
-  
+
   def show
+    event = Event.find(params[:id])
+    render json: event
   end
 
   def create
@@ -26,7 +30,7 @@ class Api::V1::EventsController < Api::V1::ApiController
   private
   def event_params
     params.permit(:title, :address, :datetime, :description,
-        :image, :box_office, :x1, :y1, :x2, :y2)
+        :image, :box_office, :x1, :y1, :x2, :y2, :user_id)
   end
 
   def render_valid(event)
