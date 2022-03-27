@@ -25,7 +25,7 @@ RSpec.describe "Api::V1::EventsController", type: :request do
 
     context 'user uploads a file in image field' do
       it 'should accept with images under the image parameter' do
-        p = attributes_for(:event, image: fixture_file_upload('img/jpg/img-64x64.jpg', 'image/jpg'))
+        p = attributes_for(:event, image: fixture_file_upload('img/jpg/img-64x64.jpg', 'image/jpeg'))
         post '/api/v1/events', params: p
         expect(response).to be_successful
       end
