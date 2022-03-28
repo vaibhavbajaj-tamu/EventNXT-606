@@ -1,6 +1,6 @@
 class Api::V1::GuestsController < Api::V1::ApiController
   def index
-    guests = Guest.where(event_id: params[:event_id])
+    guests = Guest.where(event_id: params[:event_id]).limit(params[:limit]).offset(params[:offset])
     render json: guests
   end
 
@@ -27,6 +27,12 @@ class Api::V1::GuestsController < Api::V1::ApiController
     else
       render json: guest.errors(), status: :unprocessable_entity
     end
+  end
+
+  def refer
+    guest = Guest.find(params[:guest_id])
+    guest.guest_referral_rewards.update_all('count = count + 1')
+    head :ok
   end
 
   def book

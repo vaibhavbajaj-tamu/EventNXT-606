@@ -15,10 +15,12 @@ Rails.application.routes.draw do
   namespace :api, except: [:new, :edit] do
     namespace :v1 do
       resources :events do
+        get '/refer' => 'guests#refer'
         resources :guests do
           get '/invite' => 'guests#invite'
           patch '/book' => 'guests#book'
         end
+        resources :referral_rewards, path: :rewards
         resources :seats
       end
     end
