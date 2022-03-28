@@ -22,7 +22,7 @@ _(Subsequent use may omit the_ `-d` _and_ `--build` _flag.)_
 
 Verify the containers are `up` by running `docker-compose up`. Then, set up the database by running
 
-`docker-compose run rails bash -c 'rake db:create && rake db:migrate'`
+`docker-compose run rails rake db:create db:migrate`
 
 _(Must be done if the_ `--build` _flag is used.)_
 
