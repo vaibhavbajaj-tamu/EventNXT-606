@@ -1,6 +1,12 @@
 class Api::V1::GuestsController < Api::V1::ApiController
   def index
     guests = Guest.where(event_id: params[:event_id]).limit(params[:limit]).offset(params[:offset])
+    if params.has_key? :download
+      event_title = Event.find(params[:event_id]).title.gsub ' ', '_'
+      filename = "#{event_title}-guests-#{Time.now.strftime('%Y%m%d-%H%M%S')}.csv"
+      send_data guests.to_csv, type: 'text/csv', filename: filename
+      return
+    end
     render json: guests
   end
 

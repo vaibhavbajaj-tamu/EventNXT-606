@@ -17,6 +17,13 @@ RSpec.describe "Api::V1::GuestsController", type: :request do
         expect(guests[0]).to include("email", "booked")
       end
 
+      it 'should provide a csv download with the download parameter' do
+        get "/api/v1/events/#{event.id}/guests", params: { download: true }
+
+        expect(response).to be_successful
+        expect(response.content_type).to eq("text/csv")
+      end
+
       it 'should get a guest with :guest_id' do
         get "/api/v1/events/#{event.id}/guests/#{guest_list[0].id}"
         expect(response).to be_successful
