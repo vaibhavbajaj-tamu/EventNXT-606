@@ -1,7 +1,10 @@
 class Api::V1::EventsController < Api::V1::ApiController
   def index
     events = Event.where(user_id: params[:user_id]).limit(params[:limit]).offset(params[:offset])
-    render json: events.map{|event| event.as_json.merge({image_url: rails_storage_proxy_url(event.image)})}
+    render json: events.map{ |event|
+      image_url = event.image.attached? ? rails_storage_proxy_url(event.image) : ''
+      event.as_json.merge({image_url: image_url})
+    }
   end
 
   def show
