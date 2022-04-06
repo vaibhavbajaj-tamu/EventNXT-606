@@ -214,7 +214,10 @@ function refresh()
   <div style="text-align: center;">
   <h1 style="text-align: center; color: white;">Dashboard</h1>
   <br><br><br>
-    
+  <% if @event %> <!--- need to check if user has an event and then put something up here that shows that that event exists -->
+    <p>Event Exists</p>
+  <% end %>
+  <br><br><br>  
     <%= button_to "Manage Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
 
     <br><br><br>
@@ -225,17 +228,19 @@ function refresh()
     
    <br><br>
     <div id="rsvp-contents-toggle">
-    <%= form_tag '/events/create_event', :id => "rsvp-form" do %>
+    <%= form_tag '/api/v1/events', :id => "rsvp-form" do %>
 
-    <%= text_field_tag(:e_title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;") %><br><br>
-    <%= text_field_tag(:event_date, nil, placeholder: "MM/DD/YYYY")%><br><br>
-    <%= text_field_tag(:event_tickets, nil, placeholder: "Number of Tickets")%><br><br>
+    <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;") %><br><br>
+    <%= text_field_tag(:datetime, nil, placeholder: "MM/DD/YYYY")%><br><br>
+    <!--<%= text_field_tag(:num_tickets, nil, placeholder: "Number of Tickets")%><br><br>-->
+    <%= text_field_tag(:address, nil, placeholder: "Address")%><br><br> <!-- https://github.com/kristianmandrup/gmaps-autocomplete-rails link for GMaps integration - might be too old for use -->
 
-    <%= text_field_tag(:event_picture, nil, :title => "Right click on image and copy image address to paste here.", placeholder: "Image address or path") %><br><br>
-    <%= text_field_tag(:event_picture_size_left, nil, placeholder: "Height: e.g. 300px") %>
-    <%= text_field_tag(:event_picture_size_right, nil, placeholder: "Width: e.g. 300px") %><br><br>
+    <!--<label for=":image">File to upload</label><%= file_field_tag(:image) %><br><br>-->
     
-    <%= text_area_tag(:event_text, nil, placeholder: "Event description", style:"background-color: transparent; color: white;") %><br><br>
+    <%= text_area_tag(:description, nil, placeholder: "Event description", style:"background-color: transparent; color: white;") %><br><br>
+    <%= hidden_field_tag(:last_modified, Time.now) %>
+    <%= hidden_field_tag(:user_id, 95) %>
+    <!-- reminder to pass in the user_id -->
 
 
     <div style="text-align: center;">
