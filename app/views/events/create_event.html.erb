@@ -117,12 +117,22 @@ function refresh()
 
 </script>
 
+    <form method='post' action='http://localhost:3000/events'>
+      <input type='number' id='user_id' name='user_id'>
+      <input type='text' id='title' name='title'>
+      <input type='text' id='address' name='address'>
+      <input type='text' id='description' name='description'>
+      <input type='datetime-local' id='datetime', name='datetime'>
+      <input type="hidden" id="last_modified" name="last_modified" value= <%= Time.now %> >
+      <input type='submit'>
+    </form>
+
 <br>
 
     <h4>Invitation Card Contents Preview</h4>
 
     <div class="ticket" style="background: white; color: black; border: 2px solid white; border-radius: 3px;">
-        <h2 id="event-t" style="color: black;"><%= $title_saved.to_s %></h2><br>
+        <h2 id="event-t" style="color: black;"><%= $event_title %></h2><br>
         <div id="img">
         <% if $event_image %>
           <p> <%= image_tag($event_image, :size => "300x300", :crop => :fill) %> <p>

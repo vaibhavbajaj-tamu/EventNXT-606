@@ -8,14 +8,16 @@ class Api::V1::EventsController < Api::V1::ApiController
   end
 
   def show
+    #@event = Event.find(params[:id])
     @event = Event.find(params[:id])
+    #render json: {event: event}
   end
 
   def create
     #p = event_params
     #p[:last_modified] = Time.new
     event = Event.create(event_params)
-    render_valid(event)
+    render_valid(@event)
     #render json: {params: event_params, event: event}
   end
 
@@ -37,13 +39,14 @@ class Api::V1::EventsController < Api::V1::ApiController
   end
 
   def render_valid(event)
+    @event = event
     if event.valid?
       event.image.attach(params[:image]) if params[:image].present?
       event.box_office.attach(params[:image]) if params[:box_office].present?
       #head :ok
       #render json: {event: event, params: params}
       params[:id] = event.id
-      show
+      @event
     else
       render json: {errors: event.errors.full_messages}, status: :unprocessable_entity
     end

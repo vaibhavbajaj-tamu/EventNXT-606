@@ -209,6 +209,15 @@ function refresh()
 </script>
 
 <body>
+  <form method='post' action='events/create_event'>
+    <input type='number' id='user_id' name='user_id'>
+    <input type='text' id='title' name='title'>
+    <input type='text' id='address' name='address'>
+    <input type='text' id='description' name='description'>
+    <input type='datetime-local' id='datetime', name='datetime'>
+    <input type="hidden" id="last_modified" name="last_modified" value= <%= Time.now %> >
+    <input type='submit'>
+  </form>
   <section id="panel">
   <br><br>
   <div style="text-align: center;">
@@ -228,7 +237,7 @@ function refresh()
     
    <br><br>
     <div id="rsvp-contents-toggle">
-    <%= form_tag '/api/v1/events', :id => "rsvp-form" do %>
+    <%= form_tag '/events/create_event', :id => "rsvp-form" do %>
 
     <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;") %><br><br>
     <%= text_field_tag(:datetime, nil, placeholder: "MM/DD/YYYY")%><br><br>
@@ -239,17 +248,20 @@ function refresh()
     
     <%= text_area_tag(:description, nil, placeholder: "Event description", style:"background-color: transparent; color: white;") %><br><br>
     <%= hidden_field_tag(:last_modified, Time.now) %>
-    <%= hidden_field_tag(:user_id, 95) %>
-    <!-- reminder to pass in the user_id -->
+    <%= hidden_field_tag(:user_id, 95) %> <!-- reminder to pass in the user_id -> make this not hardcoded-->
 
 
     <div style="text-align: center;">
     <br>
     <p id="error-msg", style="color: red;"></p>
+
+    <!--<%= button_to "Save and Continue", "api/v1/events/:id", :class => "button", :id => "thisone" %>-->
+    <button type="submit" class="button">Create Event</button>
+    <button type="submit" class="button"><a>Save and Continue</a></button> <!-- here to show event -->
+    <button type="submit" class="button">Skip to Manage Page</button>
+    <!--<%= submit_tag "Save and Continue", :id => "thisone", :class => "button" %>-->
     
-    <%= submit_tag "Save and Continue", :id => "thisone", :class => "button" %>
-    
-    <%= submit_tag "Skip to Manage Page", :id => "thisone", :class => "button" %>
+    <!--<%= submit_tag "Skip to Manage Page", :id => "thisone", :class => "button" %>-->
     <br><br><br>
     </div>
     </div>
