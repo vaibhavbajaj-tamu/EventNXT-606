@@ -21,8 +21,14 @@
 !/log/.keep
 /tmp
 
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+/public/assets
+
 /coverage
 
 /config/master.key
 /config/credentials/development.key
 /config/credentials/production.key
+
