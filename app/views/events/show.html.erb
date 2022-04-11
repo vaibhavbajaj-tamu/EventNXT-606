@@ -19,182 +19,126 @@
       padding-bottom: 100vh;
       background-color: white;
     }
-    
+
+  h3{
+  text-align: center;
+  }
+
+  #referral-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+  }
+
+  .level-contents-toggle{
+    text-align: center;
+  }
+
+  #referral-contents-toggle{
+    display: none; 
+    text-align: center; 
+    padding-top: 10px; 
+    padding-bottom: 20px; 
+    background-color: #e6ccff;
+    color: black; 
+    border-radius: 10px;
+    padding: 10px;
+  }
 </style>
+
+<script>
+//JS toggles RSVP Form visibility
+  function toggle_referral() {
+  var button_name = document.getElementById("referral-prepper");
+  var x = document.getElementById("referral-contents-toggle");
+  if (button_name.innerHTML == "Open Referral Reward Template") {
+    button_name.innerHTML = "Close Referral Reward Template";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Referral Reward Template";
+    button_name.style.background = "lightgreen";
+    x.style.display = "none";
+  }
+}
+
+function refresh() {
+  // or $('#myform')[0] with jQuery
+  $("#reward-msg").load(location.href + " #reward-msg");
+  
+}
+</script>
 
 <body>
 <section>
 <h2><%= @event.title %></h2>
+
 <!--<h2>The Control Room</h2>-->
-
-<%= link_to "Back", root_path, class:"btn btn-primary" %><br><br>
-
-
-<h3>Summarized Ticket Commitments Information</h3>
-
-<div class="table-responsive">
-<table class="table table-sm col-md-12">
-  <thead class="thead-light">
-    <tr> 
-      <th>Seat Category</th>
-      <th>Total Seats</th>
-      <th>Total Box Office Commitments</th>
-      <th>Total Guest Commitments</th>
-      <th>Balance</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!--<tr>-->
-    <!-- <td><%= @event.seat_category %></td>-->
-    <!-- <td><%= best_in_place [@event], :total_seats, :as => :input, :place_holder => "#{@event.total_seats}", :url => event_path(@event) %></td>-->
-    <!--   <td><%= @event.total_seats_box_office %></td>-->
-    <!--   <td><%= @event.total_seats_guest %></td>-->
-    <!--   <td><%= @event.balance %></td>-->
-    <!-- </tr>-->
-  <!--  <% @total_seat_wise_split.each do |row| %>
-      <tr>
-        <td><%= row.seat_category %></td>
-        <td><%= row.total_seats %></td>
-        <td><%= row.vip_seats %></td>
-        <td><%= row.non_vip_seats %></td>
-        <td><%= row.balance %></td>
-      </tr>
-      
-    <% end %>
-    -->
-    
-    <% @seat_type_split.each do |row| %>
-      <tr>
-        <td><%= row.seat_category %></td>
-        <td><%= row.total_seat_count %></td>
-        <td><%= row.box_office_seat_count %></td>
-        <td><%= row.vip_seat_count %></td>
-        <td><%= row.balance_seats %></td>
-        <td><%= link_to 'Edit', edit_seating_type_path(row) %></td>
-        <td><%= link_to 'Delete', row, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-
-    <tr>
-
-    <!-- <%= form_tag("/seating_types/") %>
-      <td><%= text_field_tag :"seating_type" %></td>
-      <td><%= text_field_tag :"total_seat_count" %></td>
-      <td><%= submit_tag("Add") %></td>
-    </form>
-    -->
-    <td>  
-          
-    </tr>
-  </tbody>
-</table>
-
-
-
-</div>
-
-<div style="text-align: center;">
-<%= link_to 'New Seating Type', new_seating_type_path, class:"btn btn-primary" %> <br> <br>
-
-
+<p>Event Date: <%=@event.datetime %></p> <!-- format this to look nicer -->
+<p>Address: <%=@event.address %></p> <!-- <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p> Example of what addr should look like--> 
+<p>Description: <%=@event.description %></p>
 <br><br>
+<%= button_to "Edit Event", edit_event_url(@event), :method => :get%>
+<%= button_to "Delete Event", @event, :method => :delete, data: {confirm: "Are you sure you want to delete this event?"} %>
+<br><br>
+<h1>Manage Guests</h1><br>
+
+<div id="form-div">
+<h3>Import Box Office Data</h3>
+<%= form_tag import_new_spreadsheet_path, multipart: true  do %> 
+  <div style="text-align: center;">
+    <br>
+    <%= label_tag(:file, "Accepted types: .xlsx") %><br>
+    <%= file_field_tag(:file, :id => "file-button") %><br><br>
+    <%= submit_tag("Import Latest Box Office Data", :class => "button") %>
+  </div>
+<% end %>
 </div>
+<br><br><br>
 
+<h1 class="display-6" style="text-align: center; color: gray;"> Referral Rewards </h1><br><br>
+<div id="referral">
+  <div style="text-align: center;" id="center-referral-button">
+    <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Open Referral Reward Template</button>
+  </div>
+  <br><br>
+  <div id="referral-contents-toggle">
+  <h4>Referral Reward Email Template</h4>
+  <div class="referral-template" style="background: white; color: black;"> 
+        <p>Hi Guest,</p>
+        <p id="reward-msg">Please send your friend an invitation to FashionNXT by inserting their email in the box below. You will receive <%= $reward.to_s %> Reward if any of your friends purchase tickets to FashionNXT.</p>
+        <p id="email"><b>Email:  <%= label_tag(:email, "")%>
+        <%= text_field_tag(:email, nil, :required => 'true', placeholder: "email", style:"color: black;")%><br><br></p>
+        <p>Choose the date you are going and want your friends to join:</p>
+        <p id="event-date"><b>Event date:  <%= label_tag(:event_date, "") %>
+        <%= text_field_tag(:event_date, nil, :required => 'true', placeholder: "MM/DD/YYYY", style:"color: black;")%><br><br></p>
+  </div>
 
-<h3> Guest List </h3>
-
-<div class="table-responsive">
-<table class="table table-sm col-md-12">
-  <thead class="thead-light">
-    <tr>
-      <% @guest_params.each do |param| %>
-        <% column_title = param.dup.gsub('_', ' ')%>
-        <% column_title.capitalize! %>
-        <th><%= column_title %></th>
-      <% end %>
-      <th>Action</th>
-      <!--<th>Ticket Booking Status</th>-->
-      <!--<th>Total Booked</th>-->
-    </tr>
-  </thead>
-  <tbody>
-    <% @guests.each do |guest| %>
-      <tr>
-        <% @guest_params.each do |param| %>
-          <td>
-            <%= best_in_place [@event, guest], param, :as => :input, :place_holder => "#{guest[param]}", 
-              :url => update_event_guest_path(@event, guest) %>
-          </td>
-        <% end %>
-        <td>
-          <%= link_to "Send",  send_event_guest_path(@event, guest)%>
-          <%= link_to "Delete", [@event, guest], method: :delete, data: { confirm: "Are you sure?" } %>
-        </td>
-        <!--<td>-->
-        <!--  <%= guest.booking_status %>-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--  <%= guest.total_booked_num %>-->
-        <!--</td>-->
-      </tr>
+    <%= form_tag '/events/create_event', :id => "referral-form", :remote => true do %>
+    <%= label_tag(:reward, "Insert Reward:", :style => "color: black;") %>
+    <%= text_field_tag(:reward, nil, :required => 'true', placeholder: "XYZ Reward", :style => "color: black;")%><br><br>
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded" %>
     <% end %>
-    <tr>
-      <%= form_for [@event, @event.guests.build] do |form| %>
-      <!--<%= form_for [@event, @event.guests.build],  :url => update_event_guest_path(@event) do |form| %>-->
-        <% @guest_params.each do |param| %>  
-        <% if param=="event_id" %>  
-          <td> 
-            <%= form.hidden_field :"#{param}" , value: @event.id %>
-          </td>
-        <% else %>
-          <td> 
-            <%= form.text_field :"#{param}" %>
-          </td>
-        <% end %>
-        <% end %>
-        <td><%= submit_tag("Add") %></td>
-      <% end %>
-      
-      <!--<% (0..1).each do |i| %>     -->
-      <!--  <td></td>-->
-      <!--<% end %>-->
-    </tr>
-  </tbody>
-</table>
+       
+       <br>
+        <%= button_tag "Preview Changes", :id => "thisone", :type => "button", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+      <br>
+
+
+
+    <!--<br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>-->
+
 </div>
 
-<%= form_tag reconcile_path %>
-<br>
-<%= link_to "Reconcile", event_path(:reconcile => 'true', :id => @event.id), class:"btn btn-primary" %>
+<%= link_to "Back", root_path, class:"btn btn-primary" %><br><br> <!-- question if/what this should change to -->
 
-<h3><br>Box Office List</h3>
-<div class="table-responsive">
-<table class="table table-sm" id="events">
-<thead class="thead-light">
-  <tr>
-    <% @customers[0].each do |column_name| %>
-      <th><%= column_name %></th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
-  <% @customers[1..-1].each do |row| %>
-    <tr>
-      <% row.each do |cell| %>
-        <td>
-          <%= cell %>
-        </td>
-      <% end %>
-    </tr>
-  <% end %>
-</tbody>
-</table>
-</div>
+
+
+
+
 </section>
 </body>
-<%end%>
-
-
-
