@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
-  resources :seating_types
-  devise_for :users
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-  # You can have the root of your site routed with "root"
-  root 'events#index'
+
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+
+  devise_for :users, path: '',
+    path_names: {
+      registration: 'register'
+    },
+    controllers: {
+      registrations: 'registrations'
+    },
+    defaults: {format: :json}
+
+  root 'welcome#index'
+  post '/login' => 'login#create'
+
   get 'events/index'
   post 'events/index'
   get 'events/create_event'

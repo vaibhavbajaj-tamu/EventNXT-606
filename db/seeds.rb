@@ -9,6 +9,10 @@
 require 'factory_bot_rails'
 include FactoryBot::Syntax::Methods
 
+# Applications
+
+Doorkeeper::Application.create(name: 'Web', redirect_uri: '')
+
 Faker::Config.random = Random.new(42)
 
 N_USERS_WITH_EVENTS  = 3
@@ -18,7 +22,7 @@ SEATS_PER_EVENT      = 3
 REWARDS_PER_EVENT    = 3
 
 create :user, email: Rails.application.credentials.admin[:email], password: Rails.application.credentials.admin[:password],
-  created_at: Time.now, updated_at: Time.now
+  is_admin: true, created_at: Time.now, updated_at: Time.now
 
 users = create_list :user, N_USERS_WITH_EVENTS
 users.each { |user|
