@@ -24,31 +24,31 @@
   text-align: center;
   }
 
-#referral-button {
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  appearance: button;
-  padding: 20px;
-  font-size: 20px;
-  text-decoration: none;
-  color: white;
-  background-color: black;
-}
+  #referral-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+  }
 
-.level-contents-toggle{
-text-align: center;
-}
+  .level-contents-toggle{
+    text-align: center;
+  }
 
-#referral-contents-toggle{
-display: none; 
-text-align: center; 
-padding-top: 10px; 
-padding-bottom: 20px; 
-background-color: #e6ccff;
-color: black; 
-border-radius: 10px;
-padding: 10px;
-}
+  #referral-contents-toggle{
+    display: none; 
+    text-align: center; 
+    padding-top: 10px; 
+    padding-bottom: 20px; 
+    background-color: #e6ccff;
+    color: black; 
+    border-radius: 10px;
+    padding: 10px;
+  }
 </style>
 
 <script>
@@ -56,7 +56,7 @@ padding: 10px;
   function toggle_referral() {
   var button_name = document.getElementById("referral-prepper");
   var x = document.getElementById("referral-contents-toggle");
-  if (x.style.display == "none") {
+  if (button_name.innerHTML == "Open Referral Reward Template") {
     button_name.innerHTML = "Close Referral Reward Template";
     x.style.display = "block";
   } else {
@@ -82,7 +82,8 @@ function refresh() {
 <p>Address: <%=@event.address %></p> <!-- <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p> Example of what addr should look like--> 
 <p>Description: <%=@event.description %></p>
 <br><br>
-<%= button_to "Delete", @event, :method => :delete, data: {confirm: "Are you sure you want to delete this event?"} %>
+<%= button_to "Edit Event", edit_event_url(@event), :method => :get%>
+<%= button_to "Delete Event", @event, :method => :delete, data: {confirm: "Are you sure you want to delete this event?"} %>
 <br><br>
 <h1>Manage Guests</h1><br>
 
@@ -101,7 +102,9 @@ function refresh() {
 
 <h1 class="display-6" style="text-align: center; color: gray;"> Referral Rewards </h1><br><br>
 <div id="referral">
-  <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Create Referral Reward Template</button>
+  <div style="text-align: center;" id="center-referral-button">
+    <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Open Referral Reward Template</button>
+  </div>
   <br><br>
   <div id="referral-contents-toggle">
   <h4>Referral Reward Email Template</h4>
@@ -127,7 +130,7 @@ function refresh() {
 
 
 
-    <br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>
+    <!--<br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>-->
 
 </div>
 
