@@ -81,7 +81,8 @@ function refresh() {
 <p>Event Date: <%=@event.datetime %></p> <!-- format this to look nicer -->
 <p>Address: <%=@event.address %></p> <!-- <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p> Example of what addr should look like--> 
 <p>Description: <%=@event.description %></p>
-
+<br><br>
+<%= button_to "Delete", @event, :method => :delete, data: {confirm: "Are you sure you want to delete this event?"} %>
 <br><br>
 <h1>Manage Guests</h1><br>
 
