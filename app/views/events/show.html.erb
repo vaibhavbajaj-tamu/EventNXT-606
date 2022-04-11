@@ -19,8 +19,59 @@
       padding-bottom: 100vh;
       background-color: white;
     }
-    
+
+  h3{
+  text-align: center;
+  }
+
+#referral-button {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  padding: 20px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+}
+
+.level-contents-toggle{
+text-align: center;
+}
+
+#referral-contents-toggle{
+display: none; 
+text-align: center; 
+padding-top: 10px; 
+padding-bottom: 20px; 
+background-color: #e6ccff;
+color: black; 
+border-radius: 10px;
+padding: 10px;
+}
 </style>
+
+<script>
+//JS toggles RSVP Form visibility
+  function toggle_referral() {
+  var button_name = document.getElementById("referral-prepper");
+  var x = document.getElementById("referral-contents-toggle");
+  if (x.style.display == "none") {
+    button_name.innerHTML = "Close Referral Reward Template";
+    x.style.display = "block";
+  } else {
+    button_name.innerHTML = "Open Referral Reward Template";
+    button_name.style.background = "lightgreen";
+    x.style.display = "none";
+  }
+}
+
+function refresh() {
+  // or $('#myform')[0] with jQuery
+  $("#reward-msg").load(location.href + " #reward-msg");
+  
+}
+</script>
 
 <body>
 <section>
@@ -28,9 +79,58 @@
 
 <!--<h2>The Control Room</h2>-->
 <p>Event Date: <%=@event.datetime %></p> <!-- format this to look nicer -->
-<p>Address: <%=@event.address %></p>
+<p>Address: <%=@event.address %></p> <!-- <p><b>Event Address: 1255 NW 9th Ave, Portland, OR 97209</b></p> Example of what addr should look like--> 
 <p>Description: <%=@event.description %></p>
-<%= link_to "Back", root_path, class:"btn btn-primary" %><br><br>
+
+<br><br>
+<h1>Manage Guests</h1><br>
+
+<div id="form-div">
+<h3>Import Box Office Data</h3>
+<%= form_tag import_new_spreadsheet_path, multipart: true  do %> 
+  <div style="text-align: center;">
+    <br>
+    <%= label_tag(:file, "Accepted types: .xlsx") %><br>
+    <%= file_field_tag(:file, :id => "file-button") %><br><br>
+    <%= submit_tag("Import Latest Box Office Data", :class => "button") %>
+  </div>
+<% end %>
+</div>
+<br><br><br>
+
+<h1 class="display-6" style="text-align: center; color: gray;"> Referral Rewards </h1><br><br>
+<div id="referral">
+  <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Create Referral Reward Template</button>
+  <br><br>
+  <div id="referral-contents-toggle">
+  <h4>Referral Reward Email Template</h4>
+  <div class="referral-template" style="background: white; color: black;"> 
+        <p>Hi Guest,</p>
+        <p id="reward-msg">Please send your friend an invitation to FashionNXT by inserting their email in the box below. You will receive <%= $reward.to_s %> Reward if any of your friends purchase tickets to FashionNXT.</p>
+        <p id="email"><b>Email:  <%= label_tag(:email, "")%>
+        <%= text_field_tag(:email, nil, :required => 'true', placeholder: "email", style:"color: black;")%><br><br></p>
+        <p>Choose the date you are going and want your friends to join:</p>
+        <p id="event-date"><b>Event date:  <%= label_tag(:event_date, "") %>
+        <%= text_field_tag(:event_date, nil, :required => 'true', placeholder: "MM/DD/YYYY", style:"color: black;")%><br><br></p>
+  </div>
+
+    <%= form_tag '/events/create_event', :id => "referral-form", :remote => true do %>
+    <%= label_tag(:reward, "Insert Reward:", :style => "color: black;") %>
+    <%= text_field_tag(:reward, nil, :required => 'true', placeholder: "XYZ Reward", :style => "color: black;")%><br><br>
+    <%= submit_tag "Save Changes", :id => "thisone", :class => "btn btn-success btn-rounded" %>
+    <% end %>
+       
+       <br>
+        <%= button_tag "Preview Changes", :id => "thisone", :type => "button", :class => "btn btn-success btn-rounded", :onclick => "refresh()" %>
+      <br>
+
+
+
+    <br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>
+
+</div>
+
+<%= link_to "Back", root_path, class:"btn btn-primary" %><br><br> <!-- question if/what this should change to -->
 
 
 

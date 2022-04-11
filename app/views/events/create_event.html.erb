@@ -43,8 +43,33 @@ section{
   text-align: center;
 }
 
+div {
+  align-items: center;
+}
+
 p {
   color: black;
+  display: table-row;
+  text-align: center;
+}
+
+label{
+  display: table-cell;
+}
+
+input {
+  color: white; 
+  background-color: transparent; 
+  border: 2px solid white; 
+  border-radius: 2px; 
+  padding: 5px;
+  font-size: 16px;
+  display: table-cell;
+}
+
+form{
+  display: table;
+  margin-left: 25%
 }
 
 .button{
@@ -59,6 +84,51 @@ p {
   opacity: 0.5;
 }
 
+#rsvp-contents{
+  text-align: center; 
+  padding-top: 10px; 
+  padding-bottom: 20px; 
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  padding: 10px;
+  border: 3px solid white;
+  color: white;
+}
+
+#rsvp-button {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  padding: 20px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+}
+
+.level-contents-toggle{
+text-align: center;
+}
+
+#rsvp-form{
+  color: black;
+}
+
+.level-box{
+  margin-right: 5px;
+}
+
+.capacity-box{
+  margin-right: 5px;
+}
+
+.ticket {
+        text-align: center;
+        border: 3px solid black;
+        margin: 50px;
+}
 
 #referral-button {
     -webkit-appearance: button;
@@ -117,15 +187,30 @@ function refresh()
 
 </script>
 
-    <form method='post' action='http://localhost:3000/events'>
-      <input type='number' id='user_id' name='user_id'>
-      <input type='text' id='title' name='title'>
-      <input type='text' id='address' name='address'>
-      <input type='text' id='description' name='description'>
-      <input type='datetime-local' id='datetime', name='datetime'>
-      <input type="hidden" id="last_modified" name="last_modified" value= <%= Time.now %> >
-      <input type='submit'>
-    </form>
+<h4>Event Creation</h4>
+
+<div id="rsvp-contents">
+  <form id="rsvp-form" method='post' action='http://localhost:3000/events'>
+  <p>
+    <label for="user_id">User ID(Temporary):</label>&nbsp<input type='number' id='user_id' name='user_id'><br><br>
+  </p>
+  <p>
+    <label for="title">Event Title:</label>&nbsp<input type='text' id='title' name='title'><br><br>
+  </p>
+  <p>
+    <label for="address">Event Address:</label>&nbsp<input type='text' id='address' name='address'><br><br> <!-- https://github.com/kristianmandrup/gmaps-autocomplete-rails link for GMaps integration - might be too old for use -->
+  </p>
+  <p>
+    <label for="description">Event Description:</label>&nbsp<input type='text' id='description' name='description'><br><br>
+  </p>
+  <p>
+    <label for="datetime">Event Date:</label>&nbsp<input type='datetime-local' id='datetime', name='datetime'><br><br>
+  </p>
+    <input type="hidden" id="last_modified" name="last_modified" value= <%= Time.now %> >
+    <!--<label for=":image">File to upload</label><%= file_field_tag(:image) %><br><br> Image us not working currently-->
+    <button type="submit" value="submit" class="button">Create Event</button>
+  </form>
+</div>
 
 <br>
 

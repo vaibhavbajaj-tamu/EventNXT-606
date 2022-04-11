@@ -37,6 +37,8 @@
         <li class="nav-item">
           <%= link_to " Edit Profile" , edit_user_registration_path, class: "nav-link"%>
         </li>
+        <!-- work to get this to only show up on the main page for now is always on top bar -->
+        <%= button_to "Create Event", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded"%>
 
       <%else %>  
         

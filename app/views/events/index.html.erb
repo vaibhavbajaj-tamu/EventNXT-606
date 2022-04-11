@@ -209,67 +209,20 @@ function refresh()
 </script>
 
 <body>
-  <form method='post' action='events/create_event'>
-    <input type='number' id='user_id' name='user_id'>
-    <input type='text' id='title' name='title'>
-    <input type='text' id='address' name='address'>
-    <input type='text' id='description' name='description'>
-    <input type='datetime-local' id='datetime', name='datetime'>
-    <input type="hidden" id="last_modified" name="last_modified" value= <%= Time.now %> >
-    <input type='submit'>
-  </form>
   <section id="panel">
   <br><br>
   <div style="text-align: center;">
   <h1 style="text-align: center; color: white;">Dashboard</h1>
   <br><br><br>
-  <% if @event %> <!--- need to check if user has an event and then put something up here that shows that that event exists -->
-    <p>Event Exists</p>
-  <% end %>
-  <br><br><br>  
-    <%= button_to "Manage Event ", events_create_event_path, :method => "get", class: "btn btn-success btn-rounded" %>
-
-    <br><br><br>
-  <button type="button" id="rsvp-prepper" class="button" style="font-size: 20px; padding: 10px;" onclick="toggle_RSVP()">Create New Event</button>
+  <ul>
+    <% @events.each do |event| %>
+    <li>
+      <a href="/events/<%= event.id %>"> <%= event.title %> </a>
+    </li>
+    <% end %>
+  </ul>
+  <br><br><br>
   </div>
   <br>
-
-    
-   <br><br>
-    <div id="rsvp-contents-toggle">
-    <%= form_tag '/events/create_event', :id => "rsvp-form" do %>
-
-    <%= text_field_tag(:title, nil, placeholder: "Event Name", :style => "color: white; background-color: transparent; border: 2px solid white; border-radius: 2px; padding: 5px;") %><br><br>
-    <%= text_field_tag(:datetime, nil, placeholder: "MM/DD/YYYY")%><br><br>
-    <!--<%= text_field_tag(:num_tickets, nil, placeholder: "Number of Tickets")%><br><br>-->
-    <%= text_field_tag(:address, nil, placeholder: "Address")%><br><br> <!-- https://github.com/kristianmandrup/gmaps-autocomplete-rails link for GMaps integration - might be too old for use -->
-
-    <!--<label for=":image">File to upload</label><%= file_field_tag(:image) %><br><br>-->
-    
-    <%= text_area_tag(:description, nil, placeholder: "Event description", style:"background-color: transparent; color: white;") %><br><br>
-    <%= hidden_field_tag(:last_modified, Time.now) %>
-    <%= hidden_field_tag(:user_id, 95) %> <!-- reminder to pass in the user_id -> make this not hardcoded-->
-
-
-    <div style="text-align: center;">
-    <br>
-    <p id="error-msg", style="color: red;"></p>
-
-    <!--<%= button_to "Save and Continue", "api/v1/events/:id", :class => "button", :id => "thisone" %>-->
-    <button type="submit" class="button">Create Event</button>
-    <button type="submit" class="button"><a>Save and Continue</a></button> <!-- here to show event -->
-    <button type="submit" class="button">Skip to Manage Page</button>
-    <!--<%= submit_tag "Save and Continue", :id => "thisone", :class => "button" %>-->
-    
-    <!--<%= submit_tag "Skip to Manage Page", :id => "thisone", :class => "button" %>-->
-    <br><br><br>
-    </div>
-    </div>
-    
-  </div>
-<% end %>
-
-<br><br>
-<br>
 </section>
 </body>
