@@ -15,7 +15,7 @@ gem "sassc-rails", "~> 2.1.0"
 gem "jbuilder", "~> 2.11.0"
 
 gem "bootstrap", "~> 5.1"
-gem "uglifier", ">= 1.3.0"
+gem "terser", "~> 1.1"
 
 gem "roo", "~> 2.8.0"
 gem "best_in_place", git: "https://github.com/bernat/best_in_place"
