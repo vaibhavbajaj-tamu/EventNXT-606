@@ -19,7 +19,6 @@ gem "bootstrap", "~> 5.1"
 gem "terser", "~> 1.1"
 
 gem "roo", "~> 2.8.0"
-gem "best_in_place", git: "https://github.com/bernat/best_in_place"
 gem "devise", "~> 4.8.0"
 gem "doorkeeper", "~> 5.5.0"
 gem "rack-cors"
