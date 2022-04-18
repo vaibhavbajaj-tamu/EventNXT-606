@@ -8,12 +8,19 @@ class Guest < ApplicationRecord
   has_many :referral_rewards, through: :guest_referral_rewards, dependent: :destroy
 
   attribute :booked, :boolean, default: false
+  attribute :checked, :boolean, default: false
   
   validates :email, presence: true, uniqueness: true
   validates :booked, inclusion: [true, false, nil]
   validates :added_by, presence: true
   validates :invite_expiration, expiration: true
   validates :referral_expiration, expiration: true
+  validate :checked_only_if_booked
+
+  def checked_only_if_booked
+    return if (booked || !checked)
+    errors.add(:checked, "can't be true if guest hasn't booked")
+  end
 
   def self.to_csv
     guests = all

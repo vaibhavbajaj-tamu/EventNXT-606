@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get '/refer' => 'guests#refer'
         resources :guests do
           get '/invite' => 'guests#invite'
+          get '/checkin' => 'guests#checkin'
           patch '/book' => 'guests#book'
         end
         resources :referral_rewards, path: :rewards

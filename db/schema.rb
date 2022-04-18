@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_09_023149) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_11_160450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_09_023149) do
     t.datetime "invite_expiration", precision: nil
     t.datetime "referral_expiration", precision: nil
     t.datetime "invited_at", precision: nil
+    t.boolean "checked", default: false
     t.index ["added_by"], name: "index_guests_on_added_by"
     t.index ["email"], name: "index_guests_on_email", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"

@@ -62,6 +62,30 @@ RSpec.describe "Api::V1::GuestsController", type: :request do
     end
   end
 
+  describe 'GET /api/v1/events/:event_id/guests/:guest_id/checkin' do 
+    let(:event) { create :event }
+
+    context 'there is a guest booked with an event' do
+      let!(:guest) { create :guest, event: event, booked: true, checked: false}
+      it 'should update the checkin status of the guest' do
+        get "/api/v1/events/#{event.id}/guests/#{guest.id}/checkin"
+        expect(response).to be_successful
+
+        g = Guest.find(guest.id)
+        g.reload
+        expect(g.checked).to eq true
+      end
+    end
+
+    context 'there is a guest not booked with an event' do
+      let!(:guest) { create :guest, event: event, booked: false, checked: false }
+      it 'should fail to checkin the guest' do
+        get "/api/v1/events/#{event.id}/guests/#{guest.id}/checkin"
+        expect(response).to_not be_successful
+      end
+    end
+  end
+
   describe 'GET /api/v1/events/:event_id/guests/:guest_id/book' do
     context 'guest has received an invite to the event' do
       let(:event) { create :event }
