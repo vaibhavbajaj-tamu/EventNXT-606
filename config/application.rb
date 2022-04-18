@@ -14,7 +14,17 @@ module EventNXT
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += Dir[File.join(Rails.root, 'app', 'models', 'validators')]
-    config.logger = Logger.new("log/#{Time.new.strftime('%Y%m%dT%H%M%S')}.log")
+
+    # skip deprecation warnings
+    config.active_record.legacy_connection_handling = false
+    config.active_storage.replace_on_assign_to_many = true
+
+    log_path = "log/#{Rails.env}.log"
+    log_bak_path = "#{log_path}.bak"
+    begin
+      FileUtils.cp(log_path, log_bak_path)
+    rescue; end
+    config.logger = Logger.new(log_path)
     
     if ENV['USE_SENDGRID'].to_i == 1
       config.action_mailer.smtp_settings = {
