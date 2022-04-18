@@ -94,11 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
     t.datetime "invite_expiration", precision: nil
     t.datetime "referral_expiration", precision: nil
     t.datetime "invited_at", precision: nil
-<<<<<<< HEAD
-    t.boolean "checked", default: false
-=======
     t.datetime "emailed_at", precision: nil
->>>>>>> add email api
+    t.boolean "checked", default: false
     t.index ["added_by"], name: "index_guests_on_added_by"
     t.index ["email"], name: "index_guests_on_email", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"
