@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   namespace :api, except: [:new, :edit] do
     namespace :v1 do
       resources :users, except: [:create]
+      resources :email, only: [:create]
       resources :events do
         get '/refer' => 'guests#refer'
         resources :guests do
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
           get '/checkin' => 'guests#checkin'
           patch '/book' => 'guests#book'
         end
+        resources :email_templates, path: :templates
         resources :referral_rewards, path: :rewards
         resources :seats
       end

@@ -22,6 +22,10 @@ class Guest < ApplicationRecord
     errors.add(:checked, "can't be true if guest hasn't booked")
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.to_csv
     guests = all
     CSV.generate(headers: true) do |csv|

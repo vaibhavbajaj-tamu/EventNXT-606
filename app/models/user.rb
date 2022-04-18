@@ -15,6 +15,10 @@ class User < ApplicationRecord
 
   validates :email, presence: true, email: true
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.authenticate(email, password)
     user = User.find_for_authentication(email: email)
     user&.valid_password?(password) ? user : nil

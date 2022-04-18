@@ -19,6 +19,7 @@ class UpdateDatabase < ActiveRecord::Migration[6.1]
       t.datetime :invite_expiration
       t.datetime :referral_expiration
       t.datetime :invited_at
+      t.datetime :emailed_at
     end
     rename_column :guests, :user_id, :added_by
     add_index :guests, :email, unique: true

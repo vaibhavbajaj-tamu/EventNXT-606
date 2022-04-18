@@ -84,10 +84,6 @@ class Api::V1::GuestsController < Api::V1::ApiController
       head :unprocessable_entity
     end
   end
-
-  def email
-    # todo: send custom email
-  end
   
   def create
     guest = Guest.new(guest_params_create)
@@ -111,7 +107,7 @@ class Api::V1::GuestsController < Api::V1::ApiController
   def destroy
     guest = Guest.find(params[:id])
     guest.destroy
-    render status: :ok 
+    head :ok 
   end
   
   private

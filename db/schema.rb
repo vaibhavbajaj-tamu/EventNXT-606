@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_11_160450) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_160450) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "email_templates", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.string "subject"
+    t.string "body", null: false
+    t.boolean "is_html", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_email_templates_on_event_id"
+    t.index ["user_id"], name: "index_email_templates_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -81,7 +94,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_160450) do
     t.datetime "invite_expiration", precision: nil
     t.datetime "referral_expiration", precision: nil
     t.datetime "invited_at", precision: nil
+<<<<<<< HEAD
     t.boolean "checked", default: false
+=======
+    t.datetime "emailed_at", precision: nil
+>>>>>>> add email api
     t.index ["added_by"], name: "index_guests_on_added_by"
     t.index ["email"], name: "index_guests_on_email", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"
@@ -170,6 +187,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_160450) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "email_templates", "events"
+  add_foreign_key "email_templates", "users"
   add_foreign_key "events", "users"
   add_foreign_key "guest_referral_rewards", "guests"
   add_foreign_key "guest_referral_rewards", "referral_rewards"

@@ -4,6 +4,7 @@ ruby ">=2.7.0", "<3.0.0"
 
 gem "rails", "~> 7.0.0"
 gem "pg", "~> 1.1.4"
+gem "mustache", "~> 1.1"
 
 gem "sprockets-rails"
 
