@@ -36,9 +36,16 @@ class Api::V1::GuestsController < Api::V1::ApiController
   end
 
   def refer
+    # todo: use a unique random token rather than guest id
     guest = Guest.find(params[:guest_id])
-    guest.guest_referral_rewards.update_all('count = count + 1')
-    head :ok
+    referral = GuestReferral.new 
+    referral.guest = guest
+    referral.email = params[:email]
+    if referral.save
+      head :ok
+    else
+      render json: referral.errors(), status: :unprocessable_entity
+    end
   end
 
   def book

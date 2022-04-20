@@ -6,7 +6,6 @@ FactoryBot.define do
     address { Faker::Address.full_address }
     datetime { Faker::Date.forward }
     description { Faker::Lorem.paragraph }
-    last_modified { Faker::Date.backward }
 
     # ORIGINAL:
     #file_img = Dir.glob('spec/fixtures/files/img/**/*').reject {|f| File.directory?(f)}.sample

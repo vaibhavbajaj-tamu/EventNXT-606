@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_18_062903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,7 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
     t.string "address", null: false
     t.datetime "datetime", precision: nil, null: false
     t.string "description"
-    t.datetime "last_modified", precision: nil, null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
@@ -71,6 +70,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
     t.integer "count", default: 0
     t.index ["guest_id"], name: "index_guest_referral_rewards_on_guest_id"
     t.index ["referral_reward_id"], name: "index_guest_referral_rewards_on_referral_reward_id"
+  end
+
+  create_table "guest_referrals", force: :cascade do |t|
+    t.bigint "guest_id", null: false
+    t.string "email", null: false
+    t.boolean "counted", default: false, null: false
+    t.index ["email"], name: "index_guest_referrals_on_email"
+    t.index ["guest_id"], name: "index_guest_referrals_on_guest_id"
   end
 
   create_table "guest_seat_tickets", force: :cascade do |t|
@@ -189,6 +196,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_15_223120) do
   add_foreign_key "events", "users"
   add_foreign_key "guest_referral_rewards", "guests"
   add_foreign_key "guest_referral_rewards", "referral_rewards"
+  add_foreign_key "guest_referrals", "guests"
   add_foreign_key "guest_seat_tickets", "guests"
   add_foreign_key "guest_seat_tickets", "seats"
   add_foreign_key "guests", "events"
