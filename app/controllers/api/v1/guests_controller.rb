@@ -20,7 +20,7 @@ class Api::V1::GuestsController < Api::V1::ApiController
   end
   
   def invite
-    guest = Guest.find(params[:guest_id])
+    guest = Guest.find(params[:id])
     if guest.booked and !params.has_key? :resend
       res = {:message => "#{guest.first_name} #{guest.last_name} has already confirmed this invitation."}
       render json: res
@@ -59,7 +59,7 @@ class Api::V1::GuestsController < Api::V1::ApiController
     #     }
     #   }
     # }
-    guest = Guest.find(params[:guest_id])
+    guest = Guest.find(params[:id])
 
     guest.update_attribute :booked, params[:accept].present?
     guest.reload
@@ -75,7 +75,7 @@ class Api::V1::GuestsController < Api::V1::ApiController
     seats = params_confirm[:seats].to_h
 
     seats.each {|_, h| 
-      guest.seats.where(guest_id: params[:guest_id], seat_id: h[:seat_id]).update_all(committed: h[:committed])
+      guest.seats.where(guest_id: params[:id], seat_id: h[:seat_id]).update_all(committed: h[:committed])
     }
 
     # todo: customize which and how many tickets were comitted
@@ -84,7 +84,7 @@ class Api::V1::GuestsController < Api::V1::ApiController
   end
 
   def checkin
-    guest = Guest.find(params[:guest_id])
+    guest = Guest.find(params[:id])
     if guest.update({checked: true})
       head :ok
     else
