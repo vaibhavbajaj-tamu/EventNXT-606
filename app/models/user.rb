@@ -10,7 +10,7 @@ class User < ApplicationRecord
             foreign_key: :resource_owner_id,
             dependent: :delete_all
 
-  has_many :guests
+  has_many :guests, foreign_key: :added_by
   has_many :events
 
   validates :email, presence: true, email: true

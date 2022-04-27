@@ -1,0 +1,48 @@
+<div id='users' data-controller='index update destroy'
+    data-index-url-value='/api/v1/users' data-destroy-url-value='/api/v1/users' data-update-url-value='/api/v1/users'
+    data-index-offset-value=0 data-index-limit-value=10>
+  <template data-index-target='template'>
+    <tr data-update-target='update'>
+      <td><input class='id' type='checkbox' name='id' data-destroy-target='destroy'></td>
+      <td class='name'><span class='first_name'></span> <span class='last_name'></span></td>
+      <td><input class='is_admin decor' type='checkbox' disabled>
+      <td class='email'></td>
+      <td class='created_at'></td>
+    </tr>
+  </template>
+  <div class='d-flex justify-content-end'>
+    <label class='me-2' for='size'>Number of results:</label>
+    <select id='size' data-index-target='limit' data-action="index#updateLimit">
+      <option value="10">10</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+        <th scope="col">Email</th>
+        <th scope="col">Created</th>
+      </tr>
+    </thead>
+    <tbody data-index-target='dom'>
+    </tbody>
+  </table>
+  <div class='d-flex justify-content-between'>
+    <div>
+      <button data-action='update#updateBatchFromCheckbox' data-update-payload-param='{"is_admin": true}'>Elevate</button>
+      <button data-action='update#updateBatchFromCheckbox' data-update-payload-param='{"is_admin": false}'>Demote</button>
+      <button data-action='click->destroy#destroy'>Deactivate</button>
+    </div>
+    <div>
+      <button><i class='bi bi-chevron-double-left'></i></button>
+      <button data-action='index#decrementOffset'><i class='bi bi-chevron-left'></i></button>
+      <button data-action='index#incrementOffset'><i class='bi bi-chevron-right'></i></button>
+      <button><i class='bi bi-chevron-double-right'></i></button>
+    </div>
+  </div>
+</div>

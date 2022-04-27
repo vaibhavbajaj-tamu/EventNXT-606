@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
   post '/login' => 'login#create'
+  get '/admin' => 'admin#index'
 
   get 'events/index'
   post 'events/index'
