@@ -32,6 +32,4 @@ Stop the containers using
 
 _(Use_ `Ctrl-C` _to stop the containers if the_ `-d` _flag was omitted.)_
 
-## Current Work
-
-🚧🚧🚧
+See the `documentation` folder for our current work.
