@@ -1,12 +1,25 @@
 class EventsController < ApplicationController
   def index
     #@events = Event.all
-    @events = Event.where(user_id: 95) # hardcoded needs to be as some type of param
+    @events = Event.where(user_id: 64) # hardcoded needs to be as some type of param
   end
 
   def show
     @event = Event.find(params[:id])
     @event_id = params[:id]
+    @seats = Seat.where(event_id: params[:id])
+    @guests = Guest.where(event_id: params[:id])
+    @res = Seat.left_joins(:guest_seat_tickets, :guests)
+              .select('seats.category,price,total_count,'\
+                      'sum(coalesce(committed,0)) as total_committed,'\
+                      'sum(coalesce(allotted,0)) as total_allotted,'\
+                      'total_count - sum(coalesce(committed,0)) as remaining,'\
+                      'count(*) filter(where "booked") as total_booked,'\
+                      'count(*) filter (where not "booked") as total_not_booked,'\
+                      'count(distinct(guest_id)) as total_guests,'\
+                      'sum(coalesce(committed,0)) * price as balance')
+              .group('seats.id')
+              .where(seats: {event_id: @event.id})
   end
 
   def new
@@ -14,7 +27,13 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
+    par = event_params.to_h
+    if doorkeeper_token
+      par[:user_id] = doorkeeper_token[:resource_owner_id]
+    else
+      par[:user_id] = warden.authenticate(scope: :public)
+    end
+    @event = Event.new(par)
 
     #render json: {event: event}
     if @event.save
@@ -44,9 +63,33 @@ class EventsController < ApplicationController
     redirect_to root_path
   end
 
+  def import_new_spreadsheet
+    if !params[:file]
+      redirect_to root_path
+    end
+    
+    @event = Event.import(params[:file])
+    redirect_to @event
+  end
+
+  def summary
+    res = GuestSeatTicket.joins(:seat, :guest)
+              .select('category,price,total_count,'\
+                      'sum(committed) as total_committed,'\
+                      'sum(allotted) as total_allotted,'\
+                      'total_count - sum(committed) as remaining,'\
+                      'count(*) filter(where "booked") as total_booked,'\
+                      'count(*) filter (where not "booked") as total_not_booked,'\
+                      'count(distinct(guest_id)) as total_guests,'\
+                      'sum(committed) * price as balance')
+              .group('seats.id')
+              .where(seats: {event_id: params[:event_id]})
+    render json: res.to_json, except: [:id]
+  end
+
   private
   def event_params
-    params.permit(:title, :address, :datetime, :image, :description, :box_office, :last_modified, :user_id)
+    params.permit(:title, :address, :datetime, :image, :description, :last_modified, :box_office, :user_id, :token)
   end
 
   def render_valid(event)

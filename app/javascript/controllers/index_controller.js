@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class IndexController extends Controller {
   static targets = [ 'dom', 'template', 'limit', 'offset' ];
-  static values = { url: String, offset: Number, limit: Number };
+  static values = { url: String, offset: Number, limit: { type: Number, default: 10 }};
 
   connect() { this.query(); }
 
@@ -11,15 +11,24 @@ export default class IndexController extends Controller {
       offset: this.offsetValue,
       limit: this.limitValue
     })
-    fetch(`${this.urlValue}?${params.toString()}`)
-      .then(response => response.json())
+    fetch(`${this.urlValue}?${params.toString()}`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("access_token")
+      }
+    }).then(response => response.json())
       .then(data => {
+          this.preProcess();
           this.domTarget.innerHTML = '';
-          for (const d of data)
-            this.domTarget.appendChild(this.display(d))
+          if (Array.isArray(data))
+            for (const d of data)
+              this.domTarget.appendChild(this.display(d))
+          else
+            this.domTarget.appendChild(this.display(data))
           this.postProcess();
-        })
+      })
   }
+
+  preProcess() {}
 
   postProcess() {}
 
@@ -92,10 +101,23 @@ export default class IndexController extends Controller {
         result = value;
       }
 
-      const elems = template.querySelectorAll(`.${key}`)
+      const elems = template.querySelectorAll(`[data-nxt-${key}]`)
       if (elems === null)
         continue;
       elems.forEach( elem => {
+        if (result !== null){
+          if (typeof(result) == "string") { // edit date into normal format using JS
+            if(result.includes(":")){
+              var split = result.split("T")
+              result = split[0]
+            }
+          }
+          elem.setAttribute(`data-nxt-${key}`, result)
+        }
+
+        if (elem.getAttribute('data-nxt-nomod') !== null)
+          return;
+
         if (elem.tagName === "INPUT"
               || elem.tagName === 'SELECT'
               || elem.tagName === 'BUTTON') {
@@ -107,10 +129,25 @@ export default class IndexController extends Controller {
           } else {
             elem.value = result;
           }
+        } else if (elem.tagName === "IMG") {
+          if (result !== null)
+            elem.src = result;
+        } else if (elem.tagName === "A") {
+          if (result !== null)
+            elem.href = result;
+          else
+            elem.classList.add("disabled");
         } else {
           elem.innerHTML = result;
         }
       });
+
+      if (key === 'id') {
+        let elems = template.querySelectorAll('a[data-nxt-link_]');
+        elems.forEach( elem => {
+          elem.href = `${window.location.href}/${value}`
+        });
+      }
     }
     return template;
   }
@@ -126,7 +163,7 @@ export default class IndexController extends Controller {
   }
 
   decrementOffset() {
-    if (this.offsetValue > 0)
+    if (this.offsetValue - this.limitValue >= 0)
       this.offsetValue -= this.limitValue;
   }
 
@@ -135,11 +172,13 @@ export default class IndexController extends Controller {
       this.limitValue = this.offsetTarget.value
   }
 
-  limitValueChanged() {
-    this.query();
+  limitValueChanged(value, previousValue) {
+    if (value != previousValue)
+      this.query();
   }
 
-  offsetValueChanged() {
-    this.query();
+  offsetValueChanged(value, previousValue) {
+    if (value != previousValue)
+      this.query()
   }
 }

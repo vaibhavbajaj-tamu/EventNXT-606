@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   post '/login' => 'login#create'
   get '/admin' => 'admin#index'
 
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
+  # You can have the root of your site routed with "root"
   get 'events/index'
   post 'events/index'
   get 'events/create_event'
@@ -29,7 +32,8 @@ Rails.application.routes.draw do
       resources :users, except: [:create]
       resources :email, only: [:create]
       resources :events do
-        get '/refer' => 'guests#refer'
+        get '/summary' => 'events#summary'
+        resource :guest_referrals, path: :refer, only: [:show, :create]
         resources :guests do
           member do
             get :invite
@@ -40,14 +44,20 @@ Rails.application.routes.draw do
         end
         resources :email_templates, path: :templates
         resources :referral_rewards, path: :rewards
+        resources :referral_summary, only: [:index]
         resources :seats
       end
     end
   end
   
   resources :events do
+    resource :refer
+    resource :book
     resources :guests
+    resources :seating_types
   end
+
+  
 
   post '/import_new_spreadsheet' => 'events#import_new_spreadsheet'
   post '/open_existed_spreadsheet'  => 'events#open_existed_spreadsheet', as: :open_existed_spreadsheet

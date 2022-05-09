@@ -1,30 +1,42 @@
 class Api::V1::EventsController < Api::V1::ApiController
   def index
-    events = Event.where(user_id: params[:user_id]).limit(params[:limit]).offset(params[:offset])
+    render json: {message: 'No bearer token'}, status: :forbidden and return unless current_user
+    events = Event.where(user_id: current_user.id).limit(params[:limit]).offset(params[:offset])
     render json: events.map{ |event|
       with_attachments(event)
     }
   end
 
   def show
-    #@event = Event.find(params[:id])
     @event = Event.find(params[:id])
-    #render json: {event: event}
+    render json: {event: @event}
   end
 
   def create
-    #p = event_params
-    #p[:last_modified] = Time.new
-    event = Event.create(event_params)
+    render json: {message: 'No bearer token'}, status: :forbidden and return unless current_user
+    par = event_params.to_h
+    par[:user_id] = current_user.id
+    event = Event.create(par)
     render_valid(event)
-    #render json: {params: event_params, event: event}
+    if event.valid?
+      event.save
+      create_default_templates(event)
+      render json: with_attachments(event)
+    else
+      render json: {errors: event.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def update
     event = Event.find params[:id]
     update_referral_count event
     event.update(event_params)
-    render_valid(event)
+    if event.valid?
+      event.save
+      render json: with_attachments(event)
+    else
+      render json: {errors: event.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -48,6 +60,21 @@ class Api::V1::EventsController < Api::V1::ApiController
     head :ok
   end
 
+  def summary
+    res = Seat.left_joins(:guest_seat_tickets, :guests)
+              .select('seats.category,price,total_count,'\
+                      'sum(coalesce(committed,0)) as total_committed,'\
+                      'sum(coalesce(allotted,0)) as total_allotted,'\
+                      'total_count - sum(coalesce(committed,0)) as remaining,'\
+                      'count(*) filter(where "booked") as total_booked,'\
+                      'count(*) filter (where not "booked") as total_not_booked,'\
+                      'count(distinct(guest_id)) as total_guests,'\
+                      'sum(coalesce(committed,0)) * price as balance')
+              .group('seats.id')
+              .where(seats: {event_id: params[:event_id]})
+    render json: res, except: [:id]
+  end
+
   private
 
   def with_attachments(model)
@@ -57,6 +84,8 @@ class Api::V1::EventsController < Api::V1::ApiController
   end
 
   def update_referral_count(event)
+    # updates the referral count after updating the box office data by looking for
+    # the referred email
     return unless event_params.has_key? :box_office
     prior_emails = event.box_office.open do |file|
       sheet = Roo::Spreadsheet.open(file.path)
@@ -80,21 +109,32 @@ class Api::V1::EventsController < Api::V1::ApiController
     GuestReferral.where(email: new_emails).update(counted: true)
   end
 
+  def create_default_templates(event)
+    rsvp_template = EmailTemplate.new 
+    rsvp_template.name = 'RSVP Invitation'
+    rsvp_template.subject = '{{event.title}} - Invitation'
+    rsvp_template.body = File.read(Rails.root.join('app', 'views', 'guest_mailer', 'rsvp_invitation_email.html'))
+    rsvp_template.is_html = true
+    rsvp_template.event_id = event.id
+    rsvp_template.user_id = current_user.id
+
+    confirmation_template = EmailTemplate.new 
+    confirmation_template.name = 'RSVP Confirmation'
+    confirmation_template.subject = '{{event.title}} - Confirmation'
+    confirmation_template.body = File.read(Rails.root.join('app', 'views', 'guest_mailer', 'rsvp_confirmation_email.html'))
+    confirmation_template.is_html = true
+    confirmation_template.event_id = event.id
+    confirmation_template.user_id = current_user.id
+    
+    rsvp_template.save
+    confirmation_template.save
+  end
+
   def event_params
     params.permit(:title, :address, :datetime, :image, :description, :box_office, :last_modified, :user_id)
         #:image, :box_office, :x1, :y1, :x2, :y2, :user_id)
   end
 
   def render_valid(event)
-    @event = event
-    if event.valid?
-      render json: with_attachments(event)
-      #head :ok
-      #render json: {event: event, params: params}
-      params[:id] = event.id
-      @event
-    else
-      render json: {errors: event.errors.full_messages}, status: :unprocessable_entity
-    end
   end
 end

@@ -47,8 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.string "subject"
-    t.string "body", null: false
-    t.boolean "is_html", default: false, null: false
+    t.string "body"
+    t.boolean "is_html", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_email_templates_on_event_id"
@@ -61,6 +61,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
     t.datetime "datetime", precision: nil, null: false
     t.string "description"
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -84,7 +86,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
     t.bigint "guest_id", null: false
     t.bigint "seat_id", null: false
     t.integer "committed"
-    t.integer "allotted"
+    t.integer "allotted", default: 0
+    t.index ["guest_id", "seat_id"], name: "index_guest_seat_tickets_on_guest_id_and_seat_id", unique: true
     t.index ["guest_id"], name: "index_guest_seat_tickets_on_guest_id"
     t.index ["seat_id"], name: "index_guest_seat_tickets_on_seat_id"
   end
@@ -104,7 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
     t.datetime "emailed_at", precision: nil
     t.boolean "checked", default: false
     t.index ["added_by"], name: "index_guests_on_added_by"
-    t.index ["email"], name: "index_guests_on_email", unique: true
+    t.index ["email", "event_id"], name: "index_guests_on_email_and_event_id", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"
   end
 

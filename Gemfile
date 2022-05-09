@@ -31,11 +31,9 @@ group :development, :test do
 
   gem "byebug"
   gem "database_cleaner", "~> 2.0.0"
-  gem "factory_bot_rails", "~> 6.2.0"
   gem "faker", "~> 2.20.0"
+  gem "factory_bot_rails", "~> 6.2.0"
 end
 
-group :development do
-  gem "web-console"
-  gem "spring"
-end
+gem "web-console"
+gem "spring"

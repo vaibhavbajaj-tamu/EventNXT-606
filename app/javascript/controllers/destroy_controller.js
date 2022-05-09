@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import IndexController from "./index_controller";
 
 export default class extends Controller {
   static targets = [ 'destroy' ];
@@ -10,21 +11,23 @@ export default class extends Controller {
         if (elem.checked)
           fetch(`${this.urlValue}/${elem.value}`, {
             method: 'DELETE'
-          }).then(response => this.indexController.query())
+          }).then(response => this.dispatch('deleted'))
       })
     }
   }
 
   destroyByValue(e) {
     let elem = e.currentTarget;
-    if (elem.value === '')
+    let resource;
+    if (elem.value && elem.value !== '') {
+      resource = elem.value;
+    } else if (elem.getAttribute('data-nxt-id')) {
+      resource = elem.getAttribute('data-nxt-id');
+    } else {
       return;
-    fetch(`${this.urlValue}/${elem.value}`, {
+    }
+    fetch(`${this.urlValue}/${resource}`, {
       method: 'DELETE'
-    }).then(response => this.indexController.query())
-  }
-
-  get indexController() {
-    return this.application.getControllerForElementAndIdentifier(this.element, "index")
+    }).then(response => this.dispatch('deleted'))
   }
 }
