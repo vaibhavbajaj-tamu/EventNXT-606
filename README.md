@@ -2,13 +2,17 @@
 
 ## Setup
 
-### Email
+### Credentials
 
-Get a SendGrid API key or use a free mail service. Create/modify the credential files using
+Create/modify the credential files using
 
 `rails credentials:edit --environment <ENVIRONMENT>`
 
-following the format in `config/credentials.yml` and create/edit the `.env` file following the format in `.env.template`. The default mail service defaults to `EMAIL_DOMAIN`, but can be changed to use `SENDGRID_DOMAIN` by setting `USE_SENDGRID=1` in the `.env` file.
+following the format in `config/credentials.yml` and create/edit the `.env` file following the format in `.env.template`. Alternatively, if you have the PGP key, decrypt `master.key.gpg` in the `config` folder. Then copy over the credentials from running `rails credentials:edit` to the credentials for the production environment using `rails credentials:edit --environment production`.
+
+### Email
+
+Get a SendGrid API key or use a free mail service.  The default mail service defaults to `EMAIL_DOMAIN`, but can be changed to use `SENDGRID_DOMAIN` by setting `USE_SENDGRID=1` in the `.env` file. Also, edit the rails credentials with credentials for a default email and SendGrid.
 
 ### Docker
 
