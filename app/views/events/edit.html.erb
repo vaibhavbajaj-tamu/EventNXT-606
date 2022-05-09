@@ -190,7 +190,7 @@ function refresh()
 <h4>Event Editor</h4>
 
 <div id="rsvp-contents">
-  <form id="rsvp-form" method='post' action='http://localhost:3000/events/<%= @event.id %>'> <!-- redirects to the correct place -->
+  <form id="rsvp-form" method='post' action='/events/<%= @event.id %>'> <!-- redirects to the correct place -->
   <input type="hidden" name="_method" value="patch"> <!-- unfortunate hardcoding here due to using this form, but fine -->
   <p>
     <label for="user_id">User ID(Temporary):</label>&nbsp<input type='number' id='user_id' name='user_id'><br><br>
