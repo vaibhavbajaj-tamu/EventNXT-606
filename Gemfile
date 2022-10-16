@@ -1,11 +1,11 @@
 source "https://rubygems.org"
 
-ruby ">=2.7.0", "<3.0.0"
+ruby "3.1.2"
 
 gem "rails", "~> 7.0.0"
-gem "pg", "~> 1.1.4"
+gem "pg", "~> 1.4.3"
 gem "mustache", "~> 1.1"
-
+gem "tzinfo-data"
 gem "sprockets-rails"
 
 gem "dotenv-rails", "~> 2.7.0"
