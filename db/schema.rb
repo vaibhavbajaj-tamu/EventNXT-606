@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_26_131412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "box_office_data", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.string "email", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "referral_code"
+    t.datetime "referral_expiration"
+    t.datetime "emailed_at"
+    t.index ["email", "event_id"], name: "index_box_office_data_on_email_and_event_id", unique: true
+    t.index ["event_id"], name: "index_box_office_data_on_event_id"
+    t.index ["user_id"], name: "index_box_office_data_on_user_id"
   end
 
   create_table "email_templates", force: :cascade do |t|
@@ -195,6 +209,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_092609) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "box_office_data", "events"
+  add_foreign_key "box_office_data", "users"
   add_foreign_key "email_templates", "events"
   add_foreign_key "email_templates", "users"
   add_foreign_key "events", "users"
