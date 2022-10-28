@@ -30,6 +30,7 @@ class Api::V1::EventsController < Api::V1::ApiController
   def update
     event = Event.find params[:id]
     update_referral_count event
+    #load_box_office_data event
     event.update(event_params)
     if event.valid?
       event.save
@@ -81,6 +82,22 @@ class Api::V1::EventsController < Api::V1::ApiController
     image_url = url_for(model.image) if model.image.attached?
     box_office_url = url_for(model.box_office) if model.box_office.attached?
     model.as_json.merge({ image_url: image_url, box_office_url: box_office_url })
+  end
+
+  def load_box_office_data(event)
+    return unless event_params.has_key? :box_office
+    sheet = Roo::Spreadsheet.open(event_params[:box_office].tempfile.path)
+    #  sheet = Roo::Spreadsheet.open(file.path)
+    sheet.each_with_index do |row, idx|
+      next if idx == 0
+      boxOfficeData = BoxOfficeData.new(:event_id => event.id, 
+        :user_id => current_user.id,
+        :first_name => row["Customer First Name"],
+        :last_name => row["Customer Last Name"])
+      puts "Saving boxOfficeData"
+      puts boxOfficeData
+      boxOfficeData.save!
+    end
   end
 
   def update_referral_count(event)
