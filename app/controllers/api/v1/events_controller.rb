@@ -30,7 +30,7 @@ class Api::V1::EventsController < Api::V1::ApiController
   def update
     event = Event.find params[:id]
     update_referral_count event
-    #load_box_office_data event
+    load_box_office_data event
     event.update(event_params)
     if event.valid?
       event.save
@@ -88,15 +88,20 @@ class Api::V1::EventsController < Api::V1::ApiController
     return unless event_params.has_key? :box_office
     sheet = Roo::Spreadsheet.open(event_params[:box_office].tempfile.path)
     #  sheet = Roo::Spreadsheet.open(file.path)
+    
+    event = Event.find(event.id)
+    event.sale_tickets.delete_all
+
     sheet.each_with_index do |row, idx|
-      next if idx == 0
-      boxOfficeData = BoxOfficeData.new(:event_id => event.id, 
+      next if idx == 0 || idx == 1
+      saleTicket = SaleTicket.new(:event_id => event.id, 
         :user_id => current_user.id,
-        :first_name => row["Customer First Name"],
-        :last_name => row["Customer Last Name"])
-      puts "Saving boxOfficeData"
-      puts boxOfficeData
-      boxOfficeData.save!
+        :first_name => row[1],
+        :last_name => row[0],
+        :email => row[8],
+        :seat_section => row[14],
+        :tickets => row[24])
+      saleTicket.save!
     end
   end
 

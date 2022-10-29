@@ -7,8 +7,5 @@ export default class BoxofficeController extends IndexController {
     query() {
       super.query();
     }
-
-    loadData(){
-        sss
-    }
+    
 }
