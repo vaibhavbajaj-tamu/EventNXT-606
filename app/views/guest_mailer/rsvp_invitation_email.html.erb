@@ -13,9 +13,13 @@
             position: relative;
             background-repeat: no-repeat
             text-align: center;
-            height: auto; 
-            width: auto;
+            height: 300; 
+            max-width: 100%
             display:block;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            width: 4000px;
         }
         table {
           border:2px solid black;
@@ -47,8 +51,9 @@
         <img class='w-25 me-2' src='<%= url_for(@event.image) %>' alt='Event image' title='Event Image'>
       
         <p><b>Event date: <%= @event.datetime %></b></p>
-        <p><b>Number of tickets: <%= $event_tickets.to_s %></b></p>
-        <p><b>Seat Category: <%= %></b></p>
+        <%= @guest.seats.select(:category).distinct.each do |category| %>
+          <p><b>Seat Category: <%= category %></b></p>
+        <% end %>
         <p><strong>About Event: </strong><%= @event.description %></p>
         <%= @event.address %>
         <br>
