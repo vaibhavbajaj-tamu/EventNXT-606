@@ -3,7 +3,7 @@
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
-  <body style=" background-image: url(https://www.pngitem.com/pimgs/m/219-2194844_fashion-design-designer-clothing-drawing-hq-image-free.png); background-size: 1300px 1300px; background-repeat: no-repeat">
+  <body style=" background-color: white;">
     <table align="center" border="0" cellpadding="0" cellspacing="0"
            width="1200" style="border:2px solid black">
         <tbody>
@@ -29,7 +29,7 @@
                 </td>
             </tr>
             <tr style="height: 100px;">
-                <td align="left" style="border: none;
+                <td align="center" style="border: none;
                           
                            padding-right: 80px;padding-left:60px">
    
@@ -39,6 +39,8 @@
                          You are invited to <p style="color: palevioletred;font-size: 32px"><strong>{{event.title}}</strong>
                         
                     </p>
+                    <div id="img"><img src='{{event.image.url}}' alt='Event image' title='Event Image' style="max-width: 100%;  
+                      height: 300px; width: 400px; border: 1px solid #ddd; border-radius: 4px; padding: 5px"></div>
                 </td>
             </tr>
    
@@ -59,16 +61,16 @@
                       <br>FASHIONNXT
                     <br>Invites you for {{event.title}}.</br>
                     <br>
-                    <br>TO FOLLOW</br>
+                    <br><strong>TO FOLLOW:</strong></br>
                     </p>
                     <div class="ticket">
-                      <div id="img"><img src='{{event.image.url}}' alt='Event image' title='Event Image' style="max-width: 100%;  
-                        height: auto; width: auto"></div>
+                     <!-- <div id="img"><img src='{{event.image.url}}' alt='Event image' title='Event Image' style="max-width: 100%;  
+                        height: auto; width: auto"></div>-->
                       <p><b><strong>Event date: </strong>{{event.datetime}}</b></p>
-                      {{#seats}}
-                      <p><b><strong>Seat Category:</strong>{{category}}</b></p>
-                      {{/seats}}
-                      <p><strong>Number of Tickets:</strong> {{event.tickets.to_s}}</p>
+                      {{#tickets}}
+                      <p><b>Seat Category: {{category}}</b></p>
+                      {{/tickets}}
+                     <!-- <p><strong>Number of Tickets:</strong> {{event.tickets.to_s}}</p>-->
                       <p><strong>About Event:</strong> {{event.description}}</p>
                       <p><strong>{{event.address}}</p>
                       
