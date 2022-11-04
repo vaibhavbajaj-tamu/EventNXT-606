@@ -27,10 +27,50 @@ class Api::V1::EventsController < Api::V1::ApiController
     end
   end
 
+  def headers
+    event = Event.find params[:event_id]
+    header = params[:id]
+    event.box_office.open do |file|
+      sheet = Roo::Spreadsheet.open(file.path)
+      sheet.each_with_index do |row, idx|
+        if idx+1 == header.to_i
+          render json: {row: row}
+          break
+        end
+      end
+    end
+  end
+
+  def dataload
+    event = Event.find params[:event_id]
+    header = params[:header].to_i
+    firstName = params[:firstName].to_i
+    lastName = params[:lastName].to_i
+    email = params[:email].to_i
+    seatLevel = params[:seatLevel].to_i
+    seats = params[:seats].to_i
+
+    event.sale_tickets.delete_all
+    event.box_office.open do |file|
+      sheet = Roo::Spreadsheet.open(file.path)
+      sheet.each_with_index do |row, idx|
+        next if idx < header.to_i
+        saleTicket = SaleTicket.new(:event_id => event.id, 
+          :user_id => current_user.id,
+          :first_name => row[firstName],
+          :last_name => row[lastName],
+          :email => row[email],
+          :seat_section => row[seatLevel],
+          :tickets => row[seats])
+        saleTicket.save!
+      end
+    end
+  end
+
   def update
     event = Event.find params[:id]
     update_referral_count event
-    load_box_office_data event
+    remove_box_office_data event
     event.update(event_params)
     if event.valid?
       event.save
@@ -84,25 +124,10 @@ class Api::V1::EventsController < Api::V1::ApiController
     model.as_json.merge({ image_url: image_url, box_office_url: box_office_url })
   end
 
-  def load_box_office_data(event)
+  def remove_box_office_data(event)
     return unless event_params.has_key? :box_office
-    sheet = Roo::Spreadsheet.open(event_params[:box_office].tempfile.path)
-    #  sheet = Roo::Spreadsheet.open(file.path)
-    
     event = Event.find(event.id)
     event.sale_tickets.delete_all
-
-    sheet.each_with_index do |row, idx|
-      next if idx == 0 || idx == 1
-      saleTicket = SaleTicket.new(:event_id => event.id, 
-        :user_id => current_user.id,
-        :first_name => row[1],
-        :last_name => row[0],
-        :email => row[8],
-        :seat_section => row[14],
-        :tickets => row[24])
-      saleTicket.save!
-    end
   end
 
   def update_referral_count(event)

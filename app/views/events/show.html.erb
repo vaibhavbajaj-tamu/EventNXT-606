@@ -236,8 +236,6 @@ eventModal.addEventListener('show.bs.modal', function (event) {
     <div class='d-flex'>
       <%= render 'email_template' %>
       <span class='ms-2 me-2'></span>
-      <%= render 'email_modal' %>
-      <span class='ms-2 me-2'></span>
       <%= render 'bulk_email' %>
     </div>
     <div>
@@ -249,21 +247,12 @@ eventModal.addEventListener('show.bs.modal', function (event) {
 
 <h2>Manage Box Office Sales</h2>
 <div class='mb-4'>
+  <span class='ms-2 me-2'></span>
   <%= render 'box_office_data' %>
 </div>
 
 <h2>Manage Referrals</h2>
 <%= render 'referral_table' %>
-
-<script>
-var emailModal = document.getElementById('email-modal')
-emailModal.addEventListener('show.bs.modal', function (event) {
-  var button = event.relatedTarget
-  var recipient = button.getAttribute('data-nxt-email')
-  var modalInput = emailModal.querySelector('#email-to')
-  modalInput.value = recipient
-})
-</script>
 
 <script>
 var bulkEmailModal = document.getElementById('bulk-email')
