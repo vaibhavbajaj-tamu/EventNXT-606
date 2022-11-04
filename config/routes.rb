@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       post '/email' => 'email#create'
       resources :events do
         get '/summary' => 'events#summary'
+        get '/headers/:id' => 'events#headers'
+        get '/dataload/:header/:firstName/:lastName/:email/:seatLevel/:seats' => 'events#dataload'
         resource :guest_referrals, path: :refer, only: [:show, :create]
         resources :guests do
           member do
@@ -45,6 +47,7 @@ Rails.application.routes.draw do
             resource :tickets
           end
         end
+        resources :sale_tickets
         resources :email_templates, path: :templates
         resources :referral_rewards, path: :rewards
         resources :referral_summary, only: [:index]
@@ -58,6 +61,7 @@ Rails.application.routes.draw do
     resource :book
     resources :guests
     resources :seating_types
+    resources :sale_tickets
   end
 
   
