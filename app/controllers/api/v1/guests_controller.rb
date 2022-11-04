@@ -77,6 +77,28 @@ class Api::V1::GuestsController < Api::V1::ApiController
     end
   end
   
+  def set_expiry
+    recipientsList = (params[:recipients][0]).split(';').collect.to_a
+    guests = []
+    for recipient in recipientsList do
+      guest = Guest.where(event_id: params[:event_id], email: recipient).collect.to_a
+      guests.push(guest.first)
+    end
+    guests.collect.to_a
+    guests.each{|guest| guest.update({ invite_expiration: params[:expiry_datetime] }) }
+
+    render json: guests, only: [:expiry]
+  end
+
+  def get_expired
+    guest = Guest.find(params[:guest_id])
+    expired = false
+    if guest and guest.invite_expiration < Time.now
+      expired = true
+    end
+    render json: expired
+  end
+
   def create
     guest = Guest.new(guest_params_create)
     guest.save
