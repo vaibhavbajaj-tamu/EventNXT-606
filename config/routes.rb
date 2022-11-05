@@ -34,6 +34,8 @@ Rails.application.routes.draw do
       resources :users, except: [:create]
       post '/email/bulk' => 'email#bulk'
       post '/email' => 'email#create'
+      post '/guest/set_expiry' => 'guests#set_expiry'
+      post '/guest/get_expired' => 'guests#get_expired'
       resources :events do
         get '/summary' => 'events#summary'
         get '/headers/:id' => 'events#headers'

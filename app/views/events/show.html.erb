@@ -239,6 +239,8 @@ eventModal.addEventListener('show.bs.modal', function (event) {
       <%= render 'email_modal' %>
       <span class='ms-2 me-2'></span>
       <%= render 'bulk_email' %>
+      <span class='ms-2 me-2'></span>
+      <%= render 'rsvp_expiry' %>
     </div>
     <div>
       <a href='/api/v1/events/<%= @event_id %>/guests?download'><button class='btn btn-primary'>Export Guest List</button></a>
@@ -280,6 +282,24 @@ var bulkEmailModal = document.getElementById('bulk-email')
     var bulkModal = document.getElementById('bulk-email')
     var modalInput = bulkModal.querySelector('#email-to')
     modalInput.value = recipients
+    })
+</script>
+
+<script>
+var setExpiryModal = document.getElementById('invite-expiry')
+    setExpiryModal.addEventListener('show.bs.modal', function () {
+      var forms = document.querySelectorAll("[name=guest_display]");
+      var recipients = "";
+
+       for (var i=0, n=forms.length;i<n;i++) {
+        if (forms[i].elements['guest_selector'].checked) {
+          recipients += forms[i].elements['guest_email'].value+";"
+        }
+       }
+    var expiryModal = document.getElementById('invite-expiry')
+    var modalInput = expiryModal.querySelector('#set-expiry-to')
+    modalInput.value = recipients
+    console.log(recipients)
     })
 </script>
 
