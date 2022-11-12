@@ -142,6 +142,8 @@ export default class GuestController extends IndexController {
       let guestData = new FormData();
       guestData.append('id', fd.get('id'))
       guestData.append('affiliation', fd.get('affiliation'))
+      guestData.append('perks', fd.get('perks'))
+      guestData.append('comments', fd.get('comments'))
       guestData.append('checked', fd.get('checked'))
       fetch(`${this.urlValue}/${guestId}`, {
         headers: {
