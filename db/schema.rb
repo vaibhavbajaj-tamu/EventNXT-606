@@ -99,6 +99,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_160245) do
     t.string "first_name"
     t.string "last_name"
     t.string "affiliation"
+    t.string "perks"
+    t.string "comments"
     t.string "type"
     t.boolean "booked"
     t.datetime "invite_expiration", precision: nil

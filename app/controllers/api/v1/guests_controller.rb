@@ -128,14 +128,14 @@ class Api::V1::GuestsController < Api::V1::ApiController
 
   def guest_params_update
     params.permit(
-      :email, :first_name, :last_name, :affiliation, :type, 
+      :email, :first_name, :last_name, :affiliation, :perks, :comments, :type, 
       :invite_expiration, :referral_expiration, :invited_at,
       :event_id, :checked)
   end
 
   def guest_params_create
     p = params.permit(
-      :email, :first_name, :last_name, :affiliation, :type,
+      :email, :first_name, :last_name, :affiliation, :perks, :comments, :type,
       :invite_expiration, :referral_expiration, :invited_at,
       :event_id).to_h
     p[:added_by] = current_user.id

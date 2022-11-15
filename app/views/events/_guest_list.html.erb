@@ -21,6 +21,8 @@
       <div class='col-md-1'><span data-nxt-first_name></span> <span data-nxt-last_name></span></div>
       <div class='col-md-2'><input name="guest_email" type="text" data-nxt-email disabled></div>
       <div class='col-md-1'><input class='form-control' type='text' name='affiliation' data-nxt-affiliation></p></div>
+      <div class='col-md-1'><input class='form-control' type='text' name='perks' data-nxt-perks></p></div>
+      <div class='col-md-1'><input class='form-control' type='text' name='comments' data-nxt-comments></p></div>
       <div class='col-md-1'><p data-nxt-added_by></p></div>
       <div class='col-md-1'><select class='form-select form-select-sm' name='seat_id' data-nxt-category data-guest-target='seat'></select></div>
       <div class='col-md-1'><input class='form-control' type='number' name='allotted' min=0 data-nxt-allotted disabled></div>
@@ -51,6 +53,8 @@
       <div class='col-md-1'><span data-bs-toggle='tooltip' data-bs-placement='top' title='123'>Name</span></div>
       <div class='col-md-2'>Email</div>
       <div class='col-md-1'>Affiliation</div>
+      <div class='col-md-1'>Perks</div>
+      <div class='col-md-1'>Comments</div>
       <div class='col-md-1'>Added By</div>
       <div class='col-md-2'>
         <div class='row'>
@@ -92,6 +96,18 @@
           <label for='guest-add-aff'>Affiliation</label>
         </div>
       </div>
+      <div class='col'>
+        <div class='form-floating'>
+          <input id='guest-add-perks' class='form-control' type='text' name='perks'>
+          <label for='guest-add-perks'>Perks</label>
+        </div>
+        </div> 
+        <div class='col'>
+        <div class='form-floating'>
+          <input id='guest-add-comments' class='form-control' type='text' name='comments'>
+          <label for='guest-add-comments'>Comments</label>
+        </div>
+       </div> 
       <div class='col'><button class='btn-sm btn-success h-100' form='form-add-guest'><i class='bi bi-plus'></i>Add Guest</button></div>
     </form>
   </div>
