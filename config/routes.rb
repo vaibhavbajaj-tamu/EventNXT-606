@@ -50,6 +50,7 @@ Rails.application.routes.draw do
           end
         end
         resources :sale_tickets
+        resources :boxoffice_headers
         resources :email_templates, path: :templates
         resources :referral_rewards, path: :rewards
         resources :referral_summary, only: [:index]
@@ -64,6 +65,7 @@ Rails.application.routes.draw do
     resources :guests
     resources :seating_types
     resources :sale_tickets
+    resources :boxoffice_headers
   end
 
   
