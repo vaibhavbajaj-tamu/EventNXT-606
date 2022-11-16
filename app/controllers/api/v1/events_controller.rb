@@ -50,6 +50,16 @@ class Api::V1::EventsController < Api::V1::ApiController
     seatLevel = params[:seatLevel].to_i
     seats = params[:seats].to_i
 
+    event.boxoffice_headers&.destroy
+    boxofficeHeaders = BoxofficeHeaders.new(:event_id => event.id, 
+      :header_row => header,
+      :first_name => firstName,
+      :last_name => lastName,
+      :email => email,
+      :seat_section => seatLevel,
+      :tickets => seats)
+    boxofficeHeaders.save!
+
     event.sale_tickets.delete_all
     event.box_office.open do |file|
       sheet = Roo::Spreadsheet.open(file.path)
