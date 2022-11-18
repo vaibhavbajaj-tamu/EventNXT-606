@@ -142,6 +142,8 @@ export default class GuestController extends IndexController {
       let guestData = new FormData();
       guestData.append('id', fd.get('id'))
       guestData.append('affiliation', fd.get('affiliation'))
+      guestData.set('first_name',fd.get('first_name'))
+      guestData.set('last_name',fd.get('last_name'))
       guestData.append('perks', fd.get('perks'))
       guestData.append('comments', fd.get('comments'))
       guestData.append('checked', fd.get('checked'))

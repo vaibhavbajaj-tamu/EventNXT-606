@@ -210,7 +210,7 @@ eventModal.addEventListener('show.bs.modal', function (event) {
       <th width=199.8>Remaining</th>
       <th width=199.8>Total Booked</th>
       <th width=199.8>Total Guests</th>
-      <th width=199.8>Balance</th>
+<!--       <th width=199.8>Balance</th> -->
     </tr>
     <tbody>
       <% @res.each do |result| %>
@@ -221,7 +221,7 @@ eventModal.addEventListener('show.bs.modal', function (event) {
           <th width=199.8><%= result.remaining %></th>
           <th width=199.8><%= result.total_booked %></th>
           <th width=199.8><%= result.total_guests %></th>
-          <th width=199.8><%= result.balance %></th>
+<!--           <th width=199.8><%= result.balance %></th> -->
         </tr>
       <% end %>
     </tbody>
