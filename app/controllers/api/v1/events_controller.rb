@@ -51,6 +51,7 @@ class Api::V1::EventsController < Api::V1::ApiController
     seats = params[:seats].to_i
 
     event.boxoffice_headers&.destroy
+    event.boxoffice_seats.delete_all
     boxofficeHeaders = BoxofficeHeaders.new(:event_id => event.id, 
       :header_row => header,
       :first_name => firstName,
@@ -61,10 +62,16 @@ class Api::V1::EventsController < Api::V1::ApiController
     boxofficeHeaders.save!
 
     event.sale_tickets.delete_all
+    summary = {}
     event.box_office.open do |file|
       sheet = Roo::Spreadsheet.open(file.path)
       sheet.each_with_index do |row, idx|
         next if idx < header.to_i
+        next if row[email] == " "
+        if !row[seatLevel].nil? and !row[seatLevel].empty? and !row[seats].nil?
+          summary.store(row[seatLevel], 
+            summary.key?(row[seatLevel]) ? row[seats] + summary[row[seatLevel]] : row[seats])
+        end
         saleTicket = SaleTicket.new(:event_id => event.id, 
           :user_id => current_user.id,
           :first_name => row[firstName],
@@ -74,6 +81,12 @@ class Api::V1::EventsController < Api::V1::ApiController
           :tickets => row[seats])
         saleTicket.save!
       end
+    end
+    summary.each do |section, count|
+      boxofficeSeat = BoxofficeSeat.new(:event_id => event.id, 
+        :seat_section => section,
+        :booked_count => count)
+      boxofficeSeat.save!
     end
   end
 
@@ -113,6 +126,7 @@ class Api::V1::EventsController < Api::V1::ApiController
 
   def summary
     res = Seat.left_joins(:guest_seat_tickets, :guests)
+              .joins("LEFT JOIN boxoffice_seats ON boxoffice_seats.seat_section = seats.category")
               .select('seats.category,price,total_count,'\
                       'sum(coalesce(committed,0)) as total_committed,'\
                       'sum(coalesce(allotted,0)) as total_allotted,'\
@@ -122,7 +136,7 @@ class Api::V1::EventsController < Api::V1::ApiController
                       'count(distinct(guest_id)) as total_guests,'\
                       'sum(coalesce(committed,0)) * price as balance')
               .group('seats.id')
-              .where(seats: {event_id: params[:event_id]})
+              .where(seats: {event_id: @event.id}, boxoffice_seats: {event_id: @event.id})
     render json: res, except: [:id]
   end
 
@@ -138,6 +152,7 @@ class Api::V1::EventsController < Api::V1::ApiController
     return unless event_params.has_key? :box_office
     event = Event.find(event.id)
     event.sale_tickets.delete_all
+    event.boxoffice_seats.delete_all
   end
 
   def update_referral_count(event)
