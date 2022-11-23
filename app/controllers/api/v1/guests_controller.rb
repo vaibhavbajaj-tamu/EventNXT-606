@@ -43,6 +43,11 @@ class Api::V1::GuestsController < Api::V1::ApiController
     end
   end
 
+  def count_all
+    count = Guest.where(event_id: params[:event_id]).count
+    render json: count
+  end
+
   def book
     guest = Guest.find(params[:id])
 

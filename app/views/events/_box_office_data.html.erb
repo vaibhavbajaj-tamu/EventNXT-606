@@ -1,7 +1,7 @@
 <div id='sale_tickets' data-controller='boxoffice update' data-boxoffice-eventid-value=<%= @event_id %>
     data-boxoffice-url-value="/api/v1/events/<%= @event_id %>/sale_tickets"
     data-update-url-value="/api/v1/events/<%= @event_id %>/sale_tickets"
-    data-boxoffice-offset-value=0 data-boxoffice-limit-value=25
+    data-boxoffice-offset-value=0 data-boxoffice-limit-value=10
     data-action='update:created->boxoffice#query'> 
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-boxoffice">
     Load Box Office Data
@@ -80,6 +80,20 @@
         </div>
     </form>
   </template>
+  <div class='d-flex paginate-number' data-boxoffice-target='maxcount'>
+    <div><span data-nxt-maxcount></span></div>
+    <div><button class='paginate-button' data-action="boxoffice#decrementOffset boxoffice#query"><i class="arrow left"></i></button></div>
+    <div><button class='paginate-button' data-action="boxoffice#incrementOffset boxoffice#query"><i class="arrow right"></i></button></div>
+    <div>
+      <label class='me-2' for='size'>Number of records:</label>
+      <select id='size' data-boxoffice-target='limit' data-action="boxoffice#updateLimit boxoffice#query">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
   <div class="containers border-bottom border-dark">
     <div class='row align-items-end mb-4  border-dark'>
     <div class='col-md-auto'><input class='form-check-input' type='checkbox' name='selectAll' onClick="toggle(this)"></div>
