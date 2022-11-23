@@ -152,6 +152,7 @@ class Api::V1::EventsController < Api::V1::ApiController
     return unless event_params.has_key? :box_office
     event = Event.find(event.id)
     event.sale_tickets.delete_all
+    event.boxoffice_seats.delete_all
   end
 
   def update_referral_count(event)
