@@ -10,7 +10,7 @@ width:auto
     data-guest-seaturl-value="/api/v1/events/<%= @event_id %>/seats"
     data-update-url-value="/api/v1/events/<%= @event_id %>/guests"
     data-destroy-url-value="/api/v1/events/<%= @event_id %>/guests"
-    data-guest-offset-value=0 data-guest-limit-value=25
+    data-guest-offset-value=0 data-guest-limit-value=10
     data-action='update:created->guest#query update:created->guest#resetAddGuest destroy:deleted->guest#query'>
   <template id='seat_levels'>
     <select data-guest-target='seat'></select>
@@ -56,6 +56,20 @@ width:auto
       </div>
     </form>
   </template>
+  <div class='d-flex paginate-number'  data-guest-target='maxcount'>
+    <div><span data-nxt-maxcount></span></div>
+    <div><button class='paginate-button' data-action="guest#decrementOffset guest#query"><i class="arrow left"></i></button></div>
+    <div><button class='paginate-button' data-action="guest#incrementOffset guest#query"><i class="arrow right"></i></button></div>
+    <div>
+      <label class='me-2' for='size'>Number of records:</label>
+      <select id='size' data-guest-target='limit' data-action="guest#updateLimit guest#query">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
   <div class="container border-bottom border-dark" data-guest-target='dom'>
     <div class='row align-items-end mb-4 border-bottom border-dark'>
       <div class='col-md-auto'><input class='form-check-input' type='checkbox' name='selectAllGuests' onClick="toggleGuests(this)"></div>

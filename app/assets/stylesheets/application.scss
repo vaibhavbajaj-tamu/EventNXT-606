@@ -3,6 +3,34 @@
 @import 'welcome';
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+.paginate-button {
+  margin: 5px;
+  border: darkgray;
+  border-style: solid;
+}
+
+.paginate-number{
+  align-items: center;
+  vertical-align: middle;
+  justify-content: end;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
 
 div.paleBlueRows {
     font-family: "Times New Roman", Times, serif;

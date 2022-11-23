@@ -36,6 +36,10 @@ Rails.application.routes.draw do
       post '/email' => 'email#create'
       post '/guest/set_expiry' => 'guests#set_expiry'
       post '/guest/get_expired' => 'guests#get_expired'
+      get '/guest/count_all' => 'guests#count_all'
+      get '/sale_tickets/count_all' => 'sale_tickets#count_all'
+      get '/events/:event_id/guests/count_all' => 'guests#count_all'
+      get '/events/:event_id/sale_tickets/count_all' => 'sale_tickets#count_all'
       resources :events do
         get '/summary' => 'events#summary'
         get '/headers/:id' => 'events#headers'
