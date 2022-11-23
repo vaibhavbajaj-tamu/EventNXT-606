@@ -200,27 +200,48 @@ eventModal.addEventListener('show.bs.modal', function (event) {
   </form>
 </div> 
 <br>
+
+<h4> Box Office Seating </h4>
+<div id='boxoffice-seating' class='mb-4'>
+  <table class="center">
+    <tr>
+      <th width=199.8>Category</th>
+      <th width=199.8>Total Sold</th>
+    </tr>
+    <tbody>
+      <% @boxoffice_seats.each do |result| %>
+        </tr>
+          <th width=199.8><%= result.seat_section %></th>
+          <th width=199.8><%= result.booked_count %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+      
 <h4> Seating Summary Information </h4>
 <div id='seating-summary' class='mb-4'>
   <table class="center">
     <tr>
       <th width=199.8>Category</th>
-      <th width=199.8>Total Committed</th>
+      <th width=199.8>VIP Guests</th>
       <th width=199.8>Total Allotted</th>
-      <th width=199.8>Remaining</th>
-      <th width=199.8>Total Booked</th>
-      <th width=199.8>Total Guests</th>
+      <th width=199.8>Total Committed</th>
+      <th width=199.8>Total Sold</th>
+      <th width=199.8>Free Seats</th>
+      
+     
 <!--       <th width=199.8>Balance</th> -->
     </tr>
     <tbody>
       <% @res.each do |result| %>
         <tr>
           <th width=199.8><%= result.category %></th>
-          <th width=199.8><%= result.total_committed %></th>
-          <th width=199.8><%= result.total_allotted%></th>
-          <th width=199.8><%= result.remaining %></th>
-          <th width=199.8><%= result.total_booked %></th>
           <th width=199.8><%= result.total_guests %></th>
+          <th width=199.8><%= result.total_allotted%></th>
+          <th width=199.8><%= result.total_committed %></th>
+          <th width=199.8><%= result.boxoffice_booked %></th>
+          <th width=199.8><%= result.remaining %></th>
 <!--           <th width=199.8><%= result.balance %></th> -->
         </tr>
       <% end %>

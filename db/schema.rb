@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_13_142502) do
+ActiveRecord::Schema[7.0].define(version: 202211111668232192) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_142502) do
     t.integer "seat_section"
     t.integer "tickets"
     t.index ["event_id"], name: "index_boxoffice_headers_on_event_id"
+  end
+
+  create_table "boxoffice_seats", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.string "seat_section"
+    t.integer "booked_count"
+    t.index ["event_id"], name: "index_boxoffice_seats_on_event_id"
   end
 
   create_table "email_templates", force: :cascade do |t|
@@ -110,8 +117,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_142502) do
     t.string "first_name"
     t.string "last_name"
     t.string "affiliation"
-    t.string "perks"
-    t.string "comments"
     t.string "type"
     t.boolean "booked"
     t.datetime "invite_expiration", precision: nil
@@ -119,6 +124,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_142502) do
     t.datetime "invited_at", precision: nil
     t.datetime "emailed_at", precision: nil
     t.boolean "checked", default: false
+    t.string "perks"
+    t.string "comments"
     t.index ["added_by"], name: "index_guests_on_added_by"
     t.index ["email", "event_id"], name: "index_guests_on_email_and_event_id", unique: true
     t.index ["event_id"], name: "index_guests_on_event_id"
@@ -221,6 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_142502) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boxoffice_headers", "events"
+  add_foreign_key "boxoffice_seats", "events"
   add_foreign_key "email_templates", "events"
   add_foreign_key "email_templates", "users"
   add_foreign_key "events", "users"
