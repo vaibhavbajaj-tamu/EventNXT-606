@@ -54,8 +54,29 @@ width:auto
           </ul>
         </div>
       </div>
+        <div class='col-md-1'><button  type='button' data-nxt-id data-action='guest#view_guest_seats'>View Seats</button></div>
     </form>
   </template>
+
+<div class="container mt-2" ><h5> Guest Level Seating Summary </h5> </div>
+  <div class="container mt-2" ><h6 id="guest-name"> </h6> </div>
+
+    <div class="container mt-2" >
+        <table class="table" >
+          <thead>
+            <tr>
+              <%# <th>ID</th>
+              <th>Guest ID</th> %>
+              <th width=199.8> Seat Category</th>
+              <th width=199.8> Committed</th>
+              <th width=199.8> Allotted</th>
+            </tr>
+          </thead>
+          <tbody id="data-check" type = "text" data-action='guest#view_guest_seats' data-guest-target='guest#extra'>
+
+          </tbody>
+        </table>
+      </div>
   <div class='d-flex paginate-number'  data-guest-target='maxcount'>
     <div><span data-nxt-maxcount></span></div>
     <div><button class='paginate-button' data-action="guest#decrementOffset guest#query"><i class="arrow left"></i></button></div>
