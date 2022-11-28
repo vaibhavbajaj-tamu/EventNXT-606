@@ -21,6 +21,7 @@ export default class GuestController extends IndexController {
 
     this.genTooltips();
     this.handleBookStatus();
+    this.handleGuestCommitted();
     this.handleAddedBy();
     this.updateSeats();
   }
@@ -89,6 +90,16 @@ export default class GuestController extends IndexController {
       }
     }
   }
+  
+  handleGuestCommitted() {
+    for (const dom of this.element.querySelectorAll('p[data-nxt-guestcommitted]')) {
+      fetch(`/api/v1/guests/${dom.textContent}`)
+        .then(response => response.json())
+        .then(data => {
+          dom.textContent = `${data['guestcommitted']}`
+        })
+    }
+  }  
 
   handleAddedBy() {
     for (const dom of this.element.querySelectorAll('p[data-nxt-added_by]')) {
