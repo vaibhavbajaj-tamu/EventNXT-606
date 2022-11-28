@@ -47,6 +47,20 @@ class Api::V1::GuestsController < Api::V1::ApiController
     count = Guest.where(event_id: params[:event_id]).count
     render json: count
   end
+  
+  def sum_all
+    sum = GuestSeatTicket.where(guest_id: params[:id]).sum(:allotted)
+    render json: sum
+  end
+
+  def updateguestcommitted
+    guest = Guest.find(params[:id])
+    if guest.update({:guestcommitted => params[:sumofall]})
+      head :ok
+    else
+      head :unprocessable_entity
+    end
+  end
 
   def book
     guest = Guest.find(params[:id])
