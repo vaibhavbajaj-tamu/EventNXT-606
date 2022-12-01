@@ -207,7 +207,7 @@ export default class GuestController extends IndexController {
         (data) => {
           console.log(data)
           let name = data.first_name + " " + data.last_name ;
-          document.getElementById('guest-name').innerHTML = name;
+          document.getElementById('guest-name').innerHTML = "Guest : "+name;
         });
     });
     
