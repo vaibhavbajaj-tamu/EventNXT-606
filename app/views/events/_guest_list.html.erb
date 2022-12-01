@@ -3,6 +3,10 @@
 border:transparent;
 width:auto
 }
+    
+#guest-disp{
+  display: none; 
+}
 </style>
 
 <div id='guests' data-controller='guest update destroy'
@@ -42,7 +46,7 @@ width:auto
         <i class='bi bi-bookmark-check-fill' data-nxt-booked></i>
       </div>
       <div class='col-md-1'><input type='checkbox' name='checked' data-nxt-checked></div>
-      <div class='col-md-2'>
+      <div class='col-md-1'>
         <div class="dropdown">
           <button class='btn btn-secondary dropdown-toggle' type='button'
               data-bs-toggle='dropdown' aria-expanded='false'>
@@ -55,25 +59,22 @@ width:auto
           </ul>
         </div>
       </div>
-        <div class='col-md-1'><button  type='button' data-nxt-id data-action='guest#view_guest_seats'>View Seats</button></div>
+        <div ><button  class='btn btn-primary'   type='button' data-nxt-id data-action='guest#view_guest_seats' >View Seats </button></div>
     </form>
   </template>
 
-<div class="container mt-2" ><h5> Guest Level Seating Summary </h5> </div>
-  <div class="container mt-2" ><h6 id="guest-name"> </h6> </div>
-
-    <div class="container mt-2" >
-        <table class="table" >
+    <div class="cont-new" id = "guest-disp">
+     <div class="guest-disp" ><h6 id="guest-name"> </h6> </div>
+        <table  width = 300px>
           <thead>
             <tr>
               <%# <th>ID</th>
               <th>Guest ID</th> %>
               <th width=199.8> Seat Category</th>
-              <th width=199.8> Committed</th>
               <th width=199.8> Allotted</th>
             </tr>
           </thead>
-          <tbody id="data-check" type = "text" data-action='guest#view_guest_seats' data-guest-target='guest#extra'>
+          <tbody id="data-check" type = "text" data-action='guest#view_guest_seats' data-guest-target='guest'>
 
           </tbody>
         </table>

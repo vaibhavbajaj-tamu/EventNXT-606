@@ -218,7 +218,7 @@ export default class GuestController extends IndexController {
         (data) => {
           console.log(data)
           let name = data.first_name + " " + data.last_name ;
-          document.getElementById('guest-name').innerHTML = name;
+          document.getElementById('guest-name').innerHTML = "Guest : "+name;
         });
     });
     
@@ -252,13 +252,11 @@ export default class GuestController extends IndexController {
                   // temp += "<td>" + itemData.id + "</td>";
                   // temp += "<td>" + itemData.guest_id + "</td>";
                   temp += "<td width=199.8>" + map_cat_id.get(itemData.seat_id) + "</td>";
-                  temp += "<td width=199.8>" + itemData.committed + "</td>";
                   temp += "<td width=199.8>" + itemData.allotted + "</td></tr>";
                 });
-      
+                document.getElementById('guest-disp').style.display = 'block';
                 document.getElementById('data-check').innerHTML = temp;
       
-                console.log("temp", temp)
               }
             });
             });
