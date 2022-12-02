@@ -71,7 +71,7 @@
 </style>
 
 <script>
-//JS toggles RSVP Form visibility
+/JS toggles RSVP Form visibility
   function toggle_referral() {
   var button_name = document.getElementById("referral-prepper");
   var x = document.getElementById("referral-contents-toggle");
@@ -83,7 +83,7 @@
     button_name.style.background = "lightgreen";
     x.style.display = "none";
   }
-}
+}/
 
   function guest_table_toggle() {
     var button_name = document.getElementById("guest-list-table-toggle");
@@ -336,7 +336,7 @@ var setExpiryModal = document.getElementById('invite-expiry')
 <% end %>
 </div> -->
 
-<h4 class="display-10" style="text-align: center; color: gray;"> Referral Rewards </h1><br><br>
+<!--<h4 class="display-10" style="text-align: center; color: gray;"> Referral Rewards </h1><br><br>
 <div id="referral">
   <div style="text-align: center;" id="center-referral-button">
     <button type="button" id="referral-prepper" class="btn btn-success btn-rounded" onclick="toggle_referral()">Open Referral Reward Template</button>
@@ -366,8 +366,8 @@ var setExpiryModal = document.getElementById('invite-expiry')
 
 
 
-    <!--<br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>-->
+    <br><%= button_to "Back to Dashboard", root_path, :class => "btn btn-success btn-rounded", :type => "button", :method => "get" %>
 
 </div>
 
-<%= link_to "Back", '/events', class:"btn btn-primary" %><br><br> <!-- question if/what this should change to -->
+<%= link_to "Back", '/events', class:"btn btn-primary" %><br><br> -->

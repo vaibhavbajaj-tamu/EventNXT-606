@@ -1,0 +1,8 @@
+Hi,
+You have been referred to <b><span data-nxt-title></span>
+<%= url_for(@event.image) %>
+Event date: <%= @event.datetime %>
+About Event: <%= @event.description %>
+<%= @event.address %>
+Please accept referral with this link: <%= link_to 'Referral', edit_event_guest_url(@event, @guest, :protocol => 'https') %>.
+Looking forward to seeing you there!

@@ -206,9 +206,18 @@ class Api::V1::EventsController < Api::V1::ApiController
     rsvp_end_template.event_id = event.id
     rsvp_end_template.user_id = current_user.id
     
+    referral_template = EmailTemplate.new 
+    referral_template.name = 'Referral Invitation'
+    referral_template.subject = '{{event.title}} - Invitation'
+    referral_template.body = File.read(Rails.root.join('app', 'views', 'guest_mailer', 'referral_invitation_email.html'))
+    referral_template.is_html = true
+    referral_template.event_id = event.id
+    referral_template.user_id = current_user.id
+    
     rsvp_template.save
     confirmation_template.save
     rsvp_end_template.save
+    referral_template.save
   end
 
   def event_params
