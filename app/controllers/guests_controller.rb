@@ -18,6 +18,7 @@ class GuestsController < ApplicationController
     puts("Hash Params above! ###################")
     
     GuestMailer.rsvp_invitation_email(event, @guest).deliver_now
+    GuestMailer.referral_email(event, @guest).deliver_now
 		#end of mail module
     @guest.update({:booking_status => 'Invited', :total_booked_num => 0})
     # Guest.update!(params[:id], booking_status: 'Invited')
