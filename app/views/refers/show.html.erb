@@ -4,24 +4,11 @@
     data-action='update:created->refer#disableSubmit'>
   <template data-refer-target='template'>
     <div> 
-      <p>
-        Hello! <b><span data-nxt-first_name></span> <span data-nxt-last_name></span></b>
-        has referred you to <b><span data-nxt-title></span></b>.
-      </p>
-      <div class='card'>
-        <img class='img-fluid' data-nxt-image_url>
-        <div class='card-body'>
-          <h5 class='card-title' data-nxt-title></h5>
-          <h6 class='card-subtitle mb-2 text-muted datetime' data-nxt-datetime></h6>
-          <h6 class='card-subtitle mb-2 text-muted address' data-nxt-address></h6>
-          <p class='card-text description' data-nxt-description></p>
-        </div>
-      </div>
     </div>
   </template>
   <div class='mb-3' data-refer-target='dom'></div>
   <p>
-    Please enter your email to receive your purchase link.
+    Please enter the email to which you want to receive your purchase link.
   </p>
   <form id='form-referral' data-action='update#sendFromForm'>
     <div class='input-group mb-3'>
