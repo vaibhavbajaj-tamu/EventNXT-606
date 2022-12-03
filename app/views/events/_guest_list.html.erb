@@ -1,11 +1,23 @@
 <style>
 #guest-add-fn_1, #guest-add-ln_1{
 border:transparent;
-width:auto
+width: 90px
 }
     
 #guest-disp{
   display: none; 
+}
+
+#guest-email{
+  width: 80px
+}
+
+#guest-status, #guest-checkin{
+  width: 20px
+}
+
+#guest-action{
+  width: 30px;
 }
 </style>
 
@@ -30,9 +42,9 @@ width:auto
     <form class='row' data-guest-target='form' data-action='change->guest#updateForm' name='guest_display'>
       <div class='col-md-auto'><input class='form-check-input' type='checkbox' name='guest_selector' data-nxt-id data-destroy-target='destroy' data-update-target='update'></div>
 <!--       <div class='col-md-1'><span data-nxt-first_name></span> <span data-nxt-last_name></span></div> -->
-       <span class='col-md-1'><input id='guest-add-fn_1' class='form-control' type='text' name='first_name' data-nxt-first_name>
+      <span class='col-md-1'><input id='guest-add-fn_1' class='form-control' type='text' name='first_name' data-nxt-first_name>
       <input id='guest-add-ln_1' class='form-control' type='text' name='last_name' data-nxt-last_name></span>
-      <div class='col-md-2'><input name="guest_email" type="text" data-nxt-email disabled></div>
+      <div class='col-md-1'><input id="guest-email" name="guest_email" type="text" data-nxt-email disabled></div>
       <div class='col-md-1'><input class='form-control' type='text' name='affiliation' data-nxt-affiliation></p></div>
       <div class='col-md-1'><input class='form-control' type='text' name='perks' data-nxt-perks></p></div>
       <div class='col-md-1'><input class='form-control' type='text' name='comments' data-nxt-comments></p></div>
@@ -41,13 +53,13 @@ width:auto
       <div class='col-md-1'><input class='form-control' type='number' name='allotted' min=0 data-nxt-allotted disabled></div>
       <div class='col-md-1'><p data-nxt-guestcommitted></p></div>
       <div class='col-md-1'>
-        <i class='bi bi-calendar-event' data-nxt-invite_expiration data-guest-target='tooltip'></i>
-        <i class='bi bi-envelope' data-nxt-emailed_at data-guest-target='tooltip'></i>
-        <i class='bi bi-bookmark-check-fill' data-nxt-booked></i>
+        <i id= "guest-status" class='bi bi-calendar-event' data-nxt-invite_expiration data-guest-target='tooltip'></i>
+        <i id= "guest-status" class='bi bi-envelope' data-nxt-emailed_at data-guest-target='tooltip'></i>
+        <i id= "guest-status" class='bi bi-bookmark-check-fill' data-nxt-booked></i>
       </div>
-      <div class='col-md-1'><input type='checkbox' name='checked' data-nxt-checked></div>
+      <div class='col-md-1'><input id="guest-checkin" type='checkbox' name='checked' data-nxt-checked></div>
       <div class='col-md-1'>
-        <div class="dropdown">
+        <div class="dropdown" id="guest-action">
           <button class='btn btn-secondary dropdown-toggle' type='button'
               data-bs-toggle='dropdown' aria-expanded='false'>
             Actions
@@ -59,7 +71,7 @@ width:auto
           </ul>
         </div>
       </div>
-        <div class = 'col-md-1'><button  class='btn btn-primary'   type='button' data-nxt-id data-action='guest#view_guest_seats' >View Seats </button></div>
+        <div class ='col-md-1' id="guest-action"><button class='btn btn-primary' type='button' data-nxt-id data-action='guest#view_guest_seats' >View Seats </button></div>
     </form>
   </template>
 
@@ -97,7 +109,7 @@ width:auto
     <div class='row align-items-end mb-4 border-bottom border-dark'>
       <div class='col-md-auto'><input class='form-check-input' type='checkbox' name='selectAllGuests' onClick="toggleGuests(this)"></div>
       <div class='col-md-1'><span data-bs-toggle='tooltip' data-bs-placement='top' title='123'>Name</span></div>
-      <div class='col-md-2'>Email</div>
+      <div class='col-md-1'>Email</div>
       <div class='col-md-1'>Affiliation</div>
       <div class='col-md-1'>Perks</div>
       <div class='col-md-1'>Comments</div>
@@ -111,10 +123,10 @@ width:auto
           <div class='col-md text-center'>Allotted</div>
         </div>
       </div>
-      <div class='col-md-1'>Guest Committed</div>
+      <div class='col-md-1' id="guest-committed">Guest Committed</div>
       <div class='col-md-1'>Status</div>
       <div class='col-md-1'>Check-in</div>
-      <div class='col-md-2'></div>
+      <div class='col-md-1'></div>
     </div>
   </div>
   <div class='container mt-2'>
@@ -159,12 +171,3 @@ width:auto
     </form>
   </div>
 </div>
-
-<script>
-function toggleGuests(source) {
-  checkboxes = document.getElementsByName('guest_selector');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-  }
-}
-</script>
