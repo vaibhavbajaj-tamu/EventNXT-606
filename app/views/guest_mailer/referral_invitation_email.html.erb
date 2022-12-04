@@ -42,12 +42,11 @@
 
     <p>Hi,</p>
     <br>
-    You have been referred to <b><span data-nxt-title></span></b></br>
+    <br>Please send your friends an invitation to FASHIONNXT event <%= @event.title %> by entering their email in the below referral link. You will be receivng rewards if any of your friends purchase tickets to the event.</br>
     <br>
     </p>
     <div class="ticket">
         <img class='w-25 me-2' src='<%= url_for(@event.image) %>' alt='Event image' title='Event Image'>
-      
         <p><b>Event date: <%= @event.datetime %></b></p>
         <p><strong>About Event: </strong><%= @event.description %></p>
         <%= @event.address %>

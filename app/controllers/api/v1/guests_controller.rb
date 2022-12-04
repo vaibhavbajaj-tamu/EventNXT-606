@@ -41,7 +41,15 @@ class Api::V1::GuestsController < Api::V1::ApiController
     else
       render json: guest.errors(), status: :unprocessable_entity
     end
+    template = EmailTemplate.where(name: "Referral Invitation").first
+    gen_email_from_template([current_user.email], guest.email, template)
+    if guest.update({:invited_at => Time.now})
+      head :ok
+    else
+      render json: guest.errors(), status: :unprocessable_entity
+    end
   end
+   
 
   def count_all
     count = Guest.where(event_id: params[:event_id]).count
