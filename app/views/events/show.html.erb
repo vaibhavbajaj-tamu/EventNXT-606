@@ -271,9 +271,11 @@ eventModal.addEventListener('show.bs.modal', function (event) {
 </div>
 
 <h2>Manage Box Office Sales</h2>
-<div class='mb-4'>
-  <span class='ms-2 me-2'></span>
-  <%= render 'box_office_data' %>
+<div class='mb-2'>
+  <div class='d-flex'>
+      <%= render 'box_office_data' %>
+      <%= render 'bulk_referral_email' %>
+  </div>
 </div>
 
 <h2>Manage Referrals</h2>
@@ -301,6 +303,23 @@ var bulkEmailModal = document.getElementById('bulk-email')
         }
        }
     var bulkModal = document.getElementById('bulk-email')
+    var modalInput = bulkModal.querySelector('#email-to')
+    modalInput.value = recipients
+    })
+</script>
+
+<script>
+var bulkEmailModal = document.getElementById('bulk-referral-email')
+    bulkEmailModal.addEventListener('show.bs.modal', function () {
+      var forms = document.querySelectorAll("[name=boxoffice_display]");
+      var recipients = "";
+
+       for (var i=0, n=forms.length;i<n;i++) {
+        if (forms[i].elements['boxoffice_selector'].checked) {
+          recipients += forms[i].elements['boxoffice_email'].value+";"
+        }
+       }
+    var bulkModal = document.getElementById('bulk-referral-email')
     var modalInput = bulkModal.querySelector('#email-to')
     modalInput.value = recipients
     })

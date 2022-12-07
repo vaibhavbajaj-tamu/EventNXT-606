@@ -28,11 +28,13 @@ Rails.application.routes.draw do
   get 'events/show'
   post 'events/show'
   post 'email/bulk'
+  post 'email/bulkReferral'
 
   namespace :api, except: [:new, :edit] do
     namespace :v1 do
       resources :users, except: [:create]
       post '/email/bulk' => 'email#bulk'
+      post '/email/bulkReferral' => 'email#bulkReferral'
       post '/email' => 'email#create'
       post '/guest/set_expiry' => 'guests#set_expiry'
       post '/guest/get_expired' => 'guests#get_expired'
