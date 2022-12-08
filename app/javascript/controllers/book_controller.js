@@ -65,8 +65,20 @@ export default class BookController extends IndexController {
       },
       method: "POST",
     }).then(response => 'ok')
+      .then(data => {this.sendmail()})
     this.sumTarget.reset();
   }
+  
+  
+  sendmail()
+  {
+    fetch(`/api/v1/events/${this.eventidValue}/guests/${this.guestidValue}/countmail`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+      }
+    }).then(response => response.json())
+  }
+
 
   sendTickets(e) {
     e.preventDefault() 
