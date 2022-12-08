@@ -214,10 +214,20 @@ class Api::V1::EventsController < Api::V1::ApiController
     referral_template.event_id = event.id
     referral_template.user_id = current_user.id
     
+    purchase_template = EmailTemplate.new 
+    purchase_template.name = 'Purchase Tickets'
+    purchase_template.subject = 'Purchase Tickets'
+    purchase_template.body = File.read(Rails.root.join('app', 'views', 'guest_mailer', 'purchase_tickets_email.html'))
+    purchase_template.is_html = true
+    purchase_template.event_id = event.id
+    purchase_template.user_id = current_user.id
+    
     rsvp_template.save
     confirmation_template.save
     rsvp_end_template.save
     referral_template.save
+    purchase_template.save
+    
   end
 
   def event_params

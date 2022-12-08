@@ -11,8 +11,6 @@ class Api::V1::GuestReferralsController < Api::V1::ApiController
 
   def create
    @guest = Guest.find_by(id: params[:token], event_id: params[:event_id])
-    puts "Error"
-    puts @guests
     referral = GuestReferral.new 
     referral.guest = @guest
     referral.email = params[:email]
@@ -20,7 +18,7 @@ class Api::V1::GuestReferralsController < Api::V1::ApiController
     if referral.save
       head :ok
       @event = Event.find(@guest.event_id)
-      GuestMailer.rsvp_invitation_email(@event, @guest).deliver_now
+      GuestMailer.purchase_tickets_email(referral.email, @event, @guest).deliver_now
       #redirect_to @event
     else
       render json: referral.errors(), status: :unprocessable_entity
