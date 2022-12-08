@@ -60,6 +60,13 @@ class Api::V1::GuestsController < Api::V1::ApiController
     sum = GuestSeatTicket.where(guest_id: params[:id]).sum(:allotted)
     render json: sum
   end
+  
+  
+  def mail
+    sendmail = current_user
+    render json: sendmail
+  end
+
 
   def updateguestcommitted
     guest = Guest.find(params[:id])
