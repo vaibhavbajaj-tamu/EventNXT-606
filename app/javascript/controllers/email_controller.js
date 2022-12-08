@@ -1,14 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'email', 'template', 'name', 'select', 'subject', 'body' ];
-  static values = { eventid: Number};
+  static targets = [ 'email', 'template', 'name', 'select', 'subject', 'body', 'from' ];
+  static values = { eventid: Number, mailfrom: String};
 
   connect() {
     this.queryTemplates();
   }
 
   queryTemplates() {
+    this.setmail();
     fetch(`/api/v1/events/${this.eventidValue}/templates`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("access_token"),
@@ -25,6 +26,28 @@ export default class extends Controller {
         }
       });
   }
+  
+  
+  setmail()
+  {
+
+    fetch(`/api/v1/events/${this.eventidValue}/guests/mail`, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+        method: "GET",
+      }
+    }).then(response => response.json())
+      .then(data => {this.mailfrom = data['email'];this.sendfrom();})
+      .then(data => console.log(this.mailfrom));
+
+  }
+
+  sendfrom()
+  {
+    let elem = this.fromTarget.querySelector(`input[data-nxt-frommail]`);
+    elem.setAttribute('value', this.mailfrom)
+  }
+
 
   createTemplateOption(id, name) {
     return `<option value='${id}'>${name}</option>`;
