@@ -64,7 +64,7 @@ export default class BoxofficeController extends IndexController {
         "Authorization": "Bearer " + localStorage.getItem("access_token"),
       },
       method: "GET",
-    }).then(response => {super.query(); 
+    }).then(response => {super.query(); super.getCount();
     this.dispatch('dataLoaded')});
   }
 
