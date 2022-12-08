@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       
       
       get '/events/:event_id/guests/mail' => 'guests#mail'
+      get '/events/:event_id/guests/:id/countmail' => 'guests#countmail'
 
 
       get '/guest/count_all' => 'guests#count_all'
