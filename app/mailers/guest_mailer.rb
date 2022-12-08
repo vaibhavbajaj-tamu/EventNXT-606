@@ -23,5 +23,18 @@ class GuestMailer < ApplicationMailer
         @guest = guest
         mail(to: @guest.email, subject: "#{@event.title} - Seating Confirmation")
    end
+    
+    
+   def rsvp_guest_count_email(event, guest)
+        @event = event
+        @guest = guest
+        mail(to: @guest.email, subject: "#{@event.title} - Request Confirmation", 
+        body: "Hi #{@guest.first_name} #{guest.last_name}, 
+
+        Your request to book #{@guest.guestcommitted} seats has been sent to the organizer.
+        
+        Thank you and have a great day!!!")
+    end
+
 
 end
