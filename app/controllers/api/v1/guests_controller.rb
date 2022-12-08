@@ -66,6 +66,17 @@ class Api::V1::GuestsController < Api::V1::ApiController
     sendmail = current_user
     render json: sendmail
   end
+  
+  
+  def countmail
+    @event = Event.find(params[:event_id])
+    @guest = Guest.find(params[:id])
+
+    GuestMailer.rsvp_guest_count_email(@event, @guest).deliver_now
+    render json: @event
+    
+  end
+
 
 
   def updateguestcommitted
