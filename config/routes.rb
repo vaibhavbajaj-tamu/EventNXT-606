@@ -41,6 +41,11 @@ Rails.application.routes.draw do
       
       post '/events/:event_id/guests/:id/:sumofall/updateguestcommitted' => 'guests#updateguestcommitted'
       get '/events/:event_id/guests/:id/sum_all' => 'guests#sum_all'
+      
+      
+      
+      get '/events/:event_id/guests/mail' => 'guests#mail'
+
 
       get '/guest/count_all' => 'guests#count_all'
       get '/sale_tickets/count_all' => 'sale_tickets#count_all'
