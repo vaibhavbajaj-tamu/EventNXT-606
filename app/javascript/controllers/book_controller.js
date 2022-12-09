@@ -83,15 +83,19 @@ export default class BookController extends IndexController {
   sendTickets(e) {
     e.preventDefault() 
     this.handleMaxCommittment()
+    let error = document.getElementById("error");
     let inputCommittedValue = this.sumTarget.querySelector('input[data-nxt-guestcommitted]').value
     let inputCommitted = this.sumTarget.querySelector('input[data-nxt-guestcommitted]')
     if(inputCommittedValue <= this.sumofall)
     {
+      error.textContent = ""
       this.disableSubmit()
       this.updateGuestCommitted()
     }
     else{
       this.sumTarget.querySelector('input[data-nxt-guestcommitted]').value = 0
+      error.textContent = "Please enter an input less than max"
+      error.style.color = "red"
     }
   }
 
