@@ -21,7 +21,6 @@ export default class GuestController extends IndexController {
 
     this.genTooltips();
     this.handleBookStatus();
-    this.handleGuestCommitted();
     this.handleAddedBy();
     this.updateSeats();
   }
@@ -90,16 +89,6 @@ export default class GuestController extends IndexController {
       }
     }
   }
-  
-  handleGuestCommitted() {
-    for (const dom of this.element.querySelectorAll('p[data-nxt-guestcommitted]')) {
-      fetch(`/api/v1/guests/${dom.textContent}`)
-        .then(response => response.json())
-        .then(data => {
-          dom.textContent = `${data['guestcommitted']}`
-        })
-    }
-  }  
 
   handleAddedBy() {
     for (const dom of this.element.querySelectorAll('p[data-nxt-added_by]')) {
@@ -120,20 +109,17 @@ export default class GuestController extends IndexController {
     let selectSeat = form.querySelector('select[data-nxt-category]')
     let guestId = form.querySelector('input[data-nxt-id]').value
     let inputAllotted = form.querySelector('input[data-nxt-allotted]')
-    let inputCommitted = form.querySelector('input[data-nxt-committed]')
 
     // update the allotted input after selecting seat tier
     if (e.target.tagName === 'SELECT' && e.target.name === 'seat_id') {
       let seatId = selectSeat.value
       if (seatId) {
         inputAllotted.disabled = false;
-        inputCommitted.disabled = false;
         fetch(`${this.urlValue}/${guestId}/tickets?seat_id=${seatId}`)
           .then(response => response.json())
           .then(data => {
             if (data.length == 0) {
               inputAllotted.value = 0
-              inputCommitted.value = 0
               return
             }
 
@@ -142,17 +128,11 @@ export default class GuestController extends IndexController {
                 inputAllotted.value = ticket['allotted'];
               else
                 inputAllotted.value = 0;
-              if(ticket['committed'])
-                inputCommitted.value = ticket['committed'];
-              else
-                inputCommitted.value = 0;
             }
           })
       } else {
         inputAllotted.value = '';
         inputAllotted.disabled = true;
-        inputCommitted.value = '';
-        inputCommitted.disabled = true;
       }
     } else {
       let fd = new FormData(form);
@@ -181,7 +161,6 @@ export default class GuestController extends IndexController {
         let ticketData = new FormData();
         ticketData.append('seat_id', fd.get('seat_id'));
         ticketData.append('allotted', fd.get('allotted'));
-        ticketData.append('committed', fd.get('committed'));
         fetch(`${this.urlValue}/${guestId}/tickets`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -226,7 +205,7 @@ export default class GuestController extends IndexController {
     .then((response) => {
       response.json().then(
         (data) => {
-          console.log(data)
+          console.log("data", data)
           let name = data.first_name + " " + data.last_name ;
           document.getElementById('guest-name').innerHTML = "Guest : "+name;
         });
@@ -251,9 +230,8 @@ export default class GuestController extends IndexController {
             console.log(response);
             response.json().then(
               (data) => {
-                console.log(data);
       
-                console.log("data",data.length);
+                console.log("data",data);
       
               if (data.length > 0) {
                 var temp = "";
@@ -262,11 +240,19 @@ export default class GuestController extends IndexController {
                   // temp += "<td>" + itemData.id + "</td>";
                   // temp += "<td>" + itemData.guest_id + "</td>";
                   temp += "<td width=199.8>" + map_cat_id.get(itemData.seat_id) + "</td>";
-                  temp += "<td width=199.8>" + itemData.allotted + "</td>";
-                  temp += "<td width=199.8>" + itemData.committed + "</td></tr>";
+                  temp += "<td width=199.8>" + itemData.allotted + "</td></tr>";
                 });
-                document.getElementById('guest-disp').style.display = 'block';
-                document.getElementById('data-check').innerHTML = temp;
+                if(document.getElementById('guest-disp').style.display == 'block'){
+                  console.log("inner-contnet",document.getElementById('data-check').innerHTML) 
+                  document.getElementById('guest-disp').style.display = 'none';
+                }
+
+                else{                
+                    document.getElementById('guest-disp').style.display = 'block';
+                    document.getElementById('data-check').innerHTML = temp;
+      
+                console.log("temp", temp)
+              }
       
               }
             });
