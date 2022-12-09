@@ -272,10 +272,9 @@ eventModal.addEventListener('show.bs.modal', function (event) {
 
 <h2>Manage Box Office Sales</h2>
 <div class='mb-2'>
-  <div class='d-flex'>
-      <%= render 'box_office_data' %>
-      <%= render 'bulk_referral_email' %>
-  </div>
+  <%= render 'bulk_referral_email' %>
+  <span class='ms-2 me-2'></span>
+  <%= render 'box_office_data' %>
 </div>
 
 <h2>Manage Referrals</h2>
