@@ -120,17 +120,20 @@ export default class GuestController extends IndexController {
     let selectSeat = form.querySelector('select[data-nxt-category]')
     let guestId = form.querySelector('input[data-nxt-id]').value
     let inputAllotted = form.querySelector('input[data-nxt-allotted]')
+    let inputCommitted = form.querySelector('input[data-nxt-committed]')
 
     // update the allotted input after selecting seat tier
     if (e.target.tagName === 'SELECT' && e.target.name === 'seat_id') {
       let seatId = selectSeat.value
       if (seatId) {
         inputAllotted.disabled = false;
+        inputCommitted.disabled = false;
         fetch(`${this.urlValue}/${guestId}/tickets?seat_id=${seatId}`)
           .then(response => response.json())
           .then(data => {
             if (data.length == 0) {
               inputAllotted.value = 0
+              inputCommitted.value = 0
               return
             }
 
@@ -139,11 +142,17 @@ export default class GuestController extends IndexController {
                 inputAllotted.value = ticket['allotted'];
               else
                 inputAllotted.value = 0;
+              if(ticket['committed'])
+                inputCommitted.value = ticket['committed'];
+              else
+                inputCommitted.value = 0;
             }
           })
       } else {
         inputAllotted.value = '';
         inputAllotted.disabled = true;
+        inputCommitted.value = '';
+        inputCommitted.disabled = true;
       }
     } else {
       let fd = new FormData(form);
@@ -172,6 +181,7 @@ export default class GuestController extends IndexController {
         let ticketData = new FormData();
         ticketData.append('seat_id', fd.get('seat_id'));
         ticketData.append('allotted', fd.get('allotted'));
+        ticketData.append('committed', fd.get('committed'));
         fetch(`${this.urlValue}/${guestId}/tickets`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -252,7 +262,8 @@ export default class GuestController extends IndexController {
                   // temp += "<td>" + itemData.id + "</td>";
                   // temp += "<td>" + itemData.guest_id + "</td>";
                   temp += "<td width=199.8>" + map_cat_id.get(itemData.seat_id) + "</td>";
-                  temp += "<td width=199.8>" + itemData.allotted + "</td></tr>";
+                  temp += "<td width=199.8>" + itemData.allotted + "</td>";
+                  temp += "<td width=199.8>" + itemData.committed + "</td></tr>";
                 });
                 if(document.getElementById('guest-disp').style.display == 'block'){
                   console.log("inner-contnet",document.getElementById('data-check').innerHTML) 
