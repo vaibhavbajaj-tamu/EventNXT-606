@@ -33,9 +33,9 @@ width: 90px
   </template>
   <template id='allotments'>
     <div>
-      <select class='seat_id guest-seat-alloc'></select>
-      <input class='allotted' type='number'>
-      <span class='committed'></span>
+      <select class='seat_id guest-seat-alloc' style="background-color:#E8E8E8"></select>
+      <input class='allotted' style="background-color:#E8E8E8" type='number'>
+      <input class='committed' style="background-color:#E8E8E8" type='number'>
     </div>
   </template>
   <template data-guest-target='template'>
@@ -49,15 +49,16 @@ width: 90px
       <div class='col-md-1'><input class='form-control' type='text' name='perks' data-nxt-perks></p></div>
       <div class='col-md-1'><input class='form-control' type='text' name='comments' data-nxt-comments></p></div>
 <!--       <div class='col-md-1'><p data-nxt-added_by></p></div> -->
-      <div class='col-md-1'><select class='form-select form-select-sm' name='seat_id' data-nxt-category data-guest-target='seat'></select></div>
-      <div class='col-md-1'><input class='form-control' type='number' name='allotted' min=0 data-nxt-allotted disabled></div>
+      <div class='col-md-1' style="background-color:#E8E8E8"><select class='form-select form-select-sm' name='seat_id' data-nxt-category data-guest-target='seat'></select></div>
+      <div class='col-md-1' style="background-color:#E8E8E8"><input class='form-control' type='number' name='allotted' min=0 data-nxt-allotted disabled></div>
+      <div class='col-md-1' style="background-color:#E8E8E8"><input class='form-control' type='number' name='committed' min=0 data-nxt-committed disabled></div>
       <div class='col-md-1'><p data-nxt-guestcommitted></p></div>
       <div class='col-md-1'>
         <i id= "guest-status" class='bi bi-calendar-event' data-nxt-invite_expiration data-guest-target='tooltip'></i>
         <i id= "guest-status" class='bi bi-envelope' data-nxt-emailed_at data-guest-target='tooltip'></i>
         <i id= "guest-status" class='bi bi-bookmark-check-fill' data-nxt-booked></i>
       </div>
-      <div class='col-md-1'><input id="guest-checkin" type='checkbox' name='checked' data-nxt-checked></div>
+      <!--<div class='col-md-1'><input id="guest-checkin" type='checkbox' name='checked' data-nxt-checked></div> -->
       <div class='col-md-1'>
         <div class="dropdown" id="guest-action">
           <button class='btn btn-secondary dropdown-toggle' type='button'
@@ -82,8 +83,9 @@ width: 90px
             <tr>
               <%# <th>ID</th>
               <th>Guest ID</th> %>
-              <th width=199.8> Seat Category</th>
+              <th width=199.8> Category</th>
               <th width=199.8> Allotted</th>
+              <th width=199.8> Committed</th>
             </tr>
           </thead>
           <tbody id="data-check" type = "text" data-action='guest#view_guest_seats' data-guest-target='guest'>
@@ -114,18 +116,19 @@ width: 90px
       <div class='col-md-1'>Perks</div>
       <div class='col-md-1'>Comments</div>
 <!--       <div class='col-md-1'>Added By</div> -->
-      <div class='col-md-2'>
+      <div class='col-md-3'>
         <div class='row'>
-          <div class='col-md text-center'>Allocation</div>
+          <div class='col-md text-center'>Seat Arrangement</div>
         </div>
         <div class='row'>
-          <div class='col-md text-center'>Seat Level</div>
+          <div class='col-md text-center'>Category</div>
           <div class='col-md text-center'>Allotted</div>
+          <div class='col-md text-center'>Committed</div>
         </div>
       </div>
       <div class='col-md-1'>Guest Committed</div>
       <div class='col-md-1'>Status</div>
-      <div class='col-md-1'>Check-in</div>
+      <!--<div class='col-md-1'>Check-in</div>-->
       <%# <div class='col-md-1'></div> %>
     </div>
   </div>
