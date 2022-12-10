@@ -6,6 +6,7 @@ export default class BookController extends IndexController {
 
   preProcess() {
     this.handleSum()
+    this.showExpiry()
     this.submit = this.formTarget.firstElementChild.cloneNode(true)
   }
 
@@ -13,7 +14,6 @@ export default class BookController extends IndexController {
     this.formTarget.append(this.submit)
     //this.handleSeatCategory()
     //this.handleMaxCommittment()
-    this.showExpiry()
   }
 
   showExpiry() {
