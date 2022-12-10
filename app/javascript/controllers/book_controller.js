@@ -5,8 +5,8 @@ export default class BookController extends IndexController {
   static values = { eventid: Number, guestid: Number, sumofall: Number };
 
   preProcess() {
-    this.handleSum()
     this.showExpiry()
+    this.handleSum()
     this.submit = this.formTarget.firstElementChild.cloneNode(true)
   }
 
