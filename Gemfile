@@ -3,10 +3,10 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "rails", "~> 7.0.0"
-gem "pg", "~> 1.4.3"
 gem "mustache", "~> 1.1"
 gem "tzinfo-data"
 gem "sprockets-rails"
+gem "pg", "~> 1.4.3"
 
 gem "dotenv-rails", "~> 2.7.0"
 gem "importmap-rails", "~> 1.0.0"
@@ -33,6 +33,8 @@ group :development, :test do
   gem "database_cleaner", "~> 2.0.0"
   gem "faker", "~> 2.20.0"
   gem "factory_bot_rails", "~> 6.2.0"
+  
+  gem "sqlite3", "~> 1.6"
 end
 
 gem "web-console"

@@ -34,6 +34,7 @@ module EventNXT
         :enable_starttls_auto => true,
       }
     else
+      puts  Rails.application.credentials.email
       config.action_mailer.smtp_settings = {
         :user_name => Rails.application.credentials.email[:user_name],
         :password => Rails.application.credentials.email[:password],
