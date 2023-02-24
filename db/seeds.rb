@@ -9,10 +9,10 @@
 # Applications
 
 Doorkeeper::Application.create(name: 'Web', redirect_uri: '')
-#User.create first_name: "admin", last_name: "nimda",
-            #email: Rails.application.credentials.admin[:email],
-            #password: Rails.application.credentials.admin[:password],
-            #is_admin: true
+User.create first_name: "admin", last_name: "nimda",
+            email: Rails.application.credentials.admin[:email],
+            password: Rails.application.credentials.admin[:password],
+            is_admin: true
 
 if Rails.env == 'development'
   require 'factory_bot_rails'
