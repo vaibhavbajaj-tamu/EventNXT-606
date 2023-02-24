@@ -1,7 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'dotenv/load'
-require 'rails/all'
+require 'bin/rails/all'
 require 'set'
 
 # Require the gems listed in Gemfile, including any gems
@@ -35,8 +35,8 @@ module EventNXT
       }
     else
       config.action_mailer.smtp_settings = {
-        #:user_name => Rails.application.credentials.email[:user_name],
-        #:password => Rails.application.credentials.email[:password],
+        :user_name => Rails.application.credentials.email[:user_name],
+        :password => Rails.application.credentials.email[:password],
         :address => ENV['EMAIL_DOMAIN'],
         :port => ENV['EMAIL_PORT'],
         :authentication => :plain,
